@@ -269,11 +269,13 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
         <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark p-4 sm:p-6 text-white rounded-t-wellness">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3 sm:gap-4">
-              <img
-                src="/image copy copy copy copy copy copy copy copy copy.png"
-                alt="SocialFlow Logo"
-                className="h-10 sm:h-12 w-auto object-contain"
-              />
+              <div className="bg-white rounded-lg p-2 shadow-md">
+                <img
+                  src="/image copy copy copy copy copy copy copy copy copy.png"
+                  alt="SocialFlow Logo"
+                  className="h-8 sm:h-10 w-auto object-contain"
+                />
+              </div>
               <h2 className="text-xl sm:text-2xl font-serif font-bold">
                 {currentStep === 2 ? '👤 I Tuoi Dati' : '✅ Richiesta Inviata'}
               </h2>
