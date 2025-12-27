@@ -268,9 +268,16 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
       <div className="bg-white rounded-wellness shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto">
         <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark p-4 sm:p-6 text-white rounded-t-wellness">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl sm:text-2xl font-serif font-bold">
-              {currentStep === 2 ? '👤 I Tuoi Dati' : '✅ Richiesta Inviata'}
-            </h2>
+            <div className="flex items-center gap-3 sm:gap-4">
+              <img
+                src="/image copy copy copy copy copy copy copy copy.png"
+                alt="Logo"
+                className="h-10 sm:h-12 w-auto object-contain"
+              />
+              <h2 className="text-xl sm:text-2xl font-serif font-bold">
+                {currentStep === 2 ? '👤 I Tuoi Dati' : '✅ Richiesta Inviata'}
+              </h2>
+            </div>
             <button
               onClick={onClose}
               className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
