@@ -756,10 +756,13 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
                 <button
                   onClick={handleContactClick}
-                  className="bg-white text-sage-green-dark font-bold px-12 py-6 rounded-wellness hover:bg-mocha-mousse hover:text-white transition-all duration-300 shadow-organic text-xl hover:scale-110 hover:shadow-2xl transform relative z-10 hover:-translate-y-2 hover:ring-4 hover:ring-white/50"
+                  className="bg-white text-sage-green-dark font-bold px-16 py-7 rounded-wellness hover:bg-mocha-mousse hover:text-white transition-all duration-300 shadow-2xl text-2xl hover:scale-110 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform relative z-10 hover:-translate-y-2 ring-4 ring-white/40 hover:ring-yellow-300 animate-pulse-subtle border-4 border-sage-green/20"
+                  style={{
+                    animation: 'gentle-bounce 2s ease-in-out infinite'
+                  }}
                 >
                   <span className="flex items-center justify-center">
-                    <Phone className="w-6 h-6 mr-3" />
+                    <Phone className="w-7 h-7 mr-3 animate-pulse" />
                     Invia preventivo e richiedi demo
                   </span>
                 </button>
