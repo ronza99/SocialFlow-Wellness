@@ -756,7 +756,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
                 <button
                   onClick={handleContactClick}
-                  className="bg-white text-sage-green-dark font-bold px-12 py-6 rounded-wellness hover:bg-warm-sand transition-all duration-300 shadow-organic text-xl hover:scale-105 transform relative z-10"
+                  className="bg-white text-sage-green-dark font-bold px-12 py-6 rounded-wellness hover:bg-mocha-mousse hover:text-white transition-all duration-300 shadow-organic text-xl hover:scale-110 hover:shadow-2xl transform relative z-10 hover:-translate-y-2 hover:ring-4 hover:ring-white/50"
                 >
                   <span className="flex items-center justify-center">
                     <Phone className="w-6 h-6 mr-3" />
