@@ -732,13 +732,3 @@
 .help-arrow {
   animation: helpPulse 2s ease-in-out infinite;
 }
-
-/* Gentle bounce animation for CTA button */
-@keyframes gentle-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
