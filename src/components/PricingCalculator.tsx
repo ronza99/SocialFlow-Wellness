@@ -756,15 +756,16 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
                 <button
                   onClick={handleContactClick}
-                  className="bg-white text-sage-green-dark font-bold px-16 py-7 rounded-wellness hover:bg-mocha-mousse hover:text-white transition-all duration-300 shadow-2xl text-2xl hover:scale-110 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform relative z-10 hover:-translate-y-2 ring-4 ring-white/40 hover:ring-yellow-300 animate-pulse-subtle border-4 border-sage-green/20"
+                  className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white font-bold px-16 py-7 rounded-wellness hover:from-orange-600 hover:via-red-600 hover:to-pink-600 transition-all duration-300 shadow-2xl text-2xl hover:scale-110 hover:shadow-[0_20px_60px_rgba(255,100,0,0.8)] transform relative z-10 hover:-translate-y-2 ring-4 ring-orange-300/60 hover:ring-yellow-400 border-4 border-white/40 flash-button"
                   style={{
-                    animation: 'gentle-bounce 2s ease-in-out infinite'
+                    animation: 'flash-pulse 1.5s ease-in-out infinite, gentle-bounce 2s ease-in-out infinite'
                   }}
                 >
-                  <span className="flex items-center justify-center">
-                    <Phone className="w-7 h-7 mr-3 animate-pulse" />
+                  <span className="flex items-center justify-center relative z-10">
+                    <Phone className="w-7 h-7 mr-3" style={{ animation: 'phone-ring 1s ease-in-out infinite' }} />
                     Invia preventivo e richiedi demo
                   </span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-400/20 to-red-400/20 rounded-wellness animate-shimmer"></span>
                 </button>
 
                 <div className="bg-white/10 backdrop-blur-sm rounded-wellness p-4 mt-6 relative z-10 border border-white/30">
