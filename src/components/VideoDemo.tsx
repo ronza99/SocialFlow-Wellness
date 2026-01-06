@@ -184,7 +184,9 @@ const VideoDemo = () => {
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                 Qui in Google Calendar vengono mostrate tutte le prenotazioni di ogni operatore
                 in modo ordinato e organizzato. Ogni volta che un cliente cancella o prenota,
-                il calendario si aggiorna automaticamente in tempo reale. Gestione semplice e familiare!
+                il calendario si aggiorna automaticamente in tempo reale. Le prenotazioni dei clienti
+                possono essere spostate tra gli operatori in due clic per gestire al meglio le diverse agende.
+                Gestione semplice e familiare!
               </p>
             </div>
 
