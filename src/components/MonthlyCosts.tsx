@@ -26,8 +26,8 @@ const MonthlyCosts = () => {
     },
     {
       name: "Stripe + HubSpot",
-      cost: "2.15% + €0.25",
-      description: "Commissioni sui pagamenti: 1.4% Stripe + 0.75% HubSpot",
+      cost: "2.25% + €0.25",
+      description: "Commissioni sui pagamenti: 1.5% Stripe + 0.75% HubSpot",
       icon: CreditCard,
       color: "bg-green-500"
     }
@@ -86,9 +86,9 @@ const MonthlyCosts = () => {
 
   // Esempio pratico commissioni
   const stripeExample = {
-    massaggio: { price: 60, commission: 1.54 },
-    trattamento: { price: 120, commission: 2.83 },
-    pacchetto: { price: 300, commission: 6.70 }
+    massaggio: { price: 60, commission: 1.60 },
+    trattamento: { price: 120, commission: 2.95 },
+    pacchetto: { price: 300, commission: 7.00 }
   };
 
   return (
@@ -141,7 +141,7 @@ const MonthlyCosts = () => {
                 Quanto "perdi" davvero con le commissioni?
               </h4>
               <p className="text-lg text-gray-600">
-                Commissione totale: <span className="font-bold text-red-600">2.15% + €0.25</span> per transazione
+                Commissione totale: <span className="font-bold text-red-600">2.25% + €0.25</span> per transazione
               </p>
             </div>
             

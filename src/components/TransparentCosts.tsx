@@ -30,7 +30,7 @@ const TransparentCosts = () => {
     },
     {
       name: "Stripe",
-      cost: "1.4% + €0.25",
+      cost: "1.5% + €0.25",
       description: "Solo sui pagamenti effettivi ricevuti",
       note: "Commissioni bancarie standard, nessun ricarico"
     },
@@ -122,7 +122,7 @@ const TransparentCosts = () => {
               <h4 className="font-bold text-gray-900 mb-3 text-lg">Commissioni pagamenti (Stripe):</h4>
               <div className="flex justify-between items-center">
                 <span className="text-gray-700">Solo sui pagamenti effettivi ricevuti:</span>
-                <span className="text-lg font-semibold text-mocha-mousse">1.4% + €0.25</span>
+                <span className="text-lg font-semibold text-mocha-mousse">1.5% + €0.25</span>
               </div>
               <p className="text-sm text-gray-600 mt-2 italic">
                 Commissioni bancarie standard, nessun ricarico

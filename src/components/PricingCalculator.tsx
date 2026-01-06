@@ -843,6 +843,27 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
             </div>
 
+            {/* Come funziona il pagamento */}
+            <div className="mb-12">
+              <div className="bg-gradient-to-r from-gray-100 to-gray-50 rounded-wellness p-8 border-l-4 border-sage-green max-w-4xl mx-auto">
+                <h4 className="text-xl font-serif font-bold text-gray-900 mb-4">
+                  Come funziona il pagamento
+                </h4>
+                <p className="text-gray-700 leading-relaxed mb-3">
+                  Il setup si paga una sola volta. Gli strumenti necessari (chat, pagamenti, calendario e gestione clienti) vengono attivati a nome del centro e pagati direttamente ai rispettivi fornitori.
+                </p>
+                <div className="bg-white rounded-wellness p-4 mb-3 border border-sage-green/20">
+                  <p className="text-gray-900 font-bold mb-2">Pagamento setup</p>
+                  <p className="text-gray-700">
+                    40% all'avvio dei settaggi e 60% a 30 giorni dall'attivazione, dopo 1 mese di manutenzione incluso gratuitamente.
+                  </p>
+                </div>
+                <p className="text-gray-700 font-medium">
+                  Nessun vincolo: gli account restano tuoi e i dati sono sempre accessibili. Se un domani vuoi cambiare gestione o fornitore, puoi farlo.
+                </p>
+              </div>
+            </div>
+
             {/* Piani di manutenzione */}
             <div className="mb-12">
               <h4 className="text-2xl font-serif font-bold text-gray-900 mb-8 text-center">
@@ -941,26 +962,6 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             </div>
           </div>
 
-          {/* Nota finale */}
-          <div className="mb-12">
-            <div className="bg-gradient-to-r from-gray-100 to-gray-50 rounded-wellness p-8 border-l-4 border-sage-green max-w-4xl mx-auto">
-              <h4 className="text-xl font-serif font-bold text-gray-900 mb-4">
-                Come funziona il pagamento
-              </h4>
-              <p className="text-gray-700 leading-relaxed mb-3">
-                Il setup si paga una sola volta. I servizi esterni (software di chat, pagamenti, calendario/CRM e hosting se previsto) vengono attivati a nome del centro e pagati direttamente ai rispettivi fornitori.
-              </p>
-              <div className="bg-white rounded-wellness p-4 mb-3 border border-sage-green/20">
-                <p className="text-gray-900 font-bold mb-2">Pagamento setup:</p>
-                <p className="text-gray-700">
-                  40% all'avvio dei settaggi e 60% a 30 giorni dal go-live, dopo 1 mese di manutenzione incluso gratuitamente.
-                </p>
-              </div>
-              <p className="text-gray-700 font-medium">
-                Nessun vincolo proprietario: hai sempre accesso agli account e i dati restano esportabili. Se un domani vuoi cambiare fornitore o gestione, puoi farlo.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
