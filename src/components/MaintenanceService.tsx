@@ -37,7 +37,7 @@ const MaintenanceService: React.FC<MaintenanceServiceProps> = ({ currentPricingD
       features: [
         "Tutto ciò che c'è nel Piano Manutenzione tecnica",
         "Fino a 3 ore al mese (piccole nuove automazioni, promozioni mirate in chat, migliorare i punti di blocco, aggiornare logiche)",
-        "1 call strategica ogni 2 mesi"
+        "1 chiamata strategica ogni 2 mesi"
       ],
       note: "È il piano per chi vede le chat come un vero canale di vendita.",
       icon: Star,

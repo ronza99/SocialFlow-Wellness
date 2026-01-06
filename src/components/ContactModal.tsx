@@ -64,7 +64,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
 
   const maintenancePlans = {
     'piano manutenzione tecnica': { name: 'Piano Manutenzione tecnica', price: 59, description: 'Interventi tecnici e piccoli aggiustamenti' },
-    'piano crescita dm': { name: 'Piano Crescita DM', price: 129, description: 'Include manutenzione tecnica + fino a 3 ore/mese per miglioramenti e 1 call strategica ogni 2 mesi' },
+    'piano crescita dm': { name: 'Piano Crescita DM', price: 129, description: 'Include manutenzione tecnica + fino a 3 ore/mese per miglioramenti e 1 chiamata strategica ogni 2 mesi' },
     'none': { name: 'Ora non mi serve nessun piano', price: 0, description: 'Richiederò interventi solo quando necessario (60 €/ora)' }
   };
 
@@ -678,7 +678,7 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                       ? 'Ti contatterò su WhatsApp con la mia proposta dettagliata'
                       : 'Ti chiamerò per discutere la mia proposta dettagliata'
                   }</li>
-                  <li>2. Fisseremo una call conoscitiva per parlare del tuo progetto</li>
+                  <li>2. Fisseremo una chiamata conoscitiva per parlare del tuo progetto</li>
                   <li>3. Se ti convince, procederemo con il setup</li>
                 </ol>
               </div>

@@ -102,7 +102,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
       description: 'Include tutto ciò che c\'è nel Piano Manutenzione tecnica, in più:',
       features: [
         '<strong>Fino a 3 ore/mese</strong> per miglioramenti (piccole automazioni, ottimizzazioni dei flussi, promo in chat, aggiornamenti logiche)',
-        '<strong>1 call strategica</strong> ogni 2 mesi'
+        '<strong>1 chiamata strategica</strong> ogni 2 mesi'
       ],
       highlight: 'Per chi vuole ottimizzare la chat come canale di prenotazione e riattivazione clienti.',
       icon: Star,
@@ -481,7 +481,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                   ℹ️ Stai creando un preventivo, nessun pagamento adesso
                 </p>
                 <p className="text-sm text-blue-800 mt-2">
-                  Il pagamento avviene solo dopo una call conoscitiva in cui parliamo del tuo progetto. Prima ricevi solo un preventivo personalizzato senza impegno.
+                  Il pagamento avviene solo dopo una chiamata conoscitiva in cui parliamo del tuo progetto. Prima ricevi solo un preventivo personalizzato senza impegno.
                 </p>
               </div>
 
@@ -631,7 +631,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                   ✓ Nessun pagamento ora • Prima parliamo, poi decidi
                 </p>
                 <p className="text-xs text-green-800 mt-1">
-                  Ricevi un preventivo e fissiamo una call per conoscerci. Pagherai solo se decidi di procedere dopo la call.
+                  Ricevi un preventivo e fissiamo una chiamata per conoscerci. Pagherai solo se decidi di procedere dopo la chiamata.
                 </p>
               </div>
             </div>
@@ -798,7 +798,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                   </p>
                   <p className="text-sm text-white/90">
                     Primo passo: ricevi il preventivo personalizzato<br/>
-                    Secondo passo: call conoscitiva per parlare del tuo progetto<br/>
+                    Secondo passo: chiamata conoscitiva per parlare del tuo progetto<br/>
                     Terzo passo: se ti convince, procediamo
                   </p>
                 </div>
@@ -829,16 +829,16 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               <div className="bg-white/10 rounded-wellness p-6 text-left max-w-3xl mx-auto">
                 <div className="space-y-4">
                   <div>
-                    <p className="font-bold mb-2">Call 1 (circa 1 ora):</p>
+                    <p className="font-bold mb-2">Chiamata 1 (circa 1 ora):</p>
                     <p className="text-sm">raccolta e conferma informazioni del centro (servizi, regole, operatori, ecc.)</p>
                   </div>
                   <div>
-                    <p className="font-bold mb-2">Call 2 (minimo 2 ore, schermo condiviso):</p>
+                    <p className="font-bold mb-2">Chiamata 2 (minimo 2 ore, schermo condiviso):</p>
                     <p className="text-sm">creazione/verifica account software e autorizzazioni/permessi per configurare il sistema</p>
                   </div>
                   <div>
-                    <p className="font-bold mb-2">Call 3 (30–60 min, se necessaria):</p>
-                    <p className="text-sm">go-live + mini training operativo</p>
+                    <p className="font-bold mb-2">Chiamata 3 (30–60 min, se necessaria):</p>
+                    <p className="text-sm">attivazione + mini training operativo</p>
                   </div>
                 </div>
               </div>
