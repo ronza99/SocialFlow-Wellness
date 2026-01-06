@@ -19,7 +19,12 @@ The following security improvements have been implemented:
 - Any authenticated user can NO LONGER modify quote requests
 - Only users with admin role can update requests
 
-### 4. ⚠️ Auth DB Connection Strategy (Manual Action Required)
+### 4. ✅ Fixed Function Search Path
+- Secured `is_admin()` function against search_path manipulation attacks
+- Set immutable search_path to prevent SQL injection vulnerabilities
+- Follows PostgreSQL security best practices for SECURITY DEFINER functions
+
+### 5. ⚠️ Auth DB Connection Strategy (Manual Action Required)
 
 **This setting cannot be changed via SQL and must be configured in the Supabase Dashboard.**
 
