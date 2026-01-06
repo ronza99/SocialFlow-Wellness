@@ -80,9 +80,6 @@ const HowItWorks = () => {
               <p>
                 <strong>Il cliente finale</strong> prenota (e paga se previsto) in autonomia in chat e può anche spostare/cancellare entro le regole impostate dal centro.
               </p>
-              <p>
-                <strong>Lo staff del centro</strong> usa soprattutto Calendario + Telegram, mentre gli altri strumenti lavorano in background.
-              </p>
             </div>
           </div>
         </div>

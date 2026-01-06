@@ -508,16 +508,21 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             {/* Flussi principali */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
               {/* Prenotazioni */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all border-2 ${
-                selectedMainFlows.includes('bookings') ? 'border-sage-green bg-sage-green/5' : 'border-gray-200'
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+                selectedMainFlows.includes('bookings')
+                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5'
               }`} onClick={() => handleMainFlowToggle('bookings')}>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Prenotazioni trattamenti in chat</h4>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedMainFlows.includes('bookings') ? 'border-sage-green bg-sage-green' : 'border-gray-300'
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                    selectedMainFlows.includes('bookings') ? 'border-sage-green bg-sage-green scale-110' : 'border-gray-400 bg-white'
                   }`}>
-                    {selectedMainFlows.includes('bookings') && <CheckCircle className="w-4 h-4 text-white" />}
+                    {selectedMainFlows.includes('bookings') && <CheckCircle className="w-5 h-5 text-white" />}
                   </div>
+                </div>
+                <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
+                  {selectedMainFlows.includes('bookings') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
                 <div className="text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].bookings.price} €
@@ -536,16 +541,21 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
 
               {/* Abbonamenti */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all border-2 ${
-                selectedMainFlows.includes('subscriptions') ? 'border-sage-green bg-sage-green/5' : 'border-gray-200'
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+                selectedMainFlows.includes('subscriptions')
+                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5'
               }`} onClick={() => handleMainFlowToggle('subscriptions')}>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Abbonamenti ricorrenti</h4>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedMainFlows.includes('subscriptions') ? 'border-sage-green bg-sage-green' : 'border-gray-300'
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                    selectedMainFlows.includes('subscriptions') ? 'border-sage-green bg-sage-green scale-110' : 'border-gray-400 bg-white'
                   }`}>
-                    {selectedMainFlows.includes('subscriptions') && <CheckCircle className="w-4 h-4 text-white" />}
+                    {selectedMainFlows.includes('subscriptions') && <CheckCircle className="w-5 h-5 text-white" />}
                   </div>
+                </div>
+                <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
+                  {selectedMainFlows.includes('subscriptions') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
                 <div className="text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].subscriptions.price} €
@@ -564,16 +574,21 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
 
               {/* Cosmetici */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all border-2 ${
-                selectedMainFlows.includes('cosmetics') ? 'border-sage-green bg-sage-green/5' : 'border-gray-200'
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+                selectedMainFlows.includes('cosmetics')
+                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5'
               }`} onClick={() => handleMainFlowToggle('cosmetics')}>
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Vendita cosmetici in chat</h4>
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                    selectedMainFlows.includes('cosmetics') ? 'border-sage-green bg-sage-green' : 'border-gray-300'
+                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                    selectedMainFlows.includes('cosmetics') ? 'border-sage-green bg-sage-green scale-110' : 'border-gray-400 bg-white'
                   }`}>
-                    {selectedMainFlows.includes('cosmetics') && <CheckCircle className="w-4 h-4 text-white" />}
+                    {selectedMainFlows.includes('cosmetics') && <CheckCircle className="w-5 h-5 text-white" />}
                   </div>
+                </div>
+                <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
+                  {selectedMainFlows.includes('cosmetics') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
                 <div className="text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].cosmetics.price} €
@@ -638,19 +653,24 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {extraFlows.map((flow) => (
-                <div key={flow.id} className={`wellness-card p-8 cursor-pointer transition-all border-2 ${
-                  selectedExtraFlows.includes(flow.id) ? 'border-sage-green bg-sage-green/5' : 'border-gray-200'
+                <div key={flow.id} className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+                  selectedExtraFlows.includes(flow.id)
+                    ? 'border-misty-teal bg-gradient-to-br from-misty-teal/10 to-misty-teal/5 shadow-lg ring-2 ring-misty-teal/30'
+                    : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-misty-teal/50 hover:bg-misty-teal/5'
                 }`} onClick={() => handleExtraFlowToggle(flow.id)}>
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-4">
                     <h4 className="text-xl font-serif font-bold text-gray-900">{flow.name}</h4>
-                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                      selectedExtraFlows.includes(flow.id) ? 'border-sage-green bg-sage-green' : 'border-gray-300'
+                    <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all ${
+                      selectedExtraFlows.includes(flow.id) ? 'border-misty-teal bg-misty-teal scale-110' : 'border-gray-400 bg-white'
                     }`}>
-                      {selectedExtraFlows.includes(flow.id) && <CheckCircle className="w-4 h-4 text-white" />}
+                      {selectedExtraFlows.includes(flow.id) && <CheckCircle className="w-5 h-5 text-white" />}
                     </div>
                   </div>
-                  
-                  <div className="text-3xl font-serif font-bold text-sage-green mb-6">
+                  <div className="text-xs font-semibold text-misty-teal mb-4 uppercase tracking-wide">
+                    {selectedExtraFlows.includes(flow.id) ? '✓ Selezionato' : '👆 Clicca per selezionare'}
+                  </div>
+
+                  <div className="text-3xl font-serif font-bold text-misty-teal mb-6">
                     {flow.price} €
                   </div>
 
