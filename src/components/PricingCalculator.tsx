@@ -359,6 +359,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               <div className="space-y-3 text-base sm:text-lg text-gray-700 leading-relaxed">
                 <p>Progetto un sistema che lavora dentro le chat che usi già (Instagram, Facebook, WhatsApp).</p>
                 <p className="font-bold text-sage-green-dark">Paghi una sola volta il setup iniziale, poi il sistema resta tuo.</p>
+                <div className="mt-4 pt-4 border-t border-sage-green/20">
+                  <p className="font-semibold text-sage-green-dark">Sistema modulare:</p>
+                  <p>attivi solo i moduli che ti servono (Core + Extra). Possiamo aggiungere o togliere funzionalità nel tempo senza stravolgere la struttura.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -798,6 +802,28 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               Dopo la messa online ti accompagno nella fase di avvio: c'è un periodo iniziale incluso, poi puoi scegliere se avere assistenza continuativa o solo quando serve.
             </p>
 
+            {/* Onboarding incluso */}
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-wellness p-8 mb-8 text-center">
+              <Phone className="w-12 h-12 mx-auto mb-4" />
+              <h4 className="text-2xl font-serif font-bold mb-4">Onboarding incluso nei Core</h4>
+              <div className="bg-white/10 rounded-wellness p-6 text-left max-w-3xl mx-auto">
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-bold mb-2">Call 1 (circa 1 ora):</p>
+                    <p className="text-sm">raccolta e conferma informazioni del centro (servizi, regole, operatori, ecc.)</p>
+                  </div>
+                  <div>
+                    <p className="font-bold mb-2">Call 2 (minimo 2 ore, schermo condiviso):</p>
+                    <p className="text-sm">creazione/verifica account software e autorizzazioni/permessi per configurare il sistema</p>
+                  </div>
+                  <div>
+                    <p className="font-bold mb-2">Call 3 (30–60 min, se necessaria):</p>
+                    <p className="text-sm">go-live + mini training operativo</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Primo mese incluso */}
             <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-wellness p-8 mb-12 text-center">
               <CheckCircle className="w-12 h-12 mx-auto mb-4" />
@@ -924,6 +950,12 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               <p className="text-gray-700 leading-relaxed mb-3">
                 Il setup si paga una sola volta. I servizi esterni (software di chat, pagamenti, calendario/CRM e hosting se previsto) vengono attivati a nome del centro e pagati direttamente ai rispettivi fornitori.
               </p>
+              <div className="bg-white rounded-wellness p-4 mb-3 border border-sage-green/20">
+                <p className="text-gray-900 font-bold mb-2">Pagamento setup:</p>
+                <p className="text-gray-700">
+                  40% all'avvio dei settaggi e 60% a 30 giorni dal go-live, dopo 1 mese di manutenzione incluso gratuitamente.
+                </p>
+              </div>
               <p className="text-gray-700 font-medium">
                 Nessun vincolo proprietario: hai sempre accesso agli account e i dati restano esportabili. Se un domani vuoi cambiare fornitore o gestione, puoi farlo.
               </p>

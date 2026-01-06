@@ -68,9 +68,23 @@ const HowItWorks = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 mb-8 sm:mb-12 px-4">
             Come funziona
           </h2>
-          <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto font-light px-4 leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto font-light px-4 leading-relaxed mb-8">
             Un percorso semplice, con automazioni che gestiscono le parti ripetitive: dalla prima chat fino a promemoria e gestione clienti.
           </p>
+
+          <div className="bg-gradient-to-r from-sage-green/10 to-misty-teal/10 rounded-wellness p-6 sm:p-8 max-w-4xl mx-auto border-l-4 border-sage-green mx-4">
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-gray-900 mb-4">
+              Per il centro: uso quotidiano
+            </h3>
+            <div className="space-y-3 text-left text-base sm:text-lg text-gray-700 leading-relaxed">
+              <p>
+                <strong>Il cliente finale</strong> prenota (e paga se previsto) in autonomia in chat e può anche spostare/cancellare entro le regole impostate dal centro.
+              </p>
+              <p>
+                <strong>Lo staff del centro</strong> usa soprattutto Calendario + Telegram, mentre gli altri strumenti lavorano in background.
+              </p>
+            </div>
+          </div>
         </div>
 
         <div className="relative">
