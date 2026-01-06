@@ -169,10 +169,10 @@ const VideoDemo = () => {
 
             {/* Foto 7 - Google Calendar Sincronizzato */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-29 222539.png')}>
-                <img 
-                  src="/Immagine 2025-07-29 222539.png" 
-                  alt="Google Calendar con prenotazioni sincronizzate automaticamente" 
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy copy copy copy copy copy copy copy copy.png')}>
+                <img
+                  src="/image copy copy copy copy copy copy copy copy copy copy.png"
+                  alt="Google Calendar con prenotazioni sincronizzate automaticamente"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
@@ -182,9 +182,10 @@ const VideoDemo = () => {
               </div>
               <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 7: Google Calendar Sincronizzato</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Qui in Google Calendar vengono mostrate tutte le prenotazioni di ogni operatore 
-                in modo ordinato e organizzato. Ogni volta che un cliente cancella o prenota, 
-                il calendario si aggiorna automaticamente in tempo reale. Gestione semplice e familiare!
+                Qui in Google Calendar vengono mostrate tutte le prenotazioni di ogni operatore
+                in modo ordinato e organizzato. Ogni volta che un cliente cancella o prenota,
+                il calendario si aggiorna automaticamente in tempo reale. Gli operatori possono
+                spostarsi tra di loro in due clic per vedere le diverse agende. Gestione semplice e familiare!
               </p>
             </div>
 
