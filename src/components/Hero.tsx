@@ -75,7 +75,7 @@ const Hero = () => {
             <div className="text-high-contrast">
               <div className="text-xl sm:text-2xl md:text-3xl text-high-contrast mb-4 sm:mb-6 font-bold">Prezzi personalizzabili</div>
               <div className="text-base sm:text-lg text-readable font-medium mb-3">Scegli i flussi che servono al tuo centro</div>
-              <div className="text-sm sm:text-base text-sage-green-dark font-semibold">🎁 1° mese assistenza GRATIS</div>
+              <div className="text-sm sm:text-base text-sage-green-dark font-semibold">🎁 1 mese di manutenzione incluso dopo l'attivazione</div>
             </div>
           </div>
 
@@ -100,9 +100,8 @@ const Hero = () => {
                 <div className="bg-gradient-to-br from-sage-green to-sage-green-dark w-16 h-16 sm:w-20 sm:h-20 rounded-wellness flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <span className="text-4xl sm:text-5xl font-serif font-bold gradient-text">+60%</span>
               </div>
-              <p className="text-gray-900 font-bold text-lg">Prenotazioni in più</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Più prenotazioni dai DM</p>
               <p className="text-gray-700 mt-2 font-medium">vs sistemi tradizionali</p>
             </div>
 
@@ -111,9 +110,8 @@ const Hero = () => {
                 <div className="bg-gradient-to-br from-misty-teal to-misty-teal-dark w-16 h-16 sm:w-20 sm:h-20 rounded-wellness flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <span className="text-4xl sm:text-5xl font-serif font-bold gradient-text">100%</span>
               </div>
-              <p className="text-gray-900 font-bold text-lg">Libertà di Prenotazione</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Libertà di prenotazione</p>
               <p className="text-gray-700 mt-2 font-medium">senza obbligo di pagamento</p>
             </div>
 
@@ -122,10 +120,9 @@ const Hero = () => {
                 <div className="bg-gradient-to-br from-mocha-mousse to-mocha-mousse-dark w-16 h-16 sm:w-20 sm:h-20 rounded-wellness flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   <Star className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <span className="text-4xl sm:text-5xl font-serif font-bold gradient-text">H24</span>
               </div>
-              <p className="text-gray-900 font-bold text-lg">Assistente automatico</p>
-              <p className="text-gray-700 mt-2 font-medium">sempre attivo per i clienti</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Risposte automatiche H24</p>
+              <p className="text-gray-700 mt-2 font-medium">(opzionale)</p>
             </div>
           </div>
         </div>

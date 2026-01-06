@@ -12,26 +12,20 @@ const SocialProof = () => {
   const industryStats = [
     {
       icon: TrendingUp,
-      stat: "78%",
-      title: "Preferenza Prenotazioni Online",
-      description: "dei clienti wellness preferisce prenotare online piuttosto che telefonare",
-      source: "Studio Comportamenti Consumatori 2024",
+      title: "Preferenza prenotazioni online",
+      description: "I clienti wellness preferiscono prenotare online piuttosto che telefonare",
       color: "from-sage-green to-sage-green-dark"
     },
     {
       icon: Clock,
-      stat: "25-30%",
-      title: "No-Show Tradizionali",
-      description: "tasso medio di no-show nei centri senza pagamento anticipato",
-      source: "Analisi Settore Beauty & Wellness",
+      title: "No-show nei sistemi tradizionali",
+      description: "I centri senza conferma o pagamento anticipato hanno tassi di no-show significativi",
       color: "from-misty-teal to-misty-teal-dark"
     },
     {
       icon: DollarSign,
-      stat: "+45%",
-      title: "Social Commerce",
-      description: "crescita degli acquisti diretti sui social media nel 2024",
-      source: "Digital Commerce Report",
+      title: "Crescita social commerce",
+      description: "Gli acquisti diretti sui social media sono in forte crescita",
       color: "from-mocha-mousse to-mocha-mousse-dark"
     }
   ];
@@ -84,15 +78,9 @@ const SocialProof = () => {
                 <stat.icon className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white" />
               </div>
 
-              <div className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold gradient-text mb-4 sm:mb-6">{stat.stat}</div>
-              
               <h4 className="font-serif font-bold text-gray-900 text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">{stat.title}</h4>
-              
-              <p className="text-gray-800 mb-6 sm:mb-8 leading-relaxed text-base sm:text-lg font-medium">{stat.description}</p>
-              
-              <div className="glass rounded-wellness p-3 sm:p-4">
-                <p className="text-xs sm:text-sm text-gray-700 italic font-medium">Fonte: {stat.source}</p>
-              </div>
+
+              <p className="text-gray-800 leading-relaxed text-base sm:text-lg font-medium">{stat.description}</p>
             </div>
           ))}
         </div>
