@@ -121,48 +121,6 @@ const SocialProof = () => {
           </div>
         </div>
 
-        {/* Enhanced ROI Snapshot */}
-        <div className="wellness-card p-6 sm:p-8 md:p-12 max-w-5xl mx-auto mb-20 shadow-organic-lg animate-fade-in-up mx-4">
-          <div className="text-center">
-            <div className="bg-gradient-to-br from-sage-green to-misty-teal w-16 h-16 sm:w-20 sm:h-20 rounded-wellness flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-organic">
-              <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-6 sm:mb-8">
-              Esempio di rientro dei costi (stima)
-            </h3>
-            <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 font-medium">
-              Calcolo indicativo basato su scontrino medio e costi software stimati (IVA esclusa).
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
-              <div className="glass rounded-wellness p-6 sm:p-8 hover-lift">
-                <div className="text-3xl sm:text-4xl font-serif font-bold gradient-text mb-3 sm:mb-4">12</div>
-                <p className="text-gray-900 text-base sm:text-lg font-bold">prenotazioni extra al mese</p>
-                <p className="text-gray-700 mt-2 font-medium text-sm sm:text-base">Esempio indicativo (non una media)</p>
-              </div>
-              <div className="glass rounded-wellness p-6 sm:p-8 hover-lift">
-                <div className="text-3xl sm:text-4xl font-serif font-bold gradient-text mb-3 sm:mb-4">€720</div>
-                <p className="text-gray-900 text-base sm:text-lg font-bold">ricavi aggiuntivi stimati</p>
-                <p className="text-gray-700 mt-2 font-medium text-sm sm:text-base">Basato su €60 per trattamento</p>
-              </div>
-              <div className="glass rounded-wellness p-6 sm:p-8 hover-lift">
-                <div className="text-3xl sm:text-4xl font-serif font-bold gradient-text mb-3 sm:mb-4">€57/mese</div>
-                <p className="text-gray-900 text-base sm:text-lg font-bold">costi software minimi</p>
-                <p className="text-gray-700 mt-2 font-medium text-sm sm:text-base">per far funzionare i flussi base (1 operatore)</p>
-                <p className="text-gray-600 mt-2 text-xs sm:text-sm italic">Se attivi anche WhatsApp per promemoria: circa €72/mese</p>
-              </div>
-            </div>
-            <div className="glass rounded-wellness p-6 sm:p-8">
-              <div className="flex items-center justify-center mb-4">
-                <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-sage-green mr-3" />
-                <span className="text-lg sm:text-2xl font-serif font-bold text-gray-900">Esempio pratico</span>
-              </div>
-              <p className="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
-                Esempio: con 12 trattamenti extra al mese puoi coprire facilmente i costi software. I numeri cambiano da centro a centro. (IVA esclusa)
-              </p>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
   );

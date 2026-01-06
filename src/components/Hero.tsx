@@ -40,7 +40,7 @@ const Hero = () => {
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-sans font-black text-high-contrast mb-6 sm:mb-8 leading-tight px-4">
               Più prenotazioni,<br />
               <span className="relative">
-                <span className="gradient-text">meno no-show</span>
+                <span className="gradient-text">meno buchi in agenda</span>
                 <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-sage-green via-misty-teal to-mocha-mousse rounded-full opacity-60"></div>
               </span>
             </h2>
@@ -52,7 +52,7 @@ const Hero = () => {
               Un sistema che trasforma Instagram e Facebook in una macchina di prenotazioni nei messaggi privati.
             </p>
             <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-high-contrast font-medium max-w-5xl mx-auto leading-relaxed px-4">
-              I clienti prenotano nei messaggi e, se vuoi, pagano online in pochi tocchi senza rimbalzi tra siti e app.
+              I clienti prenotano (e se vuoi pagano) in pochi tocchi, senza rimbalzi tra siti e app che fanno scappare il cliente.
             </p>
           </div>
 
