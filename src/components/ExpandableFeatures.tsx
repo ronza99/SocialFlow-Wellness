@@ -20,19 +20,23 @@ const ExpandableFeatures = () => {
       id: 'social-booking',
       icon: Instagram,
       title: 'Prenotazioni Dirette sui Social',
-      summary: 'I clienti prenotano in chat su Instagram e Facebook senza uscire dall\'app. (WhatsApp disponibile per reminder e follow-up, opzionale.)',
+      summary: 'I clienti prenotano in chat su Instagram e Facebook senza uscire dall\'app. Possono scegliere un operatore specifico oppure il sistema distribuisce automaticamente. (WhatsApp disponibile per reminder e follow-up, opzionale.)',
       color: 'bg-sage-green',
       details: {
         howItWorks: [
           'Il cliente apre i messaggi del centro e sceglie dal menu',
           'Può arrivare da Instagram, Facebook, QR code o sponsorizzazioni',
           'Sceglie tra: consulenza, trattamento singolo o pacchetto',
+          'Se configurato, può selezionare un operatore specifico e vedere solo le sue disponibilità',
+          'Oppure il sistema assegna automaticamente l\'operatore disponibile',
           'Il sistema mostra la disponibilità aggiornata dal calendario',
           'Seleziona data/ora e conferma in pochi tocchi',
           'Controllo automatico: riduce errori e doppie prenotazioni'
         ],
         benefits: [
           'Prenotazione guidata direttamente in chat',
+          'Flessibilità totale: il centro decide se far scegliere l\'operatore',
+          'I clienti possono prenotare con il loro operatore preferito',
           'Nessuna registrazione e nessun form esterno',
           'Disponibilità sempre allineata al calendario',
           'Riduce il rischio di conflitti di orario e doppie prenotazioni',
@@ -40,10 +44,12 @@ const ExpandableFeatures = () => {
         ],
         technical: [
           'Collegamento calendario (Google Calendar + CRM)',
+          'Modalità configurabile: scelta operatore o assegnazione automatica',
+          'Filtro disponibilità per operatore selezionato',
           'Controllo conflitti e duplicazioni',
           'Sessione con timeout per evitare blocchi "in sospeso"',
           'Registro/backup su Google Sheets per tracciamento',
-          'Esempio pratico: il cliente scrive "Prenota", sceglie servizio e orario, conferma.'
+          'Esempio pratico: il cliente scrive "Prenota", sceglie servizio, seleziona l\'operatore (se attivo), sceglie orario e conferma.'
         ]
       }
     },
@@ -259,36 +265,42 @@ const ExpandableFeatures = () => {
     {
       id: 'crm-integration',
       icon: Users,
-      title: 'CRM, Calendario e Report Automatici',
-      summary: 'HubSpot CRM con Google Calendar sincronizzato, assegnazione clienti (round robin) e report su Google Sheets.',
+      title: 'CRM, Calendario e Gestione Operatori Flessibile',
+      summary: 'HubSpot CRM con Google Calendar sincronizzato. Il centro decide se far scegliere l\'operatore al cliente oppure distribuire automaticamente le prenotazioni tra gli operatori disponibili.',
       color: 'bg-sage-green',
       details: {
         howItWorks: [
           'Ogni operatore ha il suo calendario Google personale',
-          'Le nuove richieste vengono assegnate in modo ordinato e create nel calendario giusto',
+          'Il centro sceglie la modalità di assegnazione: scelta operatore da parte del cliente oppure distribuzione automatica',
+          'Se il cliente sceglie l\'operatore, vede solo le disponibilità di quella persona',
+          'Se usa la distribuzione automatica, le prenotazioni vengono assegnate in modo equilibrato tra gli operatori',
           'Stati appuntamento visibili con etichette/colori (senza email automatiche ai partecipanti)',
           'Contatti, trattamenti e pagamenti vengono registrati nel CRM con collegamento al pagamento',
           'Report e tabelle su Google Sheets si aggiornano automaticamente',
           'Segmentazione/gestione clienti inattivi con regole configurabili'
         ],
         benefits: [
+          'Massima flessibilità: scegli tu come gestire le prenotazioni',
+          'Il cliente può prenotare con il suo operatore preferito',
+          'Distribuzione equilibrata automatica del carico di lavoro quando serve',
           'Visione completa di ogni cliente in un unico posto',
           'Calendari separati per operatore: più organizzazione',
-          'Distribuzione più equilibrata del lavoro nel team',
           'Report sempre aggiornati per decisioni rapide',
           'Riconciliazione più semplice tra pagamenti e appuntamenti'
         ],
         technical: [
-          'Assegnazione round robin con protezione anti-conflitto',
+          'Modalità selezionabile: scelta operatore specifico o distribuzione automatica',
+          'Visualizzazione disponibilità filtrate per operatore selezionato',
+          'Distribuzione equilibrata con protezione anti-conflitto',
           'Gestione stati appuntamento via etichette/colori',
           'CRM collegato ai pagamenti Stripe (ID transazione/cliente)',
           'Report automatici su Google Sheets',
           'Regole per segmentazione/pulizia contatti inattivi'
         ],
         roundRobinExplanation: {
-          title: 'Cos\'è il Round Robin?',
-          description: 'È un metodo di assegnazione che distribuisce i nuovi clienti tra gli operatori disponibili in modo equilibrato.',
-          example: 'Esempio pratico: con 3 operatori, il 1° va ad A, il 2° a B, il 3° a C, poi si ricomincia.'
+          title: 'Come Funziona la Distribuzione Automatica?',
+          description: 'Quando attivi questa modalità, il sistema distribuisce i nuovi appuntamenti tra gli operatori disponibili in modo equilibrato, assicurando che ognuno riceva un numero simile di prenotazioni.',
+          example: 'Esempio pratico: con 3 operatori, il 1° appuntamento va a Marco, il 2° a Laura, il 3° a Sofia, poi si ricomincia da Marco. Così tutti hanno lo stesso carico di lavoro.'
         }
       }
     },

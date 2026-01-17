@@ -49,7 +49,7 @@ const HowItWorks = () => {
       number: "6",
       icon: CalendarCheck,
       title: "Il calendario si aggiorna da solo",
-      description: "L'appuntamento viene registrato automaticamente nel calendario del centro e dell'operatore assegnato. Se hai più operatori, l'assegnazione può essere distribuita in modo ordinato (es. round robin).",
+      description: "L'appuntamento viene registrato automaticamente nel calendario. Tu scegli se far scegliere l'operatore al cliente (visualizzando solo le sue disponibilità) oppure distribuire le prenotazioni in modo equilibrato tra tutti gli operatori disponibili.",
       color: "bg-sage-green"
     },
     {
