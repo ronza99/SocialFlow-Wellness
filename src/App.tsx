@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UrgencyTimer from './components/UrgencyTimer';
 import Hero from './components/Hero';
+import FAQ from './components/FAQ';
 import SocialProof from './components/SocialProof';
 import VideoDemo from './components/VideoDemo';
 import Benefits from './components/Benefits';
@@ -50,6 +51,7 @@ function App() {
       <UrgencyTimer />
       <div className="pt-16"> {/* Spazio per il timer fisso */}
         <Hero />
+        <FAQ />
         <SocialProof />
         <VideoDemo />
         <Benefits />

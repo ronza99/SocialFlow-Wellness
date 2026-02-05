@@ -25,9 +25,29 @@ const InteractiveChatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = (sectionId: string) => {
+    // Gestione speciale per FAQ: scrolla alla sezione e apri la prima FAQ
+    if (sectionId === 'faq') {
+      const faqSection = document.getElementById('faq');
+      if (faqSection) {
+        faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Dopo lo scroll, clicca sulla prima FAQ per aprirla
+        setTimeout(() => {
+          const firstFAQ = faqSection.querySelector('button[aria-expanded]');
+          if (firstFAQ && firstFAQ.getAttribute('aria-expanded') === 'false') {
+            (firstFAQ as HTMLElement).click();
+          }
+
+          // Chiudi il chatbot
+          setTimeout(() => setIsOpen(false), 500);
+        }, 1000);
+      }
+      return;
+    }
+
     // Se è una funzionalità specifica, apri la tendina corrispondente
     const featureIds = ['social-booking', 'calendar-management', 'ecommerce-social', 'ai-assistant', 'payment-system', 'multi-slot-packages', 'subscriptions', 'coupon-system', 'crm-integration', 'sms-followup', 'gdpr-compliance'];
-    
+
     if (featureIds.includes(sectionId)) {
       // Prima vai alla sezione expandable-features e centra la funzionalità specifica
       const expandableSection = document.getElementById('expandable-features');
@@ -74,6 +94,12 @@ const InteractiveChatbot = () => {
   };
 
   const chatOptions: ChatOption[] = [
+    {
+      id: 'faq',
+      text: '❓ Domande frequenti (FAQ)',
+      scrollTarget: 'faq',
+      nextMessage: 'Ti porto alle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
+    },
     {
       id: 'pricing',
       text: '💰 Quanto costa?',
