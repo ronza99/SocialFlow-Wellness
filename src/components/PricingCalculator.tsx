@@ -780,6 +780,16 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </h3>
             </div>
 
+            {bookingAutoAddMessage && (
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-wellness p-6 mb-8 border-l-4 border-blue-700 animate-fade-in shadow-organic-lg max-w-4xl mx-auto">
+                <p className="text-lg font-bold flex items-center justify-center mb-2">
+                  <span className="text-2xl mr-3">ℹ️</span>
+                  Flusso aggiunto automaticamente
+                </p>
+                <p className="text-base text-center">{bookingAutoAddMessage}</p>
+              </div>
+            )}
+
             {calculateGrandTotal() === 0 ? (
               <div className="wellness-card p-12 text-center">
                 <Calculator className="w-16 h-16 text-gray-400 mx-auto mb-6" />
