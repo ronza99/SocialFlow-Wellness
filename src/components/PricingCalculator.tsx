@@ -508,10 +508,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             {/* Flussi principali */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
               {/* Prenotazioni */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-4 hover:shadow-xl hover:-translate-y-2 ${
                 selectedMainFlows.includes('bookings')
-                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
-                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5 animate-breathe'
+                  ? 'border-sage-green-dark bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green-dark hover:bg-sage-green/5 animate-breathe'
               }`} onClick={() => handleMainFlowToggle('bookings')}>
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Prenotazioni trattamenti in chat</h4>
@@ -541,10 +541,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
 
               {/* Abbonamenti */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-4 hover:shadow-xl hover:-translate-y-2 ${
                 selectedMainFlows.includes('subscriptions')
-                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
-                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5 animate-breathe'
+                  ? 'border-sage-green-dark bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green-dark hover:bg-sage-green/5 animate-breathe'
               }`} onClick={() => handleMainFlowToggle('subscriptions')}>
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Abbonamenti ricorrenti</h4>
@@ -574,10 +574,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
 
               {/* Cosmetici */}
-              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+              <div className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-4 hover:shadow-xl hover:-translate-y-2 ${
                 selectedMainFlows.includes('cosmetics')
-                  ? 'border-sage-green bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
-                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green/50 hover:bg-sage-green/5 animate-breathe'
+                  ? 'border-sage-green-dark bg-gradient-to-br from-sage-green/10 to-sage-green/5 shadow-lg ring-2 ring-sage-green/30'
+                  : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-sage-green-dark hover:bg-sage-green/5 animate-breathe'
               }`} onClick={() => handleMainFlowToggle('cosmetics')}>
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-xl font-serif font-bold text-gray-900">Vendita cosmetici in chat</h4>
@@ -653,10 +653,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {extraFlows.map((flow) => (
-                <div key={flow.id} className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-3 hover:shadow-xl hover:-translate-y-2 ${
+                <div key={flow.id} className={`wellness-card p-8 cursor-pointer transition-all duration-300 border-4 hover:shadow-xl hover:-translate-y-2 ${
                   selectedExtraFlows.includes(flow.id)
-                    ? 'border-misty-teal bg-gradient-to-br from-misty-teal/10 to-misty-teal/5 shadow-lg ring-2 ring-misty-teal/30'
-                    : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-misty-teal/50 hover:bg-misty-teal/5 animate-breathe'
+                    ? 'border-misty-teal-dark bg-gradient-to-br from-misty-teal/10 to-misty-teal/5 shadow-lg ring-2 ring-misty-teal/30'
+                    : 'border-gray-300 bg-gradient-to-br from-gray-50 to-white hover:border-misty-teal-dark hover:bg-misty-teal/5 animate-breathe'
                 }`} onClick={() => handleExtraFlowToggle(flow.id)}>
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="text-xl font-serif font-bold text-gray-900">{flow.name}</h4>
