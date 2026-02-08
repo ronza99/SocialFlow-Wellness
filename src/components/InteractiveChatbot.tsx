@@ -182,12 +182,6 @@ const InteractiveChatbot = () => {
 
   const chatOptions: ChatOption[] = [
     {
-      id: 'faq',
-      text: '❓ Domande frequenti (FAQ)',
-      scrollTarget: 'faq-page',
-      nextMessage: 'Ti porto alla pagina delle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
-    },
-    {
       id: 'pricing',
       text: '💰 Quanto costa?',
       scrollTarget: 'pricing-calculator',
@@ -201,13 +195,19 @@ const InteractiveChatbot = () => {
     },
     {
       id: 'features',
-      text: '🔧 Che funzionalità ha?',
+      text: '🔧 Principali funzionalità',
       subOptions: [
         {
           id: 'social-booking',
           text: '📱 Prenotazioni Social',
           scrollTarget: 'social-booking',
           nextMessage: 'Ti porto alle prenotazioni social e apro la sezione dettagliata per te!'
+        },
+        {
+          id: 'ai-assistant',
+          text: '🤖 Assistente AI H24',
+          scrollTarget: 'ai-assistant',
+          nextMessage: 'Ti mostro come funziona l\'Assistente AI che risponde ai clienti 24/7!'
         },
         {
           id: 'subscriptions',
@@ -222,48 +222,6 @@ const InteractiveChatbot = () => {
           nextMessage: 'Ti porto alla vendita prodotti integrata nelle chat social!'
         },
         {
-          id: 'ai-assistant',
-          text: '🤖 Assistente AI H24',
-          scrollTarget: 'ai-assistant',
-          nextMessage: 'Ti mostro come funziona l\'Assistente AI che risponde ai clienti 24/7!'
-        },
-        {
-          id: 'gift-cards',
-          text: '🎁 Gift Card e Coupon',
-          scrollTarget: 'coupon-system',
-          nextMessage: 'Ti porto al sistema Gift Card con coupon intelligenti per nuovi clienti e riattivazioni!'
-        },
-        {
-          id: 'packages',
-          text: '📦 Pacchetti Multi-Slot',
-          scrollTarget: 'multi-slot-packages',
-          nextMessage: 'Ti spiego come funzionano i pacchetti con sblocco progressivo dei trattamenti!'
-        },
-        {
-          id: 'whatsapp-followup',
-          text: '📱 Promemoria WhatsApp',
-          scrollTarget: 'sms-followup',
-          nextMessage: 'Ti mostro come il sistema invia promemoria automatici e riattiva i clienti inattivi!'
-        },
-        {
-          id: 'calendar-management',
-          text: '📅 Gestione Calendario',
-          scrollTarget: 'calendar-management',
-          nextMessage: 'Ti porto alla gestione calendario con blocchi per centro o singoli operatori!'
-        },
-        {
-          id: 'payment-system',
-          text: '💳 Sistema Pagamenti',
-          scrollTarget: 'payment-system',
-          nextMessage: 'Ti mostro il sistema di pagamento con scelta "paga ora" o "paga in sede" e QR code!'
-        },
-        {
-          id: 'gdpr-compliance',
-          text: '🛡️ Conformità GDPR',
-          scrollTarget: 'gdpr-compliance',
-          nextMessage: 'Ti mostro come il sistema rispetta completamente la privacy e il GDPR!'
-        },
-        {
           id: 'all-features',
           text: '📋 Tutte le funzionalità',
           scrollTarget: 'expandable-features',
@@ -272,94 +230,22 @@ const InteractiveChatbot = () => {
       ]
     },
     {
-      id: 'main-flows',
-      text: '🎯 Flussi principali',
-      subOptions: [
-        {
-          id: 'bookings-flow',
-          text: '📅 Prenotazioni in chat',
-          scrollTarget: 'pricing-calculator',
-          nextMessage: 'Il flusso Prenotazioni costa 490€ (studio singolo) o 540€ (piccolo team). Ti porto al calcolatore per vedere i dettagli!'
-        },
-        {
-          id: 'subscriptions-flow',
-          text: '🔄 Abbonamenti ricorrenti',
-          scrollTarget: 'pricing-calculator',
-          nextMessage: 'Il flusso Abbonamenti costa 440€ (studio singolo) o 490€ (piccolo team). Ti porto al calcolatore prezzi!'
-        },
-        {
-          id: 'cosmetics-flow',
-          text: '🛍️ Vendita cosmetici',
-          scrollTarget: 'pricing-calculator',
-          nextMessage: 'Il flusso Cosmetici costa 440€ (studio singolo) o 490€ (piccolo team). Attivando tutti e 3 i flussi ottieni uno sconto!'
-        }
-      ]
-    },
-    {
-      id: 'extra-flows',
-      text: '✨ Funzionalità extra',
-      subOptions: [
-        {
-          id: 'ai-extra',
-          text: '🤖 Segretaria AI (260€)',
-          scrollTarget: 'ai-assistant',
-          nextMessage: 'La Segretaria AI costa 260€. Ti porto alla sezione per vedere come funziona!'
-        },
-        {
-          id: 'giftcards-extra',
-          text: '🎁 Gift Card digitali (260€)',
-          scrollTarget: 'coupon-system',
-          nextMessage: 'Gift Card e coupon costano 260€. Ti mostro come vendere trattamenti prepagati!'
-        },
-        {
-          id: 'packages-extra',
-          text: '📦 Pacchetti sedute (220€)',
-          scrollTarget: 'multi-slot-packages',
-          nextMessage: 'I pacchetti multi-sedute costano 220€. Ti spiego come funziona lo sblocco progressivo!'
-        },
-        {
-          id: 'whatsapp-extra',
-          text: '📱 Promemoria WhatsApp (220€)',
-          scrollTarget: 'sms-followup',
-          nextMessage: 'I promemoria e follow-up WhatsApp costano 220€. Ti mostro come funzionano!'
-        }
-      ]
-    },
-    {
-      id: 'benefits',
-      text: '✨ Perché scegliere SocialFlow?',
-      scrollTarget: 'vantaggi-page',
-      nextMessage: 'Ti porto alla pagina dei vantaggi! Vedrai perché SocialFlow è superiore ai software tradizionali e alle segretarie part-time.'
-    },
-    {
-      id: 'about',
-      text: '👨‍💻 Chi c\'è dietro SocialFlow?',
-      scrollTarget: 'chi-sono-page',
-      nextMessage: 'Ti porto alla sezione "Chi Sono"! Scopri chi ha creato SocialFlow e qual è la missione del progetto.'
-    },
-    {
-      id: 'costs',
-      text: '📊 Costi mensili trasparenti',
-      scrollTarget: 'transparent-costs',
-      nextMessage: 'Ti porto alla pagina Vantaggi dove troverai tutti i costi mensili in dettaglio! Zero sorprese, zero costi nascosti. Vedrai esattamente quanto spendi.'
-    },
-    {
       id: 'demo',
       text: '🎬 Voglio vedere una demo',
       scrollTarget: 'video-demo',
       nextMessage: 'Ti porto alla pagina Come Funziona dove troverai la sezione demo! Potrai vedere il sistema in azione e richiedere una demo personalizzata con un centro fittizio.'
     },
     {
-      id: 'contact',
-      text: '📞 Voglio essere contattato',
-      scrollTarget: 'pricing-calculator',
-      nextMessage: 'Ti porto al configuratore! Componi il tuo sistema selezionando i flussi che ti servono e richiedi il preventivo personalizzato.'
+      id: 'faq',
+      text: '❓ Domande frequenti',
+      scrollTarget: 'faq-page',
+      nextMessage: 'Ti porto alla pagina delle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
     },
     {
-      id: 'home',
-      text: '🏠 Torna alla Home',
-      scrollTarget: 'home',
-      nextMessage: 'Ti riporto alla home page!'
+      id: 'contact',
+      text: '📞 Richiedi preventivo',
+      scrollTarget: 'pricing-calculator',
+      nextMessage: 'Ti porto al configuratore! Componi il tuo sistema selezionando i flussi che ti servono e richiedi il preventivo personalizzato.'
     }
   ];
 
