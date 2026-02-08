@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import FAQ from '../components/FAQ';
 import SocialProof from '../components/SocialProof';
@@ -12,6 +12,18 @@ interface HomeProps {
 }
 
 export default function Home({ currentPricingData, setCurrentPricingData }: HomeProps) {
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setTimeout(() => {
+        const element = document.querySelector(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    }
+  }, []);
+
   return (
     <>
       <Hero />

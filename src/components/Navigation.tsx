@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from './Logo';
 
@@ -7,6 +7,7 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,15 +32,16 @@ export default function Navigation() {
   ];
 
   const scrollToPricing = () => {
+    setIsMobileMenuOpen(false);
+
     if (location.pathname !== '/') {
-      window.location.href = '/#pricing';
+      navigate('/#pricing');
     } else {
       const pricingSection = document.getElementById('pricing');
       if (pricingSection) {
-        pricingSection.scrollIntoView({ behavior: 'smooth' });
+        pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
-    setIsMobileMenuOpen(false);
   };
 
   return (
