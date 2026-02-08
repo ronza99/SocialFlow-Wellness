@@ -59,6 +59,46 @@ const InteractiveChatbot = () => {
       return;
     }
 
+    if (sectionId === 'transparent-costs') {
+      if (location.pathname !== '/vantaggi') {
+        navigate('/vantaggi');
+        setTimeout(() => {
+          const element = document.getElementById('transparent-costs');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          setTimeout(() => setIsOpen(false), 1000);
+        }, 500);
+      } else {
+        const element = document.getElementById('transparent-costs');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setTimeout(() => setIsOpen(false), 1000);
+      }
+      return;
+    }
+
+    if (sectionId === 'video-demo') {
+      if (location.pathname !== '/come-funziona') {
+        navigate('/come-funziona');
+        setTimeout(() => {
+          const element = document.getElementById('video-demo');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          setTimeout(() => setIsOpen(false), 1000);
+        }, 500);
+      } else {
+        const element = document.getElementById('video-demo');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        setTimeout(() => setIsOpen(false), 1000);
+      }
+      return;
+    }
+
     // Se non siamo sulla home, torna prima alla home per scrollare alle sezioni
     if (location.pathname !== '/' && !['come-funziona-page', 'vantaggi-page', 'faq-page', 'chi-sono-page'].includes(sectionId)) {
       navigate('/');
@@ -301,13 +341,13 @@ const InteractiveChatbot = () => {
       id: 'costs',
       text: '📊 Costi mensili trasparenti',
       scrollTarget: 'transparent-costs',
-      nextMessage: 'Ti mostro tutti i costi mensili in dettaglio! Zero sorprese, zero costi nascosti. Vedrai esattamente quanto spendi.'
+      nextMessage: 'Ti porto alla pagina Vantaggi dove troverai tutti i costi mensili in dettaglio! Zero sorprese, zero costi nascosti. Vedrai esattamente quanto spendi.'
     },
     {
       id: 'demo',
       text: '🎬 Voglio vedere una demo',
       scrollTarget: 'video-demo',
-      nextMessage: 'Ti porto alla sezione demo! Potrai vedere il sistema in azione e richiedere una demo personalizzata con un centro fittizio.'
+      nextMessage: 'Ti porto alla pagina Come Funziona dove troverai la sezione demo! Potrai vedere il sistema in azione e richiedere una demo personalizzata con un centro fittizio.'
     },
     {
       id: 'contact',
