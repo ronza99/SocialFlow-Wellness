@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UrgencyTimer from './components/UrgencyTimer';
-import Hero from './components/Hero';
-import FAQ from './components/FAQ';
-import SocialProof from './components/SocialProof';
-import VideoDemo from './components/VideoDemo';
-import Benefits from './components/Benefits';
-import ExpandableFeatures from './components/ExpandableFeatures';
-import HowItWorks from './components/HowItWorks';
-import PricingCalculator from './components/PricingCalculator';
-import TransparentCosts from './components/TransparentCosts';
-import SMSvsEmailMarketing from './components/SMSvsEmailMarketing';
-import About from './components/About';
+import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ExitIntentPopup from './components/ExitIntentPopup';
 import InteractiveChatbot from './components/InteractiveChatbot';
+import Home from './pages/Home';
+import ComeFunziona from './pages/ComeFunziona';
+import Vantaggi from './pages/Vantaggi';
+import FAQPage from './pages/FAQPage';
+import ChiSono from './pages/ChiSono';
 
 // Interfaccia per i dati del pricing
 export interface PricingData {
@@ -47,28 +43,32 @@ function App() {
   });
 
   return (
-    <div className="min-h-screen bg-white">
-      <UrgencyTimer />
-      <div className="pt-16"> {/* Spazio per il timer fisso */}
-        <Hero />
-        <FAQ />
-        <SocialProof />
-        <VideoDemo />
-        <Benefits />
-        <ExpandableFeatures />
-        <HowItWorks />
-        <TransparentCosts />
-        <SMSvsEmailMarketing />
-        <PricingCalculator
-          currentPricingData={currentPricingData}
-          setCurrentPricingData={setCurrentPricingData}
-        />
-        <About />
-        <Footer />
+    <Router>
+      <div className="min-h-screen bg-white">
+        <UrgencyTimer />
+        <Navigation />
+        <div className="pt-36">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  currentPricingData={currentPricingData}
+                  setCurrentPricingData={setCurrentPricingData}
+                />
+              }
+            />
+            <Route path="/come-funziona" element={<ComeFunziona />} />
+            <Route path="/vantaggi" element={<Vantaggi />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/chi-sono" element={<ChiSono />} />
+          </Routes>
+          <Footer />
+        </div>
+        <ExitIntentPopup />
+        <InteractiveChatbot />
       </div>
-      <ExitIntentPopup />
-      <InteractiveChatbot />
-    </div>
+    </Router>
   );
 }
 
