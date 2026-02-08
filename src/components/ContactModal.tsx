@@ -306,41 +306,45 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
       <div className="bg-white rounded-wellness shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto">
-        <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark p-4 sm:p-6 text-white rounded-t-wellness">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="bg-white rounded-lg p-2 shadow-md">
+        <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark p-6 text-white rounded-t-wellness sticky top-0 z-10 shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="bg-white rounded-lg p-2 shadow-md flex-shrink-0">
                 <img
                   src="/favicon.png"
                   alt="SocialFlow Logo"
-                  className="h-8 sm:h-10 w-auto object-contain"
+                  className="h-10 w-auto object-contain"
                 />
               </div>
-              <h2 className="text-xl sm:text-2xl font-serif font-bold">
+              <h2 className="text-2xl font-serif font-bold">
                 {currentStep === 2 ? '👤 I Tuoi Dati' : '✅ Richiesta Inviata'}
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
+              className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-all hover:scale-110 flex-shrink-0"
+              aria-label="Chiudi"
             >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              <X className="w-6 h-6" />
             </button>
           </div>
         </div>
 
-        <div className="p-4 sm:p-8">
+        <div className="p-6 sm:p-8">
           {currentStep === 2 && (
             <div>
               <div className="mb-8">
-                <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-6 flex items-center">
+                  <span className="bg-sage-green/10 rounded-lg p-2 mr-3">
+                    <CheckCircle className="w-7 h-7 text-sage-green" />
+                  </span>
                   Riepilogo configurazione
                 </h3>
                 {pricingData.isCustomQuote ? (
-                  <div className="bg-gradient-to-r from-mocha-mousse to-mocha-mousse-dark rounded-wellness p-8 mb-6 text-white text-center">
-                    <Building2 className="w-12 h-12 mx-auto mb-4" />
+                  <div className="bg-gradient-to-br from-mocha-mousse to-mocha-mousse-dark rounded-wellness p-8 mb-6 text-white text-center shadow-lg border-2 border-mocha-mousse-dark/20">
+                    <Building2 className="w-16 h-16 mx-auto mb-4 opacity-90" />
                     <h4 className="text-2xl font-bold mb-3">Preventivo su Misura</h4>
-                    <p className="text-lg">
+                    <p className="text-lg leading-relaxed">
                       Hai scelto un preventivo personalizzato per centro strutturato (5+ operatori).
                     </p>
                     <p className="text-base mt-3 opacity-90">
@@ -348,54 +352,80 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                     </p>
                   </div>
                 ) : (
-                  <div className="bg-warm-sand rounded-wellness p-6 mb-6">
+                  <div className="bg-gradient-to-br from-warm-sand to-soft-apricot rounded-wellness p-8 mb-6 shadow-lg border border-sage-green/10">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      <div>
-                        <h4 className="font-bold text-gray-900 mb-2">Tipo Centro:</h4>
-                        <p className="text-gray-700">
-                          {pricingData.centerType === 'single' ? 'Studio Singolo (1 operatore)' : 'Piccolo team (2-4 operatori)'}
+                      <div className="bg-white rounded-wellness p-5 shadow-sm">
+                        <h4 className="font-bold text-gray-900 mb-3 flex items-center text-lg">
+                          <Building2 className="w-5 h-5 mr-2 text-sage-green" />
+                          Tipo Centro
+                        </h4>
+                        <p className="text-gray-700 text-lg">
+                          {pricingData.centerType === 'single' ? '🏠 Studio Singolo (1 operatore)' : '👥 Piccolo team (2-4 operatori)'}
                         </p>
                       </div>
-                      <div>
-                        <h4 className="font-bold text-gray-900 mb-2">Costo Setup:</h4>
-                        <p className="text-3xl font-bold text-sage-green">€{pricingData.total}</p>
+                      <div className="bg-gradient-to-br from-sage-green to-sage-green-dark rounded-wellness p-5 shadow-md text-white">
+                        <h4 className="font-bold mb-3 flex items-center text-lg">
+                          <CheckCircle className="w-5 h-5 mr-2" />
+                          Investimento Setup
+                        </h4>
+                        <p className="text-4xl font-bold">€{pricingData.total}</p>
+                        <p className="text-sm mt-2 opacity-90">Pagamento unico</p>
                       </div>
                     </div>
                     {pricingData.selectedMainFlows && pricingData.selectedMainFlows.length > 0 && (
                       <div className="mb-6">
-                        <h4 className="font-bold text-gray-900 mb-3">Flussi Principali:</h4>
-                        <ul className="space-y-2">
-                          {pricingData.selectedMainFlows.map(flowId => (
-                            <li key={flowId} className="text-gray-700 flex items-center">
-                              <CheckCircle className="w-4 h-4 text-sage-green mr-2 flex-shrink-0" />
-                              {flowNames[flowId as keyof typeof flowNames]}
-                            </li>
-                          ))}
-                        </ul>
+                        <h4 className="font-bold text-gray-900 mb-4 text-lg flex items-center">
+                          <span className="bg-sage-green/20 rounded-lg p-1.5 mr-2">
+                            <CheckCircle className="w-5 h-5 text-sage-green" />
+                          </span>
+                          Flussi Principali
+                        </h4>
+                        <div className="bg-white rounded-wellness p-4 shadow-sm">
+                          <ul className="space-y-3">
+                            {pricingData.selectedMainFlows.map(flowId => (
+                              <li key={flowId} className="text-gray-700 flex items-start group">
+                                <CheckCircle className="w-5 h-5 text-sage-green mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                                <span className="text-base">{flowNames[flowId as keyof typeof flowNames]}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     )}
                     {pricingData.selectedExtraFlows && pricingData.selectedExtraFlows.length > 0 && (
                       <div className="mb-6">
-                        <h4 className="font-bold text-gray-900 mb-3">Flussi Extra:</h4>
-                        <ul className="space-y-2">
-                          {pricingData.selectedExtraFlows.map(flowId => (
-                            <li key={flowId} className="text-gray-700 flex items-center">
-                              <CheckCircle className="w-4 h-4 text-misty-teal mr-2 flex-shrink-0" />
-                              {flowNames[flowId as keyof typeof flowNames]}
-                            </li>
-                          ))}
-                        </ul>
+                        <h4 className="font-bold text-gray-900 mb-4 text-lg flex items-center">
+                          <span className="bg-misty-teal/20 rounded-lg p-1.5 mr-2">
+                            <CheckCircle className="w-5 h-5 text-misty-teal" />
+                          </span>
+                          Flussi Extra
+                        </h4>
+                        <div className="bg-white rounded-wellness p-4 shadow-sm">
+                          <ul className="space-y-3">
+                            {pricingData.selectedExtraFlows.map(flowId => (
+                              <li key={flowId} className="text-gray-700 flex items-start group">
+                                <CheckCircle className="w-5 h-5 text-misty-teal mr-3 flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                                <span className="text-base">{flowNames[flowId as keyof typeof flowNames]}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     )}
                     {(pricingData.selectedMaintenancePlan || selectedMaintenancePlan) && (
-                      <div className="mt-6 pt-6 border-t-2 border-gray-200">
-                        <h4 className="font-bold text-gray-900 mb-3">Piano di Manutenzione:</h4>
-                        <div className="bg-gradient-to-r from-sage-green/10 to-misty-teal/10 rounded-wellness p-4">
-                          <p className="text-gray-900 font-bold text-lg flex items-center">
-                            <CheckCircle className="w-5 h-5 text-sage-green mr-2 flex-shrink-0" />
+                      <div className="mt-6 pt-6 border-t-2 border-white/50">
+                        <h4 className="font-bold text-gray-900 mb-4 text-lg flex items-center">
+                          <span className="bg-purple-500/20 rounded-lg p-1.5 mr-2">
+                            <CheckCircle className="w-5 h-5 text-purple-600" />
+                          </span>
+                          Piano di Manutenzione
+                        </h4>
+                        <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-wellness p-5 border-2 border-purple-200/50 shadow-sm">
+                          <p className="text-gray-900 font-bold text-lg flex items-center mb-2">
+                            <CheckCircle className="w-5 h-5 text-purple-600 mr-2 flex-shrink-0" />
                             {maintenancePlans[(selectedMaintenancePlan || pricingData.selectedMaintenancePlan || '').toLowerCase() as keyof typeof maintenancePlans]?.name || selectedMaintenancePlan || pricingData.selectedMaintenancePlan}
                           </p>
-                          <p className="text-gray-700 text-sm mt-2 ml-7">
+                          <p className="text-gray-700 text-base ml-7 leading-relaxed">
                             {maintenancePlans[(selectedMaintenancePlan || pricingData.selectedMaintenancePlan || '').toLowerCase() as keyof typeof maintenancePlans]?.description}
                           </p>
                         </div>
@@ -405,9 +435,14 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                 )}
               </div>
 
-              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-6">
-                Inserisci i tuoi dati
-              </h3>
+              <div className="border-t-2 border-gray-200 pt-8 mt-8">
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-6 flex items-center">
+                  <span className="bg-misty-teal/10 rounded-lg p-2 mr-3">
+                    <User className="w-7 h-7 text-misty-teal" />
+                  </span>
+                  Inserisci i tuoi dati
+                </h3>
+              </div>
 
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -667,36 +702,37 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
               </div>
 
               {submitError && (
-                <div className="mt-6 bg-red-50 border-2 border-red-400 text-red-800 px-4 py-3 rounded-wellness flex items-start">
-                  <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <div className="mt-6 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-400 text-red-800 px-6 py-4 rounded-wellness flex items-start shadow-lg animate-fade-in">
+                  <svg className="w-6 h-6 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                   <div>
-                    <p className="font-bold">Errore durante l'invio</p>
-                    <p className="mt-1">{submitError}</p>
+                    <p className="font-bold text-lg">⚠️ Errore durante l'invio</p>
+                    <p className="mt-2 text-base">{submitError}</p>
                   </div>
                 </div>
               )}
 
-              <div className="flex justify-end mt-8">
+              <div className="flex justify-end mt-8 pt-6 border-t-2 border-gray-200">
                 <button
                   onClick={handleSubmitQuote}
                   disabled={!isStep2Valid() || isSubmitting}
-                  className={`px-8 py-4 rounded-wellness font-bold text-lg transition-all flex items-center ${
+                  className={`px-10 py-5 rounded-wellness font-bold text-xl transition-all flex items-center shadow-lg ${
                     !isStep2Valid() || isSubmitting
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-sage-green to-misty-teal text-white hover:from-sage-green-dark hover:to-misty-teal-dark shadow-wellness'
+                      : 'bg-gradient-to-r from-sage-green via-misty-teal to-sage-green-dark text-white hover:shadow-2xl hover:scale-105 animate-pulse-subtle'
                   }`}
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      <Loader2 className="w-6 h-6 mr-3 animate-spin" />
                       Invio in corso...
                     </>
                   ) : (
                     <>
+                      <Phone className="w-6 h-6 mr-3" />
                       Invia Richiesta Preventivo
-                      <ArrowRight className="w-5 h-5 ml-2" />
+                      <ArrowRight className="w-6 h-6 ml-3" />
                     </>
                   )}
                 </button>
