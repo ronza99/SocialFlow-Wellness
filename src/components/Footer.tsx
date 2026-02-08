@@ -23,7 +23,7 @@ const Footer = () => {
             <div className="flex items-center justify-center mb-8">
               <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-sage-green mr-3 sm:mr-4" />
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-white mb-8 sm:mb-12 px-2">
-                Configura il tuo sistema SocialFlow
+                Configura il tuo sistema SocialFlow Wellness
               </h2>
             </div>
             <p className="text-2xl sm:text-3xl md:text-4xl text-gray-200 mb-12 sm:mb-16 max-w-4xl mx-auto font-light px-4">

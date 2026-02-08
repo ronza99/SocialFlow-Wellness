@@ -32,7 +32,7 @@ const VideoDemo = () => {
       <div id="video-demo" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-20">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-gray-900 mb-8 sm:mb-12 px-4">
-            🎬 Guarda SocialFlow in Azione
+            🎬 Guarda SocialFlow Wellness in Azione
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto font-light px-4 leading-relaxed">
             Scopri passo dopo passo come funziona il sistema con esempi reali

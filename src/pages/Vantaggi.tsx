@@ -9,10 +9,10 @@ export default function Vantaggi() {
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 text-center mb-4">
-          I Vantaggi di SocialFlow
+          I Vantaggi di SocialFlow Wellness
         </h1>
         <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto">
-          Perché SocialFlow è la scelta migliore per automatizzare il tuo centro estetico.
+          Perché SocialFlow Wellness è la scelta migliore per automatizzare il tuo centro estetico.
           Risparmio di tempo, costi trasparenti, risultati garantiti.
         </p>
       </div>

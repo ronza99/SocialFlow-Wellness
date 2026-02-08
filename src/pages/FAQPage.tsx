@@ -9,7 +9,7 @@ export default function FAQPage() {
           Domande Frequenti
         </h1>
         <p className="text-xl text-gray-600 text-center max-w-3xl mx-auto">
-          Tutte le risposte alle tue domande su SocialFlow. Se non trovi quello che cerchi,
+          Tutte le risposte alle tue domande su SocialFlow Wellness. Se non trovi quello che cerchi,
           contattaci direttamente tramite il chatbot o richiedi un preventivo.
         </p>
       </div>

@@ -62,7 +62,7 @@ const SocialProof = () => {
             Perché Funziona
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-3xl mx-auto font-light animate-fade-in-up px-4 leading-relaxed">
-            SocialFlow è progettato su tre principi fondamentali che rendono le prenotazioni più semplici per te e i tuoi clienti
+            SocialFlow Wellness è progettato su tre principi fondamentali che rendono le prenotazioni più semplici per te e i tuoi clienti
           </p>
         </div>
 

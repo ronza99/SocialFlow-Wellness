@@ -131,7 +131,7 @@ const MultipleBookingsFeature = () => {
         {/* Confronto sistemi */}
         <div className="mb-16 sm:mb-20">
           <h3 className="text-2xl sm:text-3xl font-serif font-bold text-high-contrast mb-8 sm:mb-12 text-center">
-            ⚔️ Software Tradizionali vs SocialFlow
+            ⚔️ Software Tradizionali vs SocialFlow Wellness
           </h3>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
@@ -183,7 +183,7 @@ const MultipleBookingsFeature = () => {
                   
                   <div className="bg-green-50 rounded-wellness p-3 sm:p-4 border border-green-200">
                     <p className="text-xs sm:text-sm text-readable">
-                      <strong>SocialFlow:</strong> {scenario.socialflow}
+                      <strong>SocialFlow Wellness:</strong> {scenario.socialflow}
                     </p>
                   </div>
                 </div>
@@ -252,7 +252,7 @@ const MultipleBookingsFeature = () => {
               
               <div>
                 <h4 className="font-serif font-bold text-high-contrast text-lg sm:text-xl mb-4 sm:mb-6">
-                  ✅ Risposta SocialFlow
+                  ✅ Risposta SocialFlow Wellness
                 </h4>
                 
                 <div className="space-y-3 sm:space-y-4">

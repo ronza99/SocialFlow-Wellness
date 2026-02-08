@@ -45,10 +45,12 @@ const Logo: React.FC<LogoProps> = ({
       </div>
       {showText && (
         <div className={`ml-3 ${textSizeClasses[size]} font-sans font-bold`}>
-          <span className="text-high-contrast">Social</span>
-          <span className="gradient-text">Flow</span>
-          <div className="text-xs text-readable font-normal tracking-wider uppercase mt-1">
-            Marketing Automation
+          <div className="flex items-baseline">
+            <span className="text-high-contrast">Social</span>
+            <span className="gradient-text">Flow</span>
+          </div>
+          <div className="text-sm text-readable font-semibold tracking-wide mt-0.5">
+            Wellness
           </div>
         </div>
       )}

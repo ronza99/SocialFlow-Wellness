@@ -95,7 +95,7 @@ const SMSvsEmailMarketing = () => {
             <div className="text-center mb-8 sm:mb-10">
               <Target className="w-12 h-12 sm:w-16 sm:h-16 text-white mx-auto mb-4 sm:mb-6" />
               <h3 className="text-2xl sm:text-3xl font-serif font-bold mb-4 sm:mb-6">
-                🎯 La Strategia WhatsApp di SocialFlow
+                🎯 La Strategia WhatsApp di SocialFlow Wellness
               </h3>
             </div>
             
@@ -169,7 +169,7 @@ const SMSvsEmailMarketing = () => {
               📈 Risultati Concreti con WhatsApp Follow-up
             </h3>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Dati reali da centri wellness che utilizzano la strategia WhatsApp di SocialFlow
+              Dati reali da centri wellness che utilizzano la strategia WhatsApp di SocialFlow Wellness
             </p>
           </div>
 
