@@ -169,7 +169,7 @@ const FAQ = () => {
             </p>
             <button
               onClick={() => {
-                const pricingSection = document.getElementById('pricing-calculator');
+                const pricingSection = document.getElementById('pricing');
                 if (pricingSection) {
                   pricingSection.scrollIntoView({ behavior: 'smooth' });
                 }

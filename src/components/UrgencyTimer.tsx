@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 
 const UrgencyTimer: React.FC = () => {
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }

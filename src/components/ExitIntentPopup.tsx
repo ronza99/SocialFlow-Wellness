@@ -29,7 +29,7 @@ const ExitIntentPopup: React.FC = () => {
 
   const scrollToPricing = () => {
     setShowPopup(false);
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }

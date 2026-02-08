@@ -4,7 +4,7 @@ import Logo from './Logo';
 
 const Footer = () => {
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }

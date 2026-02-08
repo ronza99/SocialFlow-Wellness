@@ -190,7 +190,7 @@ const InteractiveChatbot = () => {
     {
       id: 'pricing',
       text: '💰 Quanto costa?',
-      scrollTarget: 'pricing-calculator',
+      scrollTarget: 'pricing',
       nextMessage: 'Ti porto al calcolatore prezzi dove puoi comporre il tuo sistema personalizzato!'
     },
     {
@@ -202,7 +202,7 @@ const InteractiveChatbot = () => {
     {
       id: 'contact',
       text: '📞 Richiedi preventivo',
-      scrollTarget: 'pricing-calculator',
+      scrollTarget: 'pricing',
       nextMessage: 'Ti porto al configuratore per richiedere il tuo preventivo personalizzato!'
     }
   ];

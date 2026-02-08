@@ -3,7 +3,7 @@ import { TrendingUp, Users, Clock, BarChart3, DollarSign, Target, Zap, CheckCirc
 
 const SocialProof = () => {
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }

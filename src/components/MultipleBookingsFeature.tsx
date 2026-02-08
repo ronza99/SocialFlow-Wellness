@@ -3,7 +3,7 @@ import { Calendar, Users, Clock, CheckCircle, X, Zap, Target } from 'lucide-reac
 
 const MultipleBookingsFeature = () => {
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }

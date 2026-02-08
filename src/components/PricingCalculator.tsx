@@ -281,7 +281,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
   };
 
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
+    const pricingSection = document.getElementById('pricing');
     if (pricingSection) {
       pricingSection.scrollIntoView({ behavior: 'smooth' });
     }
@@ -342,7 +342,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
   return (
     <>
-      <section id="pricing-calculator" className="py-24 bg-warm-sand relative">
+      <section className="py-24 bg-warm-sand relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
