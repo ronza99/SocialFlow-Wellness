@@ -8,8 +8,7 @@ interface FAQItem {
 }
 
 const FAQ = () => {
-  const [openId, setOpenId] = useState<number | null>(null);
-  const [expandAll, setExpandAll] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const faqItems: FAQItem[] = [
     {
@@ -94,23 +93,14 @@ const FAQ = () => {
     }
   ];
 
-  const toggleFAQ = (id: number) => {
-    setOpenId(openId === id ? null : id);
-  };
-
-  const handleExpandAll = () => {
-    if (expandAll) {
-      setOpenId(null);
-      setExpandAll(false);
-    } else {
-      setExpandAll(true);
-    }
+  const toggleFAQ = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
     <section id="faq" className="py-16 sm:py-24 bg-gradient-to-br from-warm-sand via-soft-apricot to-cream-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-12">
           <div className="flex items-center justify-center mb-6">
             <HelpCircle className="w-10 h-10 sm:w-12 sm:h-12 text-sage-green mr-4" />
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-gray-900">
@@ -120,64 +110,53 @@ const FAQ = () => {
           <p className="text-base sm:text-lg md:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
             Risposte rapide per capire come funziona, senza tecnicismi.
           </p>
-
-          <div className="mt-6 sm:mt-8">
-            <button
-              onClick={handleExpandAll}
-              className="text-sm sm:text-base text-sage-green-dark hover:text-sage-green font-medium underline transition-colors"
-              aria-label={expandAll ? 'Chiudi tutte le FAQ' : 'Apri tutte le FAQ'}
-            >
-              {expandAll ? 'Chiudi tutte' : 'Apri tutte'}
-            </button>
-          </div>
         </div>
 
-        <div className="space-y-4">
-          {faqItems.map((item) => {
-            const isOpen = expandAll || openId === item.id;
+        <div className="wellness-card overflow-hidden">
+          <button
+            onClick={toggleFAQ}
+            className="w-full p-6 sm:p-8 flex items-center justify-between group hover:bg-sage-green/5 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sage-green focus:ring-offset-2 rounded-wellness"
+            aria-expanded={isOpen}
+            aria-controls="faq-content"
+          >
+            <div className="flex items-center gap-4">
+              <HelpCircle className="w-6 h-6 sm:w-8 sm:h-8 text-sage-green flex-shrink-0" />
+              <span className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 group-hover:text-sage-green-dark transition-colors text-left">
+                {isOpen ? 'Nascondi le FAQ' : 'Mostra tutte le FAQ'} ({faqItems.length} domande)
+              </span>
+            </div>
+            <div className="flex-shrink-0">
+              {isOpen ? (
+                <ChevronUp className="w-6 h-6 sm:w-8 sm:h-8 text-sage-green transition-transform duration-300" />
+              ) : (
+                <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-sage-green group-hover:scale-110 transition-all duration-300" />
+              )}
+            </div>
+          </button>
 
-            return (
-              <div
-                key={item.id}
-                className="wellness-card overflow-hidden transition-all duration-300 hover:shadow-wellness-lg"
-              >
-                <button
-                  onClick={() => toggleFAQ(item.id)}
-                  className="w-full text-left p-4 sm:p-6 flex items-center justify-between group focus:outline-none focus:ring-2 focus:ring-sage-green focus:ring-offset-2 rounded-wellness"
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${item.id}`}
-                >
-                  <span className="text-base sm:text-lg md:text-xl font-semibold text-gray-900 pr-4 group-hover:text-sage-green-dark transition-colors">
-                    {item.question}
-                  </span>
-                  <div className="flex-shrink-0">
-                    {isOpen ? (
-                      <ChevronUp className="w-5 h-5 sm:w-6 sm:h-6 text-sage-green transition-transform duration-300" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 group-hover:text-sage-green transition-all duration-300" />
-                    )}
+          <div
+            id="faq-content"
+            className={`transition-all duration-500 ease-in-out ${
+              isOpen ? 'max-h-[10000px] opacity-100' : 'max-h-0 opacity-0'
+            } overflow-hidden`}
+            role="region"
+          >
+            <div className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
+              <div className="border-t border-sage-green/20 pt-6 sm:pt-8 space-y-6 sm:space-y-8">
+                {faqItems.map((item) => (
+                  <div key={item.id} className="space-y-2 sm:space-y-3">
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900 flex items-start gap-3">
+                      <span className="text-sage-green flex-shrink-0">Q:</span>
+                      <span>{item.question}</span>
+                    </h3>
+                    <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed pl-6 sm:pl-8">
+                      {item.answer}
+                    </p>
                   </div>
-                </button>
-
-                <div
-                  id={`faq-answer-${item.id}`}
-                  className={`transition-all duration-300 ease-in-out ${
-                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  } overflow-hidden`}
-                  role="region"
-                  aria-labelledby={`faq-question-${item.id}`}
-                >
-                  <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-                    <div className="pt-4 border-t border-sage-green/20">
-                      <p className="text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
-                        {item.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
 
         <div className="text-center mt-12 sm:mt-16">
