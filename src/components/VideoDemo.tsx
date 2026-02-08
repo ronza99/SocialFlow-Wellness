@@ -5,8 +5,11 @@ const VideoDemo = () => {
   const [zoomedImage, setZoomedImage] = React.useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = React.useState<number>(1);
 
-  const openQuoteModal = () => {
-    window.dispatchEvent(new Event('openQuoteModal'));
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const openZoom = (imageSrc: string) => {

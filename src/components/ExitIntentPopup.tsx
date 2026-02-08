@@ -27,9 +27,12 @@ const ExitIntentPopup: React.FC = () => {
     setShowPopup(false);
   };
 
-  const openQuoteModal = () => {
+  const scrollToPricing = () => {
     setShowPopup(false);
-    window.dispatchEvent(new Event('openQuoteModal'));
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   if (!showPopup) return null;
@@ -85,7 +88,7 @@ const ExitIntentPopup: React.FC = () => {
             {/* CTA Button */}
             <div>
               <button
-                onClick={openQuoteModal}
+                onClick={scrollToPricing}
                 className="w-full bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white font-bold py-4 px-8 rounded-wellness shadow-wellness-lg transition-all duration-300 text-lg group"
               >
                 Vedi il listino

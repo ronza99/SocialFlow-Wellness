@@ -31,16 +31,16 @@ export default function Navigation() {
     { path: '/chi-sono', label: 'Chi sono' },
   ];
 
-  const openQuoteModal = () => {
+  const scrollToPricing = () => {
     setIsMobileMenuOpen(false);
 
     if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        window.dispatchEvent(new Event('openQuoteModal'));
-      }, 300);
+      navigate('/#pricing');
     } else {
-      window.dispatchEvent(new Event('openQuoteModal'));
+      const pricingSection = document.getElementById('pricing');
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
@@ -71,7 +71,7 @@ export default function Navigation() {
               </Link>
             ))}
             <button
-              onClick={openQuoteModal}
+              onClick={scrollToPricing}
               className="bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-md hover:shadow-lg"
             >
               Richiedi Preventivo
@@ -109,7 +109,7 @@ export default function Navigation() {
               </Link>
             ))}
             <button
-              onClick={openQuoteModal}
+              onClick={scrollToPricing}
               className="w-full bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition-colors shadow-md"
             >
               Richiedi Preventivo

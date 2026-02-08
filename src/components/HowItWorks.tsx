@@ -2,8 +2,11 @@ import React from 'react';
 import { MessageSquare, Bot, Calendar, CreditCard, QrCode, CalendarCheck, Database } from 'lucide-react';
 
 const HowItWorks = () => {
-  const openQuoteModal = () => {
-    window.dispatchEvent(new Event('openQuoteModal'));
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const steps = [

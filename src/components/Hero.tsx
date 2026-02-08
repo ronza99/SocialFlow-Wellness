@@ -3,8 +3,11 @@ import { ArrowRight, Clock, TrendingUp, Star, Sparkles } from 'lucide-react';
 import Logo from './Logo';
 
 const Hero = () => {
-  const openQuoteModal = () => {
-    window.dispatchEvent(new Event('openQuoteModal'));
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -79,7 +82,7 @@ const Hero = () => {
           {/* Enhanced CTA with better animation */}
           <div className="space-y-6 mb-16 sm:mb-20 animate-fade-in-up" style={{ animationDelay: '0.8s' }}>
             <button
-              onClick={openQuoteModal}
+              onClick={scrollToPricing}
               className="wellness-button text-xl sm:text-2xl group w-full sm:w-auto px-12 py-6 animate-pulse-subtle relative overflow-hidden"
             >
               <span className="flex items-center justify-center relative z-10">
@@ -128,7 +131,7 @@ const Hero = () => {
       {/* Enhanced sticky CTA mobile */}
       <div className="fixed bottom-0 left-0 right-0 glass-dark backdrop-blur-lg border-t border-white/20 p-4 z-50 sm:hidden">
         <button
-          onClick={openQuoteModal}
+          onClick={scrollToPricing}
           className="w-full wellness-button text-base font-semibold animate-pulse-subtle"
         >
           Calcola Preventivo

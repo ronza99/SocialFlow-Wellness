@@ -47,15 +47,18 @@ const MaintenanceService: React.FC<MaintenanceServiceProps> = ({ currentPricingD
     }
   ];
 
-  const openQuoteModal = () => {
-    window.dispatchEvent(new Event('openQuoteModal'));
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleContactClick = (selectedPlan?: string) => {
     // Verifica che ci siano flussi principali selezionati
     if (!currentPricingData.selectedMainFlows || currentPricingData.selectedMainFlows.length === 0) {
-      // Se non ci sono flussi selezionati, apri il modal del preventivo
-      openQuoteModal();
+      // Se non ci sono flussi selezionati, scrolla al pricing calculator
+      scrollToPricing();
       return;
     }
 
@@ -206,7 +209,7 @@ const MaintenanceService: React.FC<MaintenanceServiceProps> = ({ currentPricingD
           {/* CTA ripetuta */}
           <div className="text-center mt-16">
             <button
-              onClick={openQuoteModal}
+              onClick={scrollToPricing}
               className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-xl font-bold px-10 py-5 rounded-full shadow-2xl transform hover:scale-105 transition-all duration-300 pulse-contact-button animate-pulse-subtle"
             >
               <span className="flex items-center justify-center">

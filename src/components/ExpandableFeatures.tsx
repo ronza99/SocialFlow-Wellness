@@ -8,8 +8,11 @@ const ExpandableFeatures = () => {
     setExpandedFeature(expandedFeature === featureId ? null : featureId);
   };
 
-  const openQuoteModal = () => {
-    window.dispatchEvent(new Event('openQuoteModal'));
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById('pricing-calculator');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const features = [
