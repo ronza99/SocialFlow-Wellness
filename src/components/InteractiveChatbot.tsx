@@ -182,70 +182,28 @@ const InteractiveChatbot = () => {
 
   const chatOptions: ChatOption[] = [
     {
-      id: 'pricing',
-      text: '💰 Quanto costa?',
-      scrollTarget: 'pricing-calculator',
-      nextMessage: 'Perfetto! Ti porto al calcolatore prezzi dove puoi comporre il tuo sistema. Scegli tra flussi principali (prenotazioni, abbonamenti, cosmetici) e flussi extra (AI, gift card, pacchetti, WhatsApp). Il totale si calcola in tempo reale!'
-    },
-    {
       id: 'how-it-works',
       text: '🛠 Come funziona?',
       scrollTarget: 'come-funziona-page',
-      nextMessage: 'Ottimo! Ti porto alla pagina dedicata dove vedrai il processo completo passo dopo passo. Scoprirai come i tuoi clienti prenotano direttamente sui social senza app esterne.'
+      nextMessage: 'Ti porto alla pagina dedicata dove vedrai il processo completo passo dopo passo!'
     },
     {
-      id: 'features',
-      text: '🔧 Principali funzionalità',
-      subOptions: [
-        {
-          id: 'social-booking',
-          text: '📱 Prenotazioni Social',
-          scrollTarget: 'social-booking',
-          nextMessage: 'Ti porto alle prenotazioni social e apro la sezione dettagliata per te!'
-        },
-        {
-          id: 'ai-assistant',
-          text: '🤖 Assistente AI H24',
-          scrollTarget: 'ai-assistant',
-          nextMessage: 'Ti mostro come funziona l\'Assistente AI che risponde ai clienti 24/7!'
-        },
-        {
-          id: 'subscriptions',
-          text: '🔄 Abbonamenti Ricorrenti',
-          scrollTarget: 'subscriptions',
-          nextMessage: 'Ti mostro come gestire abbonamenti mensili con pagamenti automatici e QR personale!'
-        },
-        {
-          id: 'ecommerce-social',
-          text: '🛒 Vendita Cosmetici',
-          scrollTarget: 'ecommerce-social',
-          nextMessage: 'Ti porto alla vendita prodotti integrata nelle chat social!'
-        },
-        {
-          id: 'all-features',
-          text: '📋 Tutte le funzionalità',
-          scrollTarget: 'expandable-features',
-          nextMessage: 'Ti mostro tutte le funzionalità dettagliate! Ogni sezione è espandibile per vedere come funziona tecnicamente.'
-        }
-      ]
+      id: 'pricing',
+      text: '💰 Quanto costa?',
+      scrollTarget: 'pricing-calculator',
+      nextMessage: 'Ti porto al calcolatore prezzi dove puoi comporre il tuo sistema personalizzato!'
     },
     {
       id: 'demo',
-      text: '🎬 Voglio vedere una demo',
+      text: '🎬 Vedi una demo',
       scrollTarget: 'video-demo',
-      nextMessage: 'Ti porto alla pagina Come Funziona dove troverai la sezione demo! Potrai vedere il sistema in azione e richiedere una demo personalizzata con un centro fittizio.'
-    },
-    {
-      id: 'faq',
-      text: '❓ Domande frequenti',
-      scrollTarget: 'faq-page',
-      nextMessage: 'Ti porto alla pagina delle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
+      nextMessage: 'Ti porto alla demo video! Potrai vedere il sistema in azione.'
     },
     {
       id: 'contact',
       text: '📞 Richiedi preventivo',
       scrollTarget: 'pricing-calculator',
-      nextMessage: 'Ti porto al configuratore! Componi il tuo sistema selezionando i flussi che ti servono e richiedi il preventivo personalizzato.'
+      nextMessage: 'Ti porto al configuratore per richiedere il tuo preventivo personalizzato!'
     }
   ];
 
