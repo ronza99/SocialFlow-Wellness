@@ -127,8 +127,31 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
     return clientData.name.trim() !== '' &&
            clientData.surname.trim() !== '' &&
            clientData.email.trim() !== '' &&
+           clientData.email.includes('@') &&
            clientData.phone.trim() !== '' &&
            clientData.businessName.trim() !== '';
+  };
+
+  const validateClientData = () => {
+    if (!clientData.name.trim()) {
+      return 'Il nome è obbligatorio';
+    }
+    if (!clientData.surname.trim()) {
+      return 'Il cognome è obbligatorio';
+    }
+    if (!clientData.email.trim()) {
+      return 'L\'email è obbligatoria';
+    }
+    if (!clientData.email.includes('@')) {
+      return 'Inserisci un\'email valida (deve contenere @)';
+    }
+    if (!clientData.phone.trim()) {
+      return 'Il numero di telefono è obbligatorio';
+    }
+    if (!clientData.businessName.trim()) {
+      return 'Il nome del centro è obbligatorio';
+    }
+    return null;
   };
 
   const calculateMainFlowsCost = () => {
@@ -162,7 +185,11 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
   };
 
   const handleSubmitQuote = async () => {
-    if (!isStep2Valid()) return;
+    const validationError = validateClientData();
+    if (validationError) {
+      setSubmitError(validationError);
+      return;
+    }
 
     setIsSubmitting(true);
     setSubmitError(null);
@@ -253,9 +280,22 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
       if (error) throw error;
 
       setCurrentStep(3);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting quote:', error);
-      setSubmitError('Si è verificato un errore. Riprova o contattaci direttamente.');
+
+      let errorMessage = 'Si è verificato un errore. Riprova o contattaci direttamente.';
+
+      if (error?.message?.includes('email')) {
+        errorMessage = 'Email non valida. Assicurati che contenga il simbolo @';
+      } else if (error?.message?.includes('telefono') || error?.message?.includes('phone')) {
+        errorMessage = 'Numero di telefono non valido';
+      } else if (error?.message?.includes('nome') || error?.message?.includes('name')) {
+        errorMessage = 'Nome o cognome non valido';
+      } else if (error?.message?.includes('costo') || error?.message?.includes('cost')) {
+        errorMessage = 'Errore nel calcolo del preventivo. Riprova';
+      }
+
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -411,9 +451,16 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                       type="email"
                       value={clientData.email}
                       onChange={(e) => setClientData({ ...clientData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-wellness border border-gray-300 focus:ring-2 focus:ring-sage-green focus:border-transparent"
+                      className={`w-full px-4 py-3 rounded-wellness border focus:ring-2 focus:ring-sage-green focus:border-transparent ${
+                        clientData.email && !clientData.email.includes('@')
+                          ? 'border-red-400 bg-red-50'
+                          : 'border-gray-300'
+                      }`}
                       placeholder="mario@esempio.it"
                     />
+                    {clientData.email && !clientData.email.includes('@') && (
+                      <p className="text-red-600 text-xs mt-1">L'email deve contenere il simbolo @</p>
+                    )}
                   </div>
 
                   <div>
@@ -620,8 +667,14 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
               </div>
 
               {submitError && (
-                <div className="mt-6 bg-red-50 border border-red-400 text-red-800 px-4 py-3 rounded-wellness">
-                  {submitError}
+                <div className="mt-6 bg-red-50 border-2 border-red-400 text-red-800 px-4 py-3 rounded-wellness flex items-start">
+                  <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <p className="font-bold">Errore durante l'invio</p>
+                    <p className="mt-1">{submitError}</p>
+                  </div>
                 </div>
               )}
 
