@@ -203,7 +203,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
 
       const mainFlowsCost = calculateMainFlowsCost();
       const extraFlowsCost = calculateExtraFlowsCost();
-      const totalSetupCost = mainFlowsCost + extraFlowsCost;
+      const totalSetupCost = pricingData.isCustomQuote ? 1 : (mainFlowsCost + extraFlowsCost);
 
       const allFlows = [
         ...mainFlowsWithNames.map(f => f.name),
