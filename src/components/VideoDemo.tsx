@@ -169,9 +169,9 @@ const VideoDemo = () => {
 
             {/* Foto 7 - Google Calendar Sincronizzato */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy copy copy copy copy copy copy copy copy.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/7cd2daac-b900-4bd5-9505-3a13a4afde59.png')}>
                 <img
-                  src="/image copy copy copy copy copy copy copy copy copy copy.png"
+                  src="/7cd2daac-b900-4bd5-9505-3a13a4afde59.png"
                   alt="Google Calendar con prenotazioni sincronizzate automaticamente"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}

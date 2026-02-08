@@ -271,7 +271,7 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="bg-white rounded-lg p-2 shadow-md">
                 <img
-                  src="/image copy copy copy copy copy copy copy copy copy.png"
+                  src="/favicon.png"
                   alt="SocialFlow Logo"
                   className="h-8 sm:h-10 w-auto object-contain"
                 />
