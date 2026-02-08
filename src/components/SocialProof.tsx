@@ -2,11 +2,8 @@ import React from 'react';
 import { TrendingUp, Users, Clock, BarChart3, DollarSign, Target, Zap, CheckCircle } from 'lucide-react';
 
 const SocialProof = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   const principles = [

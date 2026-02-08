@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calculator, Users, Building, Home, Shield, MessageSquare, Gift, Sparkles, CheckCircle, Star, Crown, Phone, Mail, Zap } from 'lucide-react';
 import ContactModal from './ContactModal';
 import Logo from './Logo';
@@ -21,6 +21,22 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
   const [skipToClientInfo, setSkipToClientInfo] = useState(false);
   const [selectedMaintenancePlan, setSelectedMaintenancePlan] = useState<string>('');
   const [bookingAutoAddMessage, setBookingAutoAddMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOpenQuote = () => {
+      const pricingSection = document.getElementById('pricing-calculator');
+      if (pricingSection) {
+        pricingSection.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          setSkipToClientInfo(true);
+          setShowContactModal(true);
+        }, 500);
+      }
+    };
+
+    window.addEventListener('openQuoteModal', handleOpenQuote);
+    return () => window.removeEventListener('openQuoteModal', handleOpenQuote);
+  }, []);
 
   const mainFlows = {
     single: {

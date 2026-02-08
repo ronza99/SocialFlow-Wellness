@@ -2,11 +2,8 @@ import React from 'react';
 import { Instagram, Bot, CreditCard, Palette, Calculator, Shield, Users, Zap, Target, Gift, TrendingUp, Calendar, Sparkles, Brain, MessageSquare } from 'lucide-react';
 
 const Benefits = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   const benefits = [
@@ -334,7 +331,7 @@ const Benefits = () => {
 
         <div className="text-center mt-16 sm:mt-20">
           <button
-            onClick={scrollToPricing}
+            onClick={openQuoteModal}
             className="wellness-button-secondary text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-6 animate-pulse-subtle"
           >
             Scopri i Prezzi Trasparenti

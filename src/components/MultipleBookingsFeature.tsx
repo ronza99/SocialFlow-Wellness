@@ -2,11 +2,8 @@ import React from 'react';
 import { Calendar, Users, Clock, CheckCircle, X, Zap, Target } from 'lucide-react';
 
 const MultipleBookingsFeature = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   const limitations = [
@@ -323,7 +320,7 @@ const MultipleBookingsFeature = () => {
               dagli la libertà di farlo senza ostacoli.
             </p>
             <button
-              onClick={scrollToPricing}
+              onClick={openQuoteModal}
               className="wellness-button text-base sm:text-lg animate-pulse-subtle"
             >
               Configura il Sistema Senza Limitazioni

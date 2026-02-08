@@ -2,11 +2,8 @@ import React from 'react';
 import { DollarSign, Shield, Info, CheckCircle } from 'lucide-react';
 
 const TransparentCosts = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   const externalServices = [
@@ -135,7 +132,7 @@ const TransparentCosts = () => {
         {/* CTA */}
         <div className="text-center">
           <button
-            onClick={scrollToPricing}
+            onClick={openQuoteModal}
             className="wellness-button text-xl px-12 py-6 animate-pulse-subtle"
           >
             Scopri il Listino Completo

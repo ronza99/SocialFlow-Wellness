@@ -2,11 +2,8 @@ import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const UrgencyTimer: React.FC = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   return (
@@ -23,7 +20,7 @@ const UrgencyTimer: React.FC = () => {
           </div>
 
           <button
-            onClick={scrollToPricing}
+            onClick={openQuoteModal}
             className="bg-white text-sage-green-dark font-semibold px-6 py-2 rounded-wellness text-sm hover:bg-warm-sand transition-all duration-200 transform shadow-organic hover:scale-105 animate-pulse-subtle"
           >
             <span className="flex items-center whitespace-nowrap">

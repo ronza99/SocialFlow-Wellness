@@ -3,11 +3,8 @@ import { ArrowRight, Heart, Sparkles, Star, Zap } from 'lucide-react';
 import Logo from './Logo';
 
 const Footer = () => {
-  const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing-calculator');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openQuoteModal = () => {
+    window.dispatchEvent(new Event('openQuoteModal'));
   };
 
   return (
@@ -33,7 +30,7 @@ const Footer = () => {
 
           <div className="space-y-8 animate-fade-in-up">
             <button
-              onClick={scrollToPricing}
+              onClick={openQuoteModal}
               className="group bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white text-lg sm:text-xl md:text-2xl font-semibold px-8 sm:px-12 md:px-16 py-4 sm:py-6 md:py-8 rounded-wellness shadow-wellness-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto animate-pulse-subtle"
             >
               <span className="flex items-center justify-center">

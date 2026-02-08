@@ -169,10 +169,7 @@ const FAQ = () => {
             </p>
             <button
               onClick={() => {
-                const pricingSection = document.getElementById('pricing-calculator');
-                if (pricingSection) {
-                  pricingSection.scrollIntoView({ behavior: 'smooth' });
-                }
+                window.dispatchEvent(new Event('openQuoteModal'));
               }}
               className="wellness-button-secondary text-base sm:text-lg"
             >
