@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, ArrowRight, Bot, User, Sparkles } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface Message {
   id: string;
@@ -23,8 +24,54 @@ const InteractiveChatbot = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToSection = (sectionId: string) => {
+    // Gestione navigazione tra pagine
+    if (sectionId === 'come-funziona-page') {
+      navigate('/come-funziona');
+      setTimeout(() => setIsOpen(false), 500);
+      return;
+    }
+
+    if (sectionId === 'vantaggi-page') {
+      navigate('/vantaggi');
+      setTimeout(() => setIsOpen(false), 500);
+      return;
+    }
+
+    if (sectionId === 'faq-page') {
+      navigate('/faq');
+      setTimeout(() => setIsOpen(false), 500);
+      return;
+    }
+
+    if (sectionId === 'chi-sono-page') {
+      navigate('/chi-sono');
+      setTimeout(() => setIsOpen(false), 500);
+      return;
+    }
+
+    if (sectionId === 'home') {
+      navigate('/');
+      setTimeout(() => setIsOpen(false), 500);
+      return;
+    }
+
+    // Se non siamo sulla home, torna prima alla home per scrollare alle sezioni
+    if (location.pathname !== '/' && !['come-funziona-page', 'vantaggi-page', 'faq-page', 'chi-sono-page'].includes(sectionId)) {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => setIsOpen(false), 1000);
+        }
+      }, 300);
+      return;
+    }
+
     // Gestione speciale per FAQ: scrolla alla sezione e apri la prima FAQ
     if (sectionId === 'faq') {
       const faqSection = document.getElementById('faq');
@@ -97,8 +144,8 @@ const InteractiveChatbot = () => {
     {
       id: 'faq',
       text: '❓ Domande frequenti (FAQ)',
-      scrollTarget: 'faq',
-      nextMessage: 'Ti porto alle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
+      scrollTarget: 'faq-page',
+      nextMessage: 'Ti porto alla pagina delle domande frequenti! Troverai risposte rapide su come funziona il sistema, senza tecnicismi.'
     },
     {
       id: 'pricing',
@@ -109,8 +156,8 @@ const InteractiveChatbot = () => {
     {
       id: 'how-it-works',
       text: '🛠 Come funziona?',
-      scrollTarget: 'how-it-works',
-      nextMessage: 'Ottimo! Ti mostro il processo completo passo dopo passo. Vedrai come i tuoi clienti prenotano direttamente sui social senza app esterne.'
+      scrollTarget: 'come-funziona-page',
+      nextMessage: 'Ottimo! Ti porto alla pagina dedicata dove vedrai il processo completo passo dopo passo. Scoprirai come i tuoi clienti prenotano direttamente sui social senza app esterne.'
     },
     {
       id: 'features',
@@ -241,8 +288,14 @@ const InteractiveChatbot = () => {
     {
       id: 'benefits',
       text: '✨ Perché scegliere SocialFlow?',
-      scrollTarget: 'benefits',
-      nextMessage: 'Ti porto ai vantaggi principali! Vedrai perché SocialFlow è superiore ai software tradizionali e alle segretarie part-time.'
+      scrollTarget: 'vantaggi-page',
+      nextMessage: 'Ti porto alla pagina dei vantaggi! Vedrai perché SocialFlow è superiore ai software tradizionali e alle segretarie part-time.'
+    },
+    {
+      id: 'about',
+      text: '👨‍💻 Chi c\'è dietro SocialFlow?',
+      scrollTarget: 'chi-sono-page',
+      nextMessage: 'Ti porto alla sezione "Chi Sono"! Scopri chi ha creato SocialFlow e qual è la missione del progetto.'
     },
     {
       id: 'costs',
@@ -261,6 +314,12 @@ const InteractiveChatbot = () => {
       text: '📞 Voglio essere contattato',
       scrollTarget: 'pricing-calculator',
       nextMessage: 'Ti porto al configuratore! Componi il tuo sistema selezionando i flussi che ti servono e richiedi il preventivo personalizzato.'
+    },
+    {
+      id: 'home',
+      text: '🏠 Torna alla Home',
+      scrollTarget: 'home',
+      nextMessage: 'Ti riporto alla home page!'
     }
   ];
 
