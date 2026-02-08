@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { X, ArrowRight } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const ExitIntentPopup: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [hasShown, setHasShown] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
@@ -29,10 +33,7 @@ const ExitIntentPopup: React.FC = () => {
 
   const scrollToPricing = () => {
     setShowPopup(false);
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   if (!showPopup) return null;

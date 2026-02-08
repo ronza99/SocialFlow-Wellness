@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 interface FAQItem {
   id: number;
@@ -9,6 +11,8 @@ interface FAQItem {
 
 const FAQ = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const faqItems: FAQItem[] = [
     {
@@ -169,10 +173,7 @@ const FAQ = () => {
             </p>
             <button
               onClick={() => {
-                const pricingSection = document.getElementById('pricing');
-                if (pricingSection) {
-                  pricingSection.scrollIntoView({ behavior: 'smooth' });
-                }
+                scrollToPricingSection(location.pathname, navigate);
               }}
               className="wellness-button-secondary text-base sm:text-lg"
             >

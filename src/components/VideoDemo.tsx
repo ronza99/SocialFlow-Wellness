@@ -1,15 +1,16 @@
 import React from 'react';
 import { Play, Smartphone, MessageSquare, CreditCard, X, ZoomIn, Calendar } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const VideoDemo = () => {
   const [zoomedImage, setZoomedImage] = React.useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = React.useState<number>(1);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   const openZoom = (imageSrc: string) => {

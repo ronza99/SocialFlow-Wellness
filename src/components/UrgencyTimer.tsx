@@ -1,12 +1,14 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const UrgencyTimer: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   return (

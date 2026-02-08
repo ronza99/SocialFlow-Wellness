@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Shield, Phone, Star, Crown, CheckCircle, AlertCircle, Zap } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 import ContactModal from './ContactModal';
 import { PricingData } from '../App';
 
@@ -9,8 +11,9 @@ interface MaintenanceServiceProps {
 
 const MaintenanceService: React.FC<MaintenanceServiceProps> = ({ currentPricingData }) => {
   const [showContactModal, setShowContactModal] = useState(false);
-
   const [selectedMaintenancePlan, setSelectedMaintenancePlan] = useState<string>('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const plans = [
     {
@@ -48,10 +51,7 @@ const MaintenanceService: React.FC<MaintenanceServiceProps> = ({ currentPricingD
   ];
 
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   const handleContactClick = (selectedPlan?: string) => {

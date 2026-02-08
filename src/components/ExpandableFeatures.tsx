@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Instagram, Bot, CreditCard, ShoppingCart, MessageSquare, Calendar, Users, Zap, Gift, Brain, Phone, CheckCircle, RotateCcw, CalendarX, Shield, Package, Repeat } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const ExpandableFeatures = () => {
   const [expandedFeature, setExpandedFeature] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleFeature = (featureId: string) => {
     setExpandedFeature(expandedFeature === featureId ? null : featureId);
   };
 
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   const features = [

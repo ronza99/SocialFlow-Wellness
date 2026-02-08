@@ -1,12 +1,14 @@
 import React from 'react';
 import { MessageSquare, Bot, Calendar, CreditCard, QrCode, CalendarCheck, Database } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const HowItWorks = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   const steps = [

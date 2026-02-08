@@ -1,12 +1,14 @@
 import React from 'react';
 import { Instagram, Bot, CreditCard, Palette, Calculator, Shield, Users, Zap, Target, Gift, TrendingUp, Calendar, Sparkles, Brain, MessageSquare } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { scrollToPricingSection } from '../utils/navigation';
 
 const Benefits = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToPricing = () => {
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    scrollToPricingSection(location.pathname, navigate);
   };
 
   const benefits = [
