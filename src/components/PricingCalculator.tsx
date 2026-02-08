@@ -780,13 +780,19 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </h3>
             </div>
 
-            {bookingAutoAddMessage && (
-              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-wellness p-6 mb-8 border-l-4 border-blue-700 animate-fade-in shadow-organic-lg max-w-4xl mx-auto">
+            {((selectedExtraFlows.includes('packages') || selectedExtraFlows.includes('gift-cards')) && selectedMainFlows.includes('bookings')) && (
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-wellness p-6 mb-8 border-l-4 border-blue-700 shadow-organic-lg max-w-4xl mx-auto">
                 <p className="text-lg font-bold flex items-center justify-center mb-2">
                   <span className="text-2xl mr-3">ℹ️</span>
                   Flusso aggiunto automaticamente
                 </p>
-                <p className="text-base text-center">{bookingAutoAddMessage}</p>
+                <p className="text-base text-center">
+                  {selectedExtraFlows.includes('packages') && selectedExtraFlows.includes('gift-cards')
+                    ? 'Per utilizzare "Pacchetti di sedute" e "Card & Gift Card digitali" è necessario il flusso "Prenotazioni in chat", che è stato aggiunto automaticamente alla tua configurazione.'
+                    : selectedExtraFlows.includes('packages')
+                    ? 'Per utilizzare "Pacchetti di sedute" è necessario il flusso "Prenotazioni in chat", che è stato aggiunto automaticamente alla tua configurazione.'
+                    : 'Per utilizzare "Card & Gift Card digitali" è necessario il flusso "Prenotazioni in chat", che è stato aggiunto automaticamente alla tua configurazione.'}
+                </p>
               </div>
             )}
 
