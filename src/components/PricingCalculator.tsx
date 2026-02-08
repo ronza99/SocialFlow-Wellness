@@ -20,6 +20,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
   const [showError, setShowError] = useState(false);
   const [skipToClientInfo, setSkipToClientInfo] = useState(false);
   const [selectedMaintenancePlan, setSelectedMaintenancePlan] = useState<string>('');
+  const [bookingAutoAddMessage, setBookingAutoAddMessage] = useState<string | null>(null);
 
   const mainFlows = {
     single: {
@@ -141,6 +142,19 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
   };
 
   const handleMainFlowToggle = (flowId: string) => {
+    if (flowId === 'bookings' && selectedMainFlows.includes('bookings')) {
+      const hasPackagesOrGiftCards = selectedExtraFlows.includes('packages') || selectedExtraFlows.includes('gift-cards');
+      if (hasPackagesOrGiftCards) {
+        const extraFlowsNames = [];
+        if (selectedExtraFlows.includes('packages')) extraFlowsNames.push('Pacchetti di sedute');
+        if (selectedExtraFlows.includes('gift-cards')) extraFlowsNames.push('Card & Gift Card digitali');
+
+        setBookingAutoAddMessage(`Non puoi rimuovere "Prenotazioni in chat" perché hai selezionato: ${extraFlowsNames.join(' e ')}. Questi flussi richiedono il sistema di prenotazioni per funzionare.`);
+        setTimeout(() => setBookingAutoAddMessage(null), 8000);
+        return;
+      }
+    }
+
     const newFlows = selectedMainFlows.includes(flowId)
       ? selectedMainFlows.filter(id => id !== flowId)
       : [...selectedMainFlows, flowId];
@@ -189,18 +203,32 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
     setSelectedExtraFlows(newFlows);
 
-    // Calcola il nuovo totale con i flussi extra aggiornati
+    let updatedMainFlows = [...selectedMainFlows];
+    let needsBookingMessage = '';
+
+    if (!selectedExtraFlows.includes(flowId) && (flowId === 'packages' || flowId === 'gift-cards')) {
+      if (!selectedMainFlows.includes('bookings')) {
+        updatedMainFlows = [...selectedMainFlows, 'bookings'];
+        setSelectedMainFlows(updatedMainFlows);
+
+        const flowName = flowId === 'packages' ? 'Pacchetti di sedute' : 'Card & Gift Card digitali';
+        needsBookingMessage = `Per utilizzare "${flowName}" è necessario il flusso "Prenotazioni in chat", che è stato aggiunto automaticamente alla tua configurazione.`;
+        setBookingAutoAddMessage(needsBookingMessage);
+
+        setTimeout(() => setBookingAutoAddMessage(null), 8000);
+      }
+    }
+
     const flows = mainFlows[selectedCenterType];
     let mainTotal = 0;
 
-    selectedMainFlows.forEach(fId => {
+    updatedMainFlows.forEach(fId => {
       if (fId === 'bookings') mainTotal += flows.bookings.price;
       if (fId === 'subscriptions') mainTotal += flows.subscriptions.price;
       if (fId === 'cosmetics') mainTotal += flows.cosmetics.price;
     });
 
-    // Sconto se tutti e 3 i flussi principali sono selezionati
-    if (selectedMainFlows.length === 3) {
+    if (updatedMainFlows.length === 3) {
       mainTotal = selectedCenterType === 'single' ? 1200 : 1350;
     }
 
@@ -211,9 +239,9 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
     const grandTotal = mainTotal + extraTotal;
 
-    // Aggiorna anche lo stato globale con il totale calcolato
     setCurrentPricingData(prev => ({
       ...prev,
+      selectedMainFlows: updatedMainFlows,
       selectedExtraFlows: newFlows,
       total: grandTotal
     }));
@@ -498,6 +526,16 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 </div>
               )}
 
+              {bookingAutoAddMessage && (
+                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-wellness p-6 mb-6 border-l-4 border-blue-700 animate-fade-in shadow-organic-lg">
+                  <p className="text-lg font-bold flex items-center justify-center mb-2">
+                    <span className="text-2xl mr-3">ℹ️</span>
+                    Informazione importante
+                  </p>
+                  <p className="text-base text-center">{bookingAutoAddMessage}</p>
+                </div>
+              )}
+
               <div className="bg-gradient-to-r from-sage-green/10 to-misty-teal/10 rounded-wellness p-6 border-l-4 border-sage-green">
                 <p className="text-lg text-gray-800 font-medium">
                   Attivando tutti e 3 i flussi Core ottieni uno sconto automatico sul totale.
@@ -650,6 +688,16 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             <p className="text-xl text-gray-700 text-center mb-12 max-w-3xl mx-auto">
               Potenzia il tuo sistema con moduli avanzati. Puoi saltare questo passo o aggiungerne quanti vuoi.
             </p>
+
+            {bookingAutoAddMessage && (
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-wellness p-6 mb-8 border-l-4 border-blue-700 animate-fade-in shadow-organic-lg max-w-4xl mx-auto">
+                <p className="text-lg font-bold flex items-center justify-center mb-2">
+                  <span className="text-2xl mr-3">ℹ️</span>
+                  Flusso aggiunto automaticamente
+                </p>
+                <p className="text-base">{bookingAutoAddMessage}</p>
+              </div>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {extraFlows.map((flow) => (
