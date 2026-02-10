@@ -273,30 +273,31 @@ const InteractiveChatbot = () => {
   return (
     <>
       {/* Chat Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        {/* Help Arrow - Solo se chat non è aperta */}
+      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
+        {/* Help Arrow - Solo se chat non è aperta - Nascosto su mobile */}
         {!isOpen && (
-          <div className="absolute -top-10 sm:-top-12 md:-top-16 -left-16 sm:-left-20 md:-left-32 animate-bounce">
-            <div className="bg-white rounded-full px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 shadow-lg border border-sage-green/20 relative">
-              <span className="text-xs sm:text-sm text-sage-green-dark font-medium whitespace-nowrap">
+          <div className="hidden md:block absolute -top-16 -left-32 animate-bounce">
+            <div className="bg-white rounded-full px-4 py-2 shadow-lg border border-sage-green/20 relative">
+              <span className="text-sm text-sage-green-dark font-medium whitespace-nowrap">
                 Hai bisogno di aiuto?
               </span>
               {/* Freccia che punta al chatbot */}
-              <div className="absolute -bottom-2 right-3 sm:right-4 md:right-8 w-0 h-0 border-l-3 border-r-3 border-t-3 sm:border-l-4 sm:border-r-4 sm:border-t-4 border-l-transparent border-r-transparent border-t-white"></div>
+              <div className="absolute -bottom-2 right-8 w-0 h-0 border-l-4 border-r-4 border-t-4 border-l-transparent border-r-transparent border-t-white"></div>
             </div>
             {/* Freccia animata che lampeggia */}
-            <div className="absolute -bottom-5 sm:-bottom-6 md:-bottom-8 right-2 sm:right-3 md:right-4 animate-pulse">
-              <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-6 md:h-6 text-sage-green" fill="currentColor" viewBox="0 0 20 20">
+            <div className="absolute -bottom-8 right-4 animate-pulse">
+              <svg className="w-6 h-6 text-sage-green" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
               </svg>
             </div>
           </div>
         )}
-        
+
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
             className="bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white rounded-full p-3 sm:p-4 shadow-wellness-xl hover:shadow-2xl transform hover:scale-110 transition-all duration-300 pulse-contact-button"
+            aria-label="Apri assistente"
           >
             <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
