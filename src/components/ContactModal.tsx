@@ -330,11 +330,30 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
           </div>
         </div>
 
-        <div className="md:hidden sticky top-[88px] z-10 h-8 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none"></div>
-
         <div className="p-6 sm:p-8">
           {currentStep === 2 && (
             <div>
+              <div className="md:hidden mb-6 animate-fade-in">
+                <div className="bg-gradient-to-br from-sage-green/20 to-misty-teal/20 rounded-wellness p-5 text-center border-2 border-sage-green shadow-lg animate-breathe">
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="bg-white rounded-full p-2 shadow-md animate-pulse">
+                      <ChevronDown className="w-6 h-6 text-sage-green" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <p className="text-gray-900 font-bold text-lg mb-1">
+                        Scorri in basso per inserire i tuoi dati
+                      </p>
+                      <p className="text-gray-700 text-sm">
+                        Compila il form e ricevi il preventivo
+                      </p>
+                    </div>
+                    <div className="animate-bounce">
+                      <ChevronDown className="w-8 h-8 text-sage-green" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <div className="mb-8">
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-6 flex items-center">
                   <span className="bg-sage-green/10 rounded-lg p-2 mr-3">
@@ -435,26 +454,6 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                     )}
                   </div>
                 )}
-              </div>
-
-              <div className="md:hidden my-8 animate-fade-in">
-                <div className="bg-gradient-to-br from-misty-teal/10 to-sage-green/10 rounded-wellness p-6 text-center border-2 border-dashed border-sage-green/30 shadow-lg animate-breathe">
-                  <div className="flex flex-col items-center">
-                    <div className="bg-white rounded-full p-3 shadow-md mb-3 animate-pulse">
-                      <User className="w-8 h-8 text-sage-green" />
-                    </div>
-                    <p className="text-gray-900 font-bold text-xl mb-2">
-                      👇 Ora inserisci i tuoi dati
-                    </p>
-                    <p className="text-gray-600 text-base mb-4">
-                      Scorri verso il basso per compilare il form e ricevere il preventivo
-                    </p>
-                    <div className="animate-bounce flex flex-col items-center gap-1">
-                      <ChevronDown className="w-8 h-8 text-sage-green" />
-                      <ChevronDown className="w-8 h-8 text-sage-green -mt-4 opacity-50" />
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div className="border-t-2 border-gray-200 pt-8 mt-8">
