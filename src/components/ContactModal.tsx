@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Phone, CheckCircle, ArrowRight, ArrowLeft, User, MapPin, Building2, Calendar, Loader2 } from 'lucide-react';
+import { X, Phone, CheckCircle, ArrowRight, ArrowLeft, User, MapPin, Building2, Calendar, Loader2, ChevronDown } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface ContactModalProps {
@@ -305,7 +305,7 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
-      <div className="bg-white rounded-wellness shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto">
+      <div className="bg-white rounded-wellness shadow-2xl max-w-5xl w-full max-h-[95vh] overflow-y-auto relative">
         <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark p-6 text-white rounded-t-wellness sticky top-0 z-10 shadow-lg">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -329,6 +329,8 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
             </button>
           </div>
         </div>
+
+        <div className="md:hidden sticky top-[88px] z-10 h-8 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none"></div>
 
         <div className="p-6 sm:p-8">
           {currentStep === 2 && (
@@ -433,6 +435,26 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                     )}
                   </div>
                 )}
+              </div>
+
+              <div className="md:hidden my-8 animate-fade-in">
+                <div className="bg-gradient-to-br from-misty-teal/10 to-sage-green/10 rounded-wellness p-6 text-center border-2 border-dashed border-sage-green/30 shadow-lg animate-breathe">
+                  <div className="flex flex-col items-center">
+                    <div className="bg-white rounded-full p-3 shadow-md mb-3 animate-pulse">
+                      <User className="w-8 h-8 text-sage-green" />
+                    </div>
+                    <p className="text-gray-900 font-bold text-xl mb-2">
+                      👇 Ora inserisci i tuoi dati
+                    </p>
+                    <p className="text-gray-600 text-base mb-4">
+                      Scorri verso il basso per compilare il form e ricevere il preventivo
+                    </p>
+                    <div className="animate-bounce flex flex-col items-center gap-1">
+                      <ChevronDown className="w-8 h-8 text-sage-green" />
+                      <ChevronDown className="w-8 h-8 text-sage-green -mt-4 opacity-50" />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="border-t-2 border-gray-200 pt-8 mt-8">
