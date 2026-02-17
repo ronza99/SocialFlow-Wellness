@@ -57,7 +57,7 @@ const Hero = () => {
           {/* Sottotitolo */}
           <div className="mb-8 sm:mb-10 animate-fade-in-up px-4" style={{ animationDelay: '0.15s' }}>
             <p className="text-lg sm:text-xl md:text-2xl text-medium-contrast leading-relaxed font-light max-w-3xl mx-auto">
-              Da storie, post, commenti e messaggi: il cliente riceve risposta, sceglie il servizio e prenota in chat (e se vuoi paga).
+              Da storie, post, commenti o messaggi: il cliente riceve risposta, sceglie il servizio e prenota in chat (e se vuoi paga).
             </p>
           </div>
 
@@ -115,7 +115,7 @@ const Hero = () => {
                   <h3 className="font-bold text-gray-900 text-base">Interazioni dai social</h3>
                 </div>
                 <p className="text-sm sm:text-base text-readable leading-relaxed">
-                  Storie, post, reel, commenti e pubblicità possono avviare automaticamente il percorso in chat.
+                  Storie, post, Reels, commenti e pubblicità possono avviare automaticamente il percorso in chat.
                 </p>
               </div>
               <div className="text-left md:border-l md:border-r border-sage-green/20 md:px-6">
@@ -137,7 +137,7 @@ const Hero = () => {
                   <h3 className="font-bold text-gray-900 text-base">Pagamenti e prepagati <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
                 </div>
                 <p className="text-sm sm:text-base text-readable leading-relaxed">
-                  Attiva buoni regalo, pacchetti e abbonamenti direttamente in chat. Se vuoi, puoi anche vendere prodotti. Su WhatsApp: sconti e promemoria automatici.
+                  Se vuoi, puoi anche vendere prodotti. Se attivi WhatsApp, puoi inviare conferme e promemoria in automatico.
                 </p>
               </div>
             </div>
@@ -179,7 +179,7 @@ const Hero = () => {
                   <div className="flex justify-center mb-2">
                     <ListChecks className="w-5 h-5 text-mocha-mousse" />
                   </div>
-                  <p className="text-sm sm:text-base text-readable leading-relaxed">Tu trovi tutto organizzato in agenda e gestisci solo le eccezioni</p>
+                  <p className="text-sm sm:text-base text-readable leading-relaxed">Tu trovi tutto organizzato nel calendario e gestisci solo le eccezioni.</p>
                 </div>
               </div>
             </div>
