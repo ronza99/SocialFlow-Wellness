@@ -75,7 +75,7 @@ const Hero = () => {
               <li className="flex items-start gap-3">
                 <Gift className="w-5 h-5 text-sage-green flex-shrink-0 mt-0.5" />
                 <span className="text-base sm:text-lg text-high-contrast font-medium">
-                  <span className="text-sage-green-dark">(Opzionale)</span> caparra/pagamento, buoni regalo, pacchetti e abbonamenti
+                  <span className="text-sage-green-dark">(Opzionale)</span> vendita prodotti in chat, abbonamenti, coupon automatici e buoni regalo — su social e WhatsApp
                 </span>
               </li>
             </ul>
@@ -134,10 +134,10 @@ const Hero = () => {
                   <div className="bg-mocha-mousse/15 rounded-lg p-2">
                     <CreditCard className="w-5 h-5 text-mocha-mousse" />
                   </div>
-                  <h3 className="font-bold text-gray-900 text-base">Vendite <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
+                  <h3 className="font-bold text-gray-900 text-base">Negozio in chat <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
                 </div>
                 <p className="text-sm sm:text-base text-readable leading-relaxed">
-                  Pagamenti anticipati, buoni regalo, pacchetti e abbonamenti con validazione semplice in struttura.
+                  Vendi prodotti, attiva abbonamenti e invia coupon automatici direttamente in chat — su Instagram, Facebook e WhatsApp.
                 </p>
               </div>
             </div>
