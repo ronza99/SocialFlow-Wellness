@@ -137,7 +137,7 @@ const Hero = () => {
                   <h3 className="font-bold text-gray-900 text-base">Pagamenti e prepagati <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
                 </div>
                 <p className="text-sm sm:text-base text-readable leading-relaxed">
-                  Attiva buoni regalo, pacchetti e abbonamenti direttamente in chat. Se vuoi, puoi anche vendere prodotti. Anche su WhatsApp.
+                  Attiva buoni regalo, pacchetti e abbonamenti direttamente in chat. Se vuoi, puoi anche vendere prodotti. Su WhatsApp: sconti e promemoria automatici.
                 </p>
               </div>
             </div>
