@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Clock, TrendingUp, Star, CheckCircle, MessageCircle, CreditCard, Share2, CalendarCheck, Gift, Play } from 'lucide-react';
+import { ArrowRight, Clock, TrendingUp, Star, CheckCircle, MessageCircle, CreditCard, Share2, CalendarCheck, Gift, Play, CalendarDays, ListChecks } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
 import Logo from './Logo';
@@ -48,7 +48,7 @@ const Hero = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-sans font-black text-high-contrast leading-tight px-4">
               DM intasati?<br />
               <span className="relative inline-block mt-1">
-                <span className="gradient-text">Trasforma i social in prenotazioni automatiche</span>
+                <span className="gradient-text">Trasforma i social in un motore di prenotazioni automatico</span>
                 <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-sage-green via-misty-teal to-mocha-mousse rounded-full opacity-60"></div>
               </span>
             </h1>
@@ -75,7 +75,7 @@ const Hero = () => {
               <li className="flex items-start gap-3">
                 <Gift className="w-5 h-5 text-sage-green flex-shrink-0 mt-0.5" />
                 <span className="text-base sm:text-lg text-high-contrast font-medium">
-                  <span className="text-sage-green-dark">(Opzionale)</span> vendita prodotti in chat, abbonamenti, coupon automatici e buoni regalo — su social e WhatsApp
+                  <span className="text-sage-green-dark">(Opzionale)</span> Pagamenti e prepagati: buoni regalo, pacchetti e abbonamenti
                 </span>
               </li>
             </ul>
@@ -101,7 +101,7 @@ const Hero = () => {
           </div>
 
           {/* Card cosa puoi automatizzare */}
-          <div className="glass rounded-wellness p-6 sm:p-8 md:p-10 max-w-3xl mx-auto mb-16 sm:mb-20 shadow-organic-lg animate-fade-in-up mx-4" style={{ animationDelay: '0.45s' }}>
+          <div className="glass rounded-wellness p-6 sm:p-8 md:p-10 max-w-3xl mx-auto mb-10 sm:mb-12 shadow-organic-lg animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-high-contrast mb-6 flex items-center justify-center gap-2">
               <Star className="w-6 h-6 text-sage-green" />
               Cosa puoi automatizzare
@@ -134,11 +134,53 @@ const Hero = () => {
                   <div className="bg-mocha-mousse/15 rounded-lg p-2">
                     <CreditCard className="w-5 h-5 text-mocha-mousse" />
                   </div>
-                  <h3 className="font-bold text-gray-900 text-base">Negozio in chat <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
+                  <h3 className="font-bold text-gray-900 text-base">Pagamenti e prepagati <span className="text-gray-500 font-normal text-sm">(opzionale)</span></h3>
                 </div>
                 <p className="text-sm sm:text-base text-readable leading-relaxed">
-                  Vendi prodotti, attiva abbonamenti e invia coupon automatici direttamente in chat — su Instagram, Facebook e WhatsApp.
+                  Attiva buoni regalo, pacchetti e abbonamenti direttamente in chat. Se vuoi, puoi anche vendere prodotti. Anche su WhatsApp.
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Mini-blocco Come funziona */}
+          <div className="max-w-3xl mx-auto mb-16 sm:mb-20 animate-fade-in-up px-4" style={{ animationDelay: '0.55s' }}>
+            <h2 className="text-lg sm:text-xl font-serif font-bold text-high-contrast mb-6 text-center">
+              Come funziona <span className="text-medium-contrast font-normal">(senza complicazioni)</span>
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-sage-green/15 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sage-green-dark font-black text-base">1</span>
+                </div>
+                <div>
+                  <div className="flex justify-center mb-2">
+                    <Share2 className="w-5 h-5 text-sage-green" />
+                  </div>
+                  <p className="text-sm sm:text-base text-readable leading-relaxed">Il cliente interagisce dai social — storie, post, commenti o messaggi</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-misty-teal/15 flex items-center justify-center flex-shrink-0">
+                  <span className="text-misty-teal font-black text-base">2</span>
+                </div>
+                <div>
+                  <div className="flex justify-center mb-2">
+                    <CalendarDays className="w-5 h-5 text-misty-teal" />
+                  </div>
+                  <p className="text-sm sm:text-base text-readable leading-relaxed">In chat riceve risposta, sceglie e prenota in pochi tocchi</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-mocha-mousse/15 flex items-center justify-center flex-shrink-0">
+                  <span className="text-mocha-mousse font-black text-base">3</span>
+                </div>
+                <div>
+                  <div className="flex justify-center mb-2">
+                    <ListChecks className="w-5 h-5 text-mocha-mousse" />
+                  </div>
+                  <p className="text-sm sm:text-base text-readable leading-relaxed">Tu trovi tutto organizzato in agenda e gestisci solo le eccezioni</p>
+                </div>
               </div>
             </div>
           </div>
@@ -151,8 +193,8 @@ const Hero = () => {
                   <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
               </div>
-              <p className="text-gray-900 font-bold text-xl mb-2">Più prenotazioni dai DM</p>
-              <p className="text-gray-700 mt-2 font-medium">vs sistemi tradizionali</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Più richieste che diventano prenotazioni</p>
+              <p className="text-gray-700 mt-2 font-medium">Meno perdite tra messaggi e risposte in ritardo.</p>
             </div>
 
             <div className="wellness-card p-8 sm:p-10 hover-lift group">
@@ -161,8 +203,8 @@ const Hero = () => {
                   <Clock className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
               </div>
-              <p className="text-gray-900 font-bold text-xl mb-2">Libertà di prenotazione</p>
-              <p className="text-gray-700 mt-2 font-medium">senza obbligo di pagamento</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Agenda più ordinata</p>
+              <p className="text-gray-700 mt-2 font-medium">Gestione operatori e disponibilità più semplice.</p>
             </div>
 
             <div className="wellness-card p-8 sm:p-10 hover-lift group">
@@ -171,8 +213,8 @@ const Hero = () => {
                   <Star className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
               </div>
-              <p className="text-gray-900 font-bold text-xl mb-2">Risposte automatiche H24</p>
-              <p className="text-gray-700 mt-2 font-medium">(opzionale)</p>
+              <p className="text-gray-900 font-bold text-xl mb-2">Meno no-show <span className="text-gray-500 font-normal text-base">(opzionale)</span></p>
+              <p className="text-gray-700 mt-2 font-medium">Promemoria e follow-up automatici quando servono.</p>
             </div>
           </div>
         </div>
