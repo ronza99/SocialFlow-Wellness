@@ -450,7 +450,7 @@ const ExpandableFeatures = () => {
                     <div>
                       <h4 className="font-serif font-bold text-gray-900 mb-6 sm:mb-8 flex items-center text-lg sm:text-xl">
                         <Zap className="w-6 h-6 sm:w-7 sm:h-7 mr-3 text-sage-green flex-shrink-0" />
-                        Come Funziona
+                        Funziona
                       </h4>
                       <ul className="space-y-4 sm:space-y-5">
                         {feature.details.howItWorks.map((step, index) => (
