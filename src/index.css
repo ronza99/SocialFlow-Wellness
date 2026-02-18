@@ -254,6 +254,7 @@
     /* Prevent horizontal scroll */
     body {
       overflow-x: hidden;
+      padding-bottom: 4rem;
     }
     
     /* Ensure containers don't exceed viewport */
