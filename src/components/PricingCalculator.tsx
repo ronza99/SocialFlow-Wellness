@@ -385,7 +385,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             {/* Introduzione */}
             <div className="bg-soft-apricot rounded-wellness p-6 sm:p-8 max-w-4xl mx-auto border border-sage-green/20">
               <div className="space-y-3 text-base sm:text-lg text-gray-700 leading-relaxed">
-                <p>Progetto un sistema che lavora dentro le chat che usi già (Instagram, Facebook, WhatsApp).</p>
+                <p>Stai creando un preventivo: non paghi nulla adesso. Dopo una chiamata conoscitiva ricevi una proposta personalizzata.</p>
                 <p className="font-bold text-sage-green-dark">Paghi una sola volta il setup iniziale, poi il sistema resta tuo.</p>
                 <div className="mt-4 pt-4 border-t border-sage-green/20">
                   <p className="font-semibold text-sage-green-dark">Sistema modulare:</p>
@@ -939,7 +939,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 <div className="bg-white rounded-wellness p-4 mb-3 border border-sage-green/20">
                   <p className="text-gray-900 font-bold mb-2">Pagamento setup</p>
                   <p className="text-gray-700">
-                    40% all'avvio dei settaggi e 60% a 30 giorni dall'attivazione, dopo 1 mese di manutenzione incluso gratuitamente.
+                    40% all'avvio e 60% a 30 giorni dal go-live (dopo 1 mese di avvio incluso).
                   </p>
                 </div>
                 <p className="text-gray-700 font-medium">
@@ -1030,6 +1030,9 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 <div className="bg-warm-sand rounded-wellness p-4 border border-sage-green/20 mb-6">
                   <p className="text-sm font-medium text-gray-800">
                     Se dopo il primo mese non attivi alcun abbonamento, il sistema continua a funzionare normalmente: potrai contattarmi quando ne avrai bisogno.
+                  </p>
+                  <p className="text-sm font-medium text-gray-800 mt-2">
+                    Il sistema continua a funzionare anche senza abbonamento: ci senti solo quando serve.
                   </p>
                 </div>
                 <button

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
+import HowItWorksHome from '../components/HowItWorksHome';
 import PricingCalculator from '../components/PricingCalculator';
 import { PricingData } from '../App';
 
@@ -24,6 +25,7 @@ export default function Home({ currentPricingData, setCurrentPricingData }: Home
   return (
     <>
       <Hero />
+      <HowItWorksHome />
       <div id="pricing">
         <PricingCalculator
           currentPricingData={currentPricingData}

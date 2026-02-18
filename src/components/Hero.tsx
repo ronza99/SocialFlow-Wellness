@@ -55,9 +55,16 @@ const Hero = () => {
           </div>
 
           {/* Sottotitolo */}
-          <div className="mb-8 sm:mb-10 animate-fade-in-up px-4" style={{ animationDelay: '0.15s' }}>
+          <div className="mb-5 sm:mb-6 animate-fade-in-up px-4" style={{ animationDelay: '0.15s' }}>
             <p className="text-lg sm:text-xl md:text-2xl text-medium-contrast leading-relaxed font-light max-w-3xl mx-auto">
-              Da storie, post, commenti o messaggi: il cliente riceve risposta, sceglie il servizio e prenota in chat (e se vuoi paga).
+              Il cliente scrive su Instagram/Facebook, sceglie trattamento e orario in chat e riceve conferma. Tu ti limiti a gestire l'agenda.
+            </p>
+          </div>
+
+          {/* Microcopy bridge */}
+          <div className="mb-8 sm:mb-10 animate-fade-in-up px-4" style={{ animationDelay: '0.20s' }}>
+            <p className="text-sm sm:text-base text-sage-green-dark font-semibold tracking-wide bg-sage-green/10 inline-block px-4 py-2 rounded-wellness border border-sage-green/30">
+              Il cliente prenota in chat &nbsp;•&nbsp; Tu gestisci solo l'agenda.
             </p>
           </div>
 
@@ -66,7 +73,7 @@ const Hero = () => {
             <ul className="space-y-3 text-left">
               <li className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-sage-green flex-shrink-0 mt-0.5" />
-                <span className="text-base sm:text-lg text-high-contrast font-medium">Risposte immediate a prezzi, disponibilità e trattamenti</span>
+                <span className="text-base sm:text-lg text-high-contrast font-medium">Risposte immediate su prezzi, durata e disponibilità</span>
               </li>
               <li className="flex items-start gap-3">
                 <CalendarCheck className="w-5 h-5 text-sage-green flex-shrink-0 mt-0.5" />
@@ -75,29 +82,36 @@ const Hero = () => {
               <li className="flex items-start gap-3">
                 <Gift className="w-5 h-5 text-sage-green flex-shrink-0 mt-0.5" />
                 <span className="text-base sm:text-lg text-high-contrast font-medium">
-                  <span className="text-sage-green-dark">(Opzionale)</span> Pagamenti e prepagati: buoni regalo, pacchetti e abbonamenti
+                  <span className="text-sage-green-dark">Opzionale:</span> pagamenti e prepagati (buoni regalo, pacchetti, abbonamenti)
                 </span>
               </li>
             </ul>
           </div>
 
           {/* CTA affiancati */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 sm:mb-20 animate-fade-in-up px-4" style={{ animationDelay: '0.35s' }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 animate-fade-in-up px-4" style={{ animationDelay: '0.35s' }}>
             <button
-              onClick={scrollToDemo}
+              onClick={scrollToPricing}
               className="w-full sm:w-auto wellness-button text-base sm:text-lg group px-8 py-4 flex items-center justify-center gap-3 animate-pulse-subtle relative overflow-hidden"
             >
-              <Play className="w-5 h-5 flex-shrink-0" />
-              Guarda una demo in chat
+              Richiedi preventivo
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent" style={{animation: 'shimmer 3s ease-in-out infinite'}}></span>
             </button>
             <button
-              onClick={scrollToPricing}
+              onClick={scrollToDemo}
               className="w-full sm:w-auto bg-gray-900 text-white font-semibold text-base sm:text-lg px-8 py-4 rounded-wellness hover:bg-gray-800 active:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2 group shadow-lg"
             >
-              Calcola il preventivo
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
+              <Play className="w-5 h-5 flex-shrink-0" />
+              Guarda una demo in chat
             </button>
+          </div>
+
+          {/* Micro-frase rassicurante */}
+          <div className="mb-16 sm:mb-20 animate-fade-in-up px-4" style={{ animationDelay: '0.42s' }}>
+            <p className="text-sm text-medium-contrast font-light">
+              Nessun impegno: prima capiamo il tuo caso e poi ricevi un preventivo su misura.
+            </p>
           </div>
 
         </div>
