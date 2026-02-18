@@ -1,6 +1,7 @@
 import React from 'react';
 import { Mail, Phone } from 'lucide-react';
 import Logo from './Logo';
+import profilePhoto from '../assets/profile_photo.png';
 
 const About = () => {
   return (
@@ -19,7 +20,7 @@ const About = () => {
               <div className="md:w-1/3 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center p-8 sm:p-12">
                 <div className="w-full max-w-[200px] aspect-square rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
                   <img
-                    src="/profile_photo.png"
+                    src={profilePhoto}
                     alt="Francesco Farì"
                     className="w-full h-full object-cover"
                   />

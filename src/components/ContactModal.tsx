@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Phone, CheckCircle, ArrowRight, ArrowLeft, User, MapPin, Building2, Calendar, Loader2, ChevronDown } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import faviconImg from '../assets/favicon.png';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -311,7 +312,7 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
             <div className="flex items-center gap-4">
               <div className="bg-white rounded-lg p-2 shadow-md flex-shrink-0">
                 <img
-                  src="/favicon.png"
+                  src={faviconImg}
                   alt="SocialFlow Logo"
                   className="h-10 w-auto object-contain"
                 />

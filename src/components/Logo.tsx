@@ -1,4 +1,5 @@
 import React from 'react';
+import logoSrc from '../assets/socialflow_logo_gear_leaf_transparent.png';
 
 interface LogoProps {
   className?: string;
@@ -27,8 +28,6 @@ const Logo: React.FC<LogoProps> = ({
     xl: 'text-3xl'
   };
 
-  // Usa sempre la versione trasparente per integrazione perfetta
-  const logoSrc = "/socialflow_logo_gear_leaf_transparent.png";
 
   return (
     <div className={`flex items-center ${className}`}>

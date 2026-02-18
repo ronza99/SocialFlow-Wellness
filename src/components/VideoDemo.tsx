@@ -2,6 +2,17 @@ import React from 'react';
 import { Play, Smartphone, MessageSquare, CreditCard, X, ZoomIn, Calendar } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
+import imgStep1 from '../assets/Screenshot_2026-02-18_013231.png';
+import imgStep2 from '../assets/image.png';
+import imgStep3 from '../assets/ea43067f-a01a-4617-9203-b2317592f072.png';
+import imgStep4 from '../assets/image_scelta_operatore.png';
+import imgStep5 from '../assets/bacf2097-262e-405e-bd21-17f8eed8ccea.png';
+import imgStep6 from '../assets/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png';
+import imgStep7 from '../assets/immagine_ecommerce_chat.png';
+import imgStep8 from '../assets/image_google_calendar.png';
+import imgStep9 from '../assets/immagine_crm_hubspot.png';
+import imgStep10a from '../assets/11.png';
+import imgStep10b from '../assets/12.webp';
 
 const VideoDemo = () => {
   const [zoomedImage, setZoomedImage] = React.useState<string | null>(null);
@@ -45,9 +56,9 @@ const VideoDemo = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 mb-12 sm:mb-16">
             {/* Foto 1 - Placeholder */}
             <div className="wellness-card p-6 sm:p-8 text-center mx-4 sm:mx-0">
-              <div className="rounded-wellness h-48 sm:h-56 md:h-64 overflow-hidden mb-6 sm:mb-8 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Screenshot_2026-02-18_013231.png')}>
+              <div className="rounded-wellness h-48 sm:h-56 md:h-64 overflow-hidden mb-6 sm:mb-8 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep1)}>
                 <img
-                  src="/Screenshot_2026-02-18_013231.png"
+                  src={imgStep1}
                   alt="Cliente inizia conversazione su Instagram"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -65,9 +76,9 @@ const VideoDemo = () => {
 
             {/* Foto 2 */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep2)}>
                 <img
-                  src="/image.png"
+                  src={imgStep2}
                   alt="Cliente sceglie massaggio sportivo con opzioni di pagamento"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -86,9 +97,9 @@ const VideoDemo = () => {
 
             {/* Foto 3 */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/ea43067f-a01a-4617-9203-b2317592f072.png')}>
-                <img 
-                  src="/ea43067f-a01a-4617-9203-b2317592f072.png" 
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep3)}>
+                <img
+                  src={imgStep3} 
                   alt="Cliente acquista Gift Card con QR code per massaggio sportivo" 
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -107,9 +118,9 @@ const VideoDemo = () => {
 
             {/* Foto 4 - Scelta Operatore */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image_scelta_operatore.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep4)}>
                 <img
-                  src="/image_scelta_operatore.png"
+                  src={imgStep4}
                   alt="Scelta operatore e personalizzazione del trattamento in chat"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -127,9 +138,9 @@ const VideoDemo = () => {
 
             {/* Foto 5 - Calendario Prenotazione */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/bacf2097-262e-405e-bd21-17f8eed8ccea.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep5)}>
                 <img
-                  src="/bacf2097-262e-405e-bd21-17f8eed8ccea.png"
+                  src={imgStep5}
                   alt="Calendario prenotazione intuitivo e accattivante"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -148,9 +159,9 @@ const VideoDemo = () => {
 
             {/* Foto 6 - Conversazione AI */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep6)}>
                 <img
-                  src="/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png"
+                  src={imgStep6}
                   alt="Conversazione intelligente tra cliente e AI su Messenger"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -169,9 +180,9 @@ const VideoDemo = () => {
 
             {/* Foto 7 - Ecommerce in Chat */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/immagine_ecommerce_chat.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep7)}>
                 <img
-                  src="/immagine_ecommerce_chat.png"
+                  src={imgStep7}
                   alt="Ecommerce integrato in chat - Cliente seleziona creme per la pelle"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -190,9 +201,9 @@ const VideoDemo = () => {
 
             {/* Foto 8 - Google Calendar Sincronizzato */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image_google_calendar.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep8)}>
                 <img
-                  src="/image_google_calendar.png"
+                  src={imgStep8}
                   alt="Google Calendar con prenotazioni sincronizzate automaticamente"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -213,9 +224,9 @@ const VideoDemo = () => {
 
             {/* Foto 9 - Dashboard CRM HubSpot */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/immagine_crm_hubspot.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep9)}>
                 <img
-                  src="/immagine_crm_hubspot.png"
+                  src={imgStep9}
                   alt="Dashboard CRM HubSpot con gestione clienti completa"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -234,9 +245,9 @@ const VideoDemo = () => {
 
             {/* Foto 10 - Analytics e Grafici Performance */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness overflow-hidden mb-4 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/11.png')}>
+              <div className="rounded-wellness overflow-hidden mb-4 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep10a)}>
                 <img
-                  src="/11.png"
+                  src={imgStep10a}
                   alt="Dashboard prenotazioni con riepilogo totale, clienti unici e andamento mensile"
                   className="w-full h-auto object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -245,9 +256,9 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <div className="rounded-wellness overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/12.webp')}>
+              <div className="rounded-wellness overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom(imgStep10b)}>
                 <img
-                  src="/12.webp"
+                  src={imgStep10b}
                   alt="Dashboard con top trattamenti, distribuzione e prenotazioni per operatore"
                   className="w-full h-auto object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
