@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, CalendarCheck, CheckCircle, Clock, Heart, HeadphonesIcon, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, CheckCircle, Clock, Heart, HeadphonesIcon, Sparkles, Star } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
 import Logo from './Logo';
@@ -10,10 +10,6 @@ const Footer = () => {
 
   const scrollToPricing = () => {
     scrollToPricingSection(location.pathname, navigate);
-  };
-
-  const openContactModal = () => {
-    window.dispatchEvent(new CustomEvent('openContactModal'));
   };
 
   return (
@@ -52,18 +48,6 @@ const Footer = () => {
               <span className="mt-2 text-sm text-gray-400">Ci metti 2 minuti.</span>
             </div>
 
-            <div className="flex flex-col items-center w-full sm:w-auto">
-              <button
-                onClick={openContactModal}
-                className="group border-2 border-sage-green text-sage-green hover:bg-sage-green hover:text-white text-base sm:text-lg font-semibold px-8 sm:px-10 py-4 sm:py-5 rounded-wellness transition-all duration-300 w-full sm:w-auto"
-              >
-                <span className="flex items-center justify-center">
-                  Richiedi una demo
-                  <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-              </button>
-              <span className="mt-2 text-sm text-gray-400">Ti mostro il flusso su ambiente demo.</span>
-            </div>
           </div>
 
           {/* Demo info */}
