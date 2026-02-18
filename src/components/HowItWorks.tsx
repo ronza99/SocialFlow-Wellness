@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageSquare, Bot, Calendar, CreditCard, QrCode, CalendarCheck, Database } from 'lucide-react';
+import { MessageSquare, Bot, Calendar, Users, CreditCard, QrCode, CalendarCheck, Database } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
 
@@ -35,31 +35,39 @@ const HowItWorks = () => {
     },
     {
       number: "4",
-      icon: CreditCard,
-      title: "Pagamento (opzionale)",
-      description: "Se attivi il pagamento online, il cliente può pagare subito in sicurezza. In alternativa può pagare in sede. (Opzionale anche per pacchetti e abbonamenti.)",
-      color: "bg-sage-green-dark"
+      icon: Users,
+      title: "Scelta Operatore (e personalizzazione del trattamento)",
+      description: "Dopo aver scelto durata e indicato eventuali note o esigenze particolari, il cliente può scegliere un operatore specifico oppure il primo disponibile. Ogni operatore ha una breve descrizione (stile, manualità, pressione) per aiutare a scegliere in modo semplice e veloce.",
+      color: "bg-sage-green-dark",
+      image: "/Screenshot_2026-02-18_020828.png"
     },
     {
       number: "5",
-      icon: QrCode,
-      title: "Conferma e QR in chat",
-      description: "Dopo la prenotazione, il cliente riceve un QR/codice in chat per riconoscimento e check-in in struttura. Se l'appuntamento viene spostato, il sistema gestisce l'aggiornamento.",
+      icon: CreditCard,
+      title: "Pagamento (opzionale)",
+      description: "Se attivi il pagamento online, il cliente può pagare subito in sicurezza. In alternativa può pagare in sede. (Opzionale anche per pacchetti e abbonamenti.)",
       color: "bg-misty-teal-dark"
     },
     {
       number: "6",
-      icon: CalendarCheck,
-      title: "Il calendario si aggiorna da solo",
-      description: "L'appuntamento viene registrato automaticamente nel calendario. Tu scegli se far scegliere l'operatore al cliente (visualizzando solo le sue disponibilità) oppure distribuire le prenotazioni in modo equilibrato tra tutti gli operatori disponibili.",
+      icon: QrCode,
+      title: "Conferma e QR in chat",
+      description: "Dopo la prenotazione, il cliente riceve un QR/codice in chat per riconoscimento e check-in in struttura. Se l'appuntamento viene spostato, il sistema gestisce l'aggiornamento.",
       color: "bg-sage-green"
     },
     {
       number: "7",
+      icon: CalendarCheck,
+      title: "Il calendario si aggiorna da solo",
+      description: "L'appuntamento viene registrato automaticamente nel calendario. Tu scegli se far scegliere l'operatore al cliente (visualizzando solo le sue disponibilità) oppure distribuire le prenotazioni in modo equilibrato tra tutti gli operatori disponibili.",
+      color: "bg-misty-teal"
+    },
+    {
+      number: "8",
       icon: Database,
       title: "Tutto tracciato e consultabile",
       description: "Dati cliente, prenotazioni e pagamenti vengono salvati e organizzati. Puoi consultare storico, liste e report per avere sempre una visione chiara.",
-      color: "bg-misty-teal"
+      color: "bg-sage-green-dark"
     }
   ];
 
@@ -113,11 +121,17 @@ const HowItWorks = () => {
                   </div>
                 </div>
 
-                {/* Icon */}
+                {/* Icon or Image */}
                 <div className="flex-shrink-0">
-                  <div className={`${step.color} w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-wellness flex items-center justify-center shadow-wellness-lg hover:scale-110 transition-transform duration-300`}>
-                    <step.icon className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white" />
-                  </div>
+                  {step.image ? (
+                    <div className="w-64 sm:w-80 md:w-96 rounded-wellness overflow-hidden shadow-wellness-lg border border-gray-200">
+                      <img src={step.image} alt={step.title} className="w-full h-auto object-cover" />
+                    </div>
+                  ) : (
+                    <div className={`${step.color} w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-wellness flex items-center justify-center shadow-wellness-lg hover:scale-110 transition-transform duration-300`}>
+                      <step.icon className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-white" />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
