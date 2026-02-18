@@ -163,11 +163,10 @@ const Benefits = () => {
                 <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
               </div>
               <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-6 sm:mb-8">
-                Non Solo Strumenti: Ti Rendiamo Autonomo
+                Onboarding guidato: ti rendiamo autonomo
               </h3>
               <p className="text-xl sm:text-2xl text-readable leading-relaxed mb-8 sm:mb-10">
-                Non ti consegniamo un sistema e basta. Nel primo mese ti seguiamo nell'avvio e sistemiamo i dettagli emersi nell'uso reale.
-                Poi puoi scegliere: assistenza mensile oppure ci contatti solo quando serve.
+                Non ti lasciamo un sistema e basta: configuriamo tutto insieme e ti seguiamo nel primo mese di utilizzo reale per rifinire i dettagli. Poi scegli tu: supporto mensile oppure chiamate solo quando serve.
               </p>
             </div>
 
@@ -175,28 +174,28 @@ const Benefits = () => {
               <div className="glass rounded-wellness p-6 sm:p-8 hover-lift">
                 <h4 className="font-serif font-bold text-sage-green-dark mb-4 sm:mb-6 flex items-center text-lg sm:text-xl">
                   <TrendingUp className="w-6 h-6 mr-3" />
-                  ✅ Il Nostro Approccio Unico
+                  Cosa facciamo noi
                 </h4>
                 <ul className="text-readable space-y-3 sm:space-y-4">
                   <li className="flex items-start">
                     <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Formazione personalizzata</strong> per ogni livello</span>
+                    <span><strong>Formazione personalizzata</strong> (anche se non sei pratico)</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Accompagnamento graduale</strong> verso l'autonomia</span>
+                    <span><strong>Procedura semplice,</strong> passo dopo passo</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Spiegazioni semplici</strong> senza tecnicismi</span>
+                    <span><strong>Settaggi e ottimizzazioni</strong> durante l'uso reale</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>1 mese di avvio incluso</strong> (correzioni e piccoli aggiustamenti)</span>
+                    <span><strong>Correzioni e piccoli aggiustamenti</strong> inclusi nel primo mese</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Poi assistenza a scelta:</strong> mensile o a chiamata</span>
+                    <span><strong>Dopo:</strong> supporto mensile o a chiamata, a scelta</span>
                   </li>
                 </ul>
               </div>
@@ -204,28 +203,28 @@ const Benefits = () => {
               <div className="glass rounded-wellness p-6 sm:p-8 hover-lift">
                 <h4 className="font-serif font-bold text-misty-teal-dark mb-4 sm:mb-6 flex items-center text-lg sm:text-xl">
                   <Target className="w-6 h-6 mr-3" />
-                  🎯 Obiettivo: Autonomia Completa
+                  Cosa ottieni tu
                 </h4>
                 <ul className="text-readable space-y-3 sm:space-y-4">
                   <li className="flex items-start">
                     <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Da "non capisco niente"</strong> a "gestisco tutto da solo"</span>
+                    <span><strong>Autonomia</strong> nella gestione quotidiana</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Sicurezza nell'uso quotidiano</strong> del sistema</span>
+                    <span><strong>Sicurezza nell'uso</strong> (senza paura di "rompere qualcosa")</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Capacità di modificare</strong> prezzi e servizi</span>
+                    <span><strong>Capacità di aggiornare</strong> prezzi e servizi quando vuoi</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Capire i numeri</strong> e i risultati</span>
+                    <span><strong>Lettura chiara</strong> di numeri e risultati</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Team più competente</strong> e moderno</span>
+                    <span><strong>Operatività più rapida</strong> e meno errori nel team</span>
                   </li>
                 </ul>
               </div>
@@ -237,7 +236,7 @@ const Benefits = () => {
                   💡 La Nostra Promessa
                 </h5>
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Ti accompagniamo passo dopo passo nell'avvio. Dopo il primo mese puoi scegliere se avere un supporto mensile oppure chiamarci quando serve. La tecnologia deve semplificarti il lavoro, non complicarlo.
+                  Ti accompagniamo nel setup e nel primo periodo di utilizzo reale, così diventi autonomo. La tecnologia deve semplificarti il lavoro, non complicarlo.
                 </p>
               </div>
             </div>
