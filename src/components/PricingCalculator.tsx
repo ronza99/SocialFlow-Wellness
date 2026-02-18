@@ -100,14 +100,18 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
       id: 'growth',
       name: 'Piano Crescita DM',
       price: 129,
-      description: 'Include tutto ciò che c\'è nel Piano Manutenzione tecnica, in più:',
+      description: 'Include tutto ciò che c\'è nel Piano Manutenzione, in più:',
       features: [
-        '<strong>Fino a 3 ore/mese</strong> per miglioramenti (piccole automazioni, ottimizzazioni dei flussi, promo in chat, aggiornamenti logiche)',
-        '<strong>1 chiamata strategica</strong> ogni 2 mesi'
+        '<strong>Fino a 3 ore/mese</strong> di interventi sul sistema esistente (testi, parametri, configurazioni)',
+        '<strong>Supporto WhatsApp dedicato</strong> per richieste e piccole modifiche operative',
+        'Aggiornamento prezzi/durate/trattamenti e contenuti in chat (menu, messaggi, pulsanti)',
+        'Assistenza su dashboard/statistiche (lettura e interpretazione dati disponibili)',
+        'Creazione/aggiornamento template WhatsApp (se attivi WhatsApp; invio e revisione — approvazione a carico di WhatsApp/Meta)'
       ],
-      highlight: 'Per chi vuole ottimizzare la chat come canale di prenotazione e riattivazione clienti.',
+      highlight: 'Per chi vuole tenere il sistema aggiornato (prezzi, promo, template e messaggi) senza gestire la parte tecnica.',
+      note: 'Non incluso: nuove logiche/nuovi flussi da zero, integrazioni extra o moduli nuovi → a preventivo / tariffa oraria.',
       icon: Star,
-      color: 'bg-purple-500',
+      color: 'bg-misty-teal',
       popular: true
     }
   ];
@@ -989,21 +993,21 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                       ))}
                     </div>
 
-                    {plan.note && (
-                      <p className="text-sm text-gray-600 italic">{plan.note}</p>
-                    )}
-
                     {plan.highlight && (
                       <div className="bg-gradient-to-r from-sage-green-dark to-misty-teal-dark text-white rounded-wellness p-4 mt-4 text-center">
                         <p className="font-bold text-sm">{plan.highlight}</p>
                       </div>
                     )}
 
+                    {plan.note && (
+                      <p className="text-xs text-gray-400 mt-3 leading-relaxed">{plan.note}</p>
+                    )}
+
                     <button
                       onClick={() => handleMaintenanceClick(plan.name.toLowerCase())}
                       className={`w-full mt-6 py-4 px-6 rounded-wellness font-bold text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden ${
                         plan.popular
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white shadow-wellness hover:shadow-2xl pulse-maintenance'
+                          ? 'bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white shadow-wellness hover:shadow-2xl animate-pulse-subtle'
                           : 'bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white shadow-lg hover:shadow-xl animate-pulse-subtle'
                       }`}
                     >
