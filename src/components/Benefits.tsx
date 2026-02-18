@@ -182,24 +182,24 @@ const Benefits = () => {
                 </h4>
                 <ul className="text-readable space-y-3 sm:space-y-4">
                   <li className="flex items-start">
-                    <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Formazione personalizzata</strong> (anche se non sei pratico)</span>
+                    <span className="text-sage-green-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Formazione personalizzata</strong> (anche se non sei pratico)</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Procedura semplice,</strong> passo dopo passo</span>
+                    <span className="text-sage-green-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Procedura semplice,</strong> passo dopo passo</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Settaggi e ottimizzazioni</strong> durante l'uso reale</span>
+                    <span className="text-sage-green-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Settaggi e ottimizzazioni</strong> durante l'uso reale</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Correzioni e piccoli aggiustamenti</strong> inclusi nel primo mese</span>
+                    <span className="text-sage-green-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Correzioni e piccoli aggiustamenti</strong> inclusi nel primo mese</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-sage-green-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Dopo:</strong> supporto mensile o a chiamata, a scelta</span>
+                    <span className="text-sage-green-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Dopo:</strong> supporto mensile o a chiamata, a scelta</span>
                   </li>
                 </ul>
               </div>
@@ -211,24 +211,24 @@ const Benefits = () => {
                 </h4>
                 <ul className="text-readable space-y-3 sm:space-y-4">
                   <li className="flex items-start">
-                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Autonomia</strong> nella gestione quotidiana</span>
+                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Autonomia</strong> nella gestione quotidiana</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Sicurezza nell'uso</strong> (senza paura di "rompere qualcosa")</span>
+                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Sicurezza nell'uso</strong> (senza paura di "rompere qualcosa")</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Capacità di aggiornare</strong> prezzi e servizi quando vuoi</span>
+                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Capacità di aggiornare</strong> prezzi e servizi quando vuoi</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Lettura chiara</strong> di numeri e risultati</span>
+                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Lettura chiara</strong> di numeri e risultati</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl">✓</span>
-                    <span><strong>Operatività più rapida</strong> e meno errori nel team</span>
+                    <span className="text-misty-teal-dark mr-3 mt-1 text-xl flex-shrink-0">✓</span>
+                    <span className="text-left"><strong>Operatività più rapida</strong> e meno errori nel team</span>
                   </li>
                 </ul>
               </div>
