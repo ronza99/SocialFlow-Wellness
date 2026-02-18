@@ -273,7 +273,7 @@ const InteractiveChatbot = () => {
   return (
     <>
       {/* Chat Button */}
-      <div className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50">
+      <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50">
         {/* Help Arrow - Solo se chat non è aperta - Nascosto su mobile */}
         {!isOpen && (
           <div className="hidden md:block absolute -top-16 -left-32 animate-bounce">
@@ -306,7 +306,7 @@ const InteractiveChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-72 sm:w-80 md:w-96 h-80 sm:h-96 bg-white rounded-wellness shadow-2xl border border-sage-green/20 flex flex-col overflow-hidden">
+        <div className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-50 w-72 sm:w-80 md:w-96 h-80 sm:h-96 bg-white rounded-wellness shadow-2xl border border-sage-green/20 flex flex-col overflow-hidden">
           {/* Header */}
           <div className="bg-gradient-to-r from-sage-green to-misty-teal text-white p-3 sm:p-4 flex items-center justify-between">
             <div className="flex items-center space-x-2 sm:space-x-3">

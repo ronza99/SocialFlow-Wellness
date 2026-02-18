@@ -104,7 +104,7 @@ const Hero = () => {
       </div>
 
       {/* Sticky CTA mobile */}
-      <div className="fixed bottom-0 left-0 right-0 glass-dark backdrop-blur-lg border-t border-white/20 p-4 z-40 sm:hidden">
+      <div className="fixed bottom-16 left-0 right-0 glass-dark backdrop-blur-lg border-t border-white/20 p-4 z-40 sm:hidden">
         <button
           onClick={scrollToPricing}
           className="w-full wellness-button text-base font-semibold animate-pulse-subtle"

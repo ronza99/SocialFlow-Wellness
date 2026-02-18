@@ -82,7 +82,7 @@ const MarketDataNotifications = () => {
   const notification = marketData[currentNotification];
 
   return (
-    <div className={`fixed bottom-6 left-6 z-50 transition-all duration-500 transform ${
+    <div className={`fixed bottom-20 sm:bottom-6 left-6 z-50 transition-all duration-500 transform ${
       isVisible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
     }`}>
       <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-6 max-w-sm">
