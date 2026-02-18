@@ -105,12 +105,12 @@ const VideoDemo = () => {
               </p>
             </div>
 
-            {/* Foto 4 - Calendario Prenotazione */}
+            {/* Foto 4 - Scelta Operatore */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/bacf2097-262e-405e-bd21-17f8eed8ccea.png')}>
-                <img 
-                  src="/bacf2097-262e-405e-bd21-17f8eed8ccea.png" 
-                  alt="Calendario prenotazione intuitivo e accattivante" 
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy copy copy.png')}>
+                <img
+                  src="/image copy copy copy copy.png"
+                  alt="Scelta operatore e personalizzazione del trattamento in chat"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
@@ -118,20 +118,40 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 4: Calendario Prenotazione</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 4: Scelta Operatore</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Questa è come si mostra il calendario per prenotare: molto intuitivo e accattivante. 
-                Il cliente può vedere tutte le disponibilità in tempo reale e scegliere data e orario 
+                Dopo aver scelto durata e indicato eventuali note o esigenze particolari, il cliente può decidere se prenotare con un operatore specifico oppure scegliere il primo disponibile.
+                Ogni operatore ha una breve descrizione (stile, manualità, pressione) per aiutare il cliente a scegliere in modo semplice e veloce.
+              </p>
+            </div>
+
+            {/* Foto 5 - Calendario Prenotazione */}
+            <div className="wellness-card p-4 sm:p-6 text-center">
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/bacf2097-262e-405e-bd21-17f8eed8ccea.png')}>
+                <img
+                  src="/bacf2097-262e-405e-bd21-17f8eed8ccea.png"
+                  alt="Calendario prenotazione intuitivo e accattivante"
+                  className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
+                  style={{ imageRendering: 'crisp-edges' }}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                  <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </div>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 5: Calendario Prenotazione</h4>
+              <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                Questa è come si mostra il calendario per prenotare: molto intuitivo e accattivante.
+                Il cliente può vedere tutte le disponibilità in tempo reale e scegliere data e orario
                 con un semplice tap. Design pulito e user-friendly che rende la prenotazione un piacere.
               </p>
             </div>
 
-            {/* Foto 5 - Conversazione AI */}
+            {/* Foto 6 - Conversazione AI */}
             <div className="wellness-card p-4 sm:p-6 text-center">
               <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png')}>
-                <img 
-                  src="/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png" 
-                  alt="Conversazione intelligente tra cliente e AI su Messenger" 
+                <img
+                  src="/3029fb9d-c935-4e97-b3cd-7766ab40a2d8.png"
+                  alt="Conversazione intelligente tra cliente e AI su Messenger"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
@@ -139,20 +159,20 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 5: Conversazione AI Intelligente</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 6: Conversazione AI Intelligente</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Questa rappresenta un esempio di conversazione tra un cliente e l'intelligenza artificiale 
-                direttamente su Messenger, in grado di adattarsi alle domande e rispondere a ogni dubbio del cliente. 
+                Questa rappresenta un esempio di conversazione tra un cliente e l'intelligenza artificiale
+                direttamente su Messenger, in grado di adattarsi alle domande e rispondere a ogni dubbio del cliente.
                 Al termine della conversazione lo porterà di nuovo indietro per terminare il pagamento o la prenotazione del trattamento scelto.
               </p>
             </div>
 
-            {/* Foto 6 - Ecommerce in Chat */}
+            {/* Foto 7 - Ecommerce in Chat */}
             <div className="wellness-card p-4 sm:p-6 text-center">
               <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-29 221527.png')}>
-                <img 
-                  src="/Immagine 2025-07-29 221527.png" 
-                  alt="Ecommerce integrato in chat - Cliente seleziona creme per la pelle" 
+                <img
+                  src="/Immagine 2025-07-29 221527.png"
+                  alt="Ecommerce integrato in chat - Cliente seleziona creme per la pelle"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
@@ -160,15 +180,15 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 6: Ecommerce Integrato in Chat</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 7: Ecommerce Integrato in Chat</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Esempio reale di ecommerce direttamente in chat: il cliente ha selezionato "Creme" 
-                e il sistema mostra 2 creme per la pelle con foto, descrizioni e prezzi. 
+                Esempio reale di ecommerce direttamente in chat: il cliente ha selezionato "Creme"
+                e il sistema mostra 2 creme per la pelle con foto, descrizioni e prezzi.
                 Tutto nella chat senza uscire dal social - vendita diretta e immediata!
               </p>
             </div>
 
-            {/* Foto 7 - Google Calendar Sincronizzato */}
+            {/* Foto 8 - Google Calendar Sincronizzato */}
             <div className="wellness-card p-4 sm:p-6 text-center">
               <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy.png')}>
                 <img
@@ -181,7 +201,7 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 7: Google Calendar Sincronizzato</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 8: Google Calendar Sincronizzato</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                 Qui in Google Calendar vengono mostrate tutte le prenotazioni di ogni operatore
                 in modo ordinato e organizzato. Ogni volta che un cliente cancella o prenota,
@@ -191,12 +211,12 @@ const VideoDemo = () => {
               </p>
             </div>
 
-            {/* Foto 8 - Dashboard CRM HubSpot */}
+            {/* Foto 9 - Dashboard CRM HubSpot */}
             <div className="wellness-card p-4 sm:p-6 text-center">
               <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-29 223038.png')}>
-                <img 
-                  src="/Immagine 2025-07-29 223038.png" 
-                  alt="Dashboard CRM HubSpot con gestione clienti completa" 
+                <img
+                  src="/Immagine 2025-07-29 223038.png"
+                  alt="Dashboard CRM HubSpot con gestione clienti completa"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
@@ -204,15 +224,15 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 8: Dashboard CRM Professionale</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 9: Dashboard CRM Professionale</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Dashboard CRM di HubSpot dove vengono tracciati automaticamente tutti i clienti 
-                con storico delle interazioni e prenotazioni (dati censurati per privacy). 
+                Dashboard CRM di HubSpot dove vengono tracciati automaticamente tutti i clienti
+                con storico delle interazioni e prenotazioni (dati censurati per privacy).
                 Visione 360° di ogni cliente per il controllo totale del tuo business.
               </p>
             </div>
 
-            {/* Foto 9 - Analytics e Grafici Performance */}
+            {/* Foto 10 - Analytics e Grafici Performance */}
             <div className="wellness-card p-4 sm:p-6 text-center">
               <div className="rounded-wellness overflow-hidden mb-4 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/11.png')}>
                 <img
@@ -236,7 +256,7 @@ const VideoDemo = () => {
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 9: Analytics e Performance (Dashboard Prenotazioni)</h4>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 10: Analytics e Performance (Dashboard Prenotazioni)</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
                 Esempio di grafici e dati per capire in pochi secondi come sta andando il centro: in alto trovi il riepilogo con <strong>totale prenotazioni</strong>, <strong>clienti unici</strong>, trattamento più richiesto e operatore più pieno. Al centro vedi l'andamento delle prenotazioni <strong>mese per mese</strong>. In basso trovi il confronto tra prenotazioni normali e <strong>pacchetti/prepagati</strong> (con percentuale), così capisci quanta parte del fatturato viene da vendite "ricorrenti".
                 <br /><br />
