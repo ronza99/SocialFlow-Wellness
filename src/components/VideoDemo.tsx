@@ -45,10 +45,10 @@ const VideoDemo = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 mb-12 sm:mb-16">
             {/* Foto 1 - Placeholder */}
             <div className="wellness-card p-6 sm:p-8 text-center mx-4 sm:mx-0">
-              <div className="rounded-wellness h-48 sm:h-56 md:h-64 overflow-hidden mb-6 sm:mb-8 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/files_5792006-1752964493999-image.png')}>
-                <img 
-                  src="/files_5792006-1752964493999-image.png" 
-                  alt="Cliente inizia conversazione su Instagram" 
+              <div className="rounded-wellness h-48 sm:h-56 md:h-64 overflow-hidden mb-6 sm:mb-8 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Screenshot_2026-02-18_013231.png')}>
+                <img
+                  src="/Screenshot_2026-02-18_013231.png"
+                  alt="Cliente inizia conversazione su Instagram"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
