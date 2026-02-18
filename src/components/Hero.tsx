@@ -93,7 +93,7 @@ const Hero = () => {
             </button>
             <button
               onClick={scrollToPricing}
-              className="w-full sm:w-auto border-2 border-sage-green text-sage-green-dark font-semibold text-base sm:text-lg px-8 py-4 rounded-wellness hover:bg-sage-green/10 transition-all duration-200 flex items-center justify-center gap-2 group"
+              className="w-full sm:w-auto bg-gray-900 text-white font-semibold text-base sm:text-lg px-8 py-4 rounded-wellness hover:bg-gray-800 active:bg-gray-700 transition-all duration-200 flex items-center justify-center gap-2 group shadow-lg"
             >
               Calcola il preventivo
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
