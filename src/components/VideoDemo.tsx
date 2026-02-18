@@ -214,24 +214,33 @@ const VideoDemo = () => {
 
             {/* Foto 9 - Analytics e Grafici Performance */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-30 221835.png')}>
-                <img 
-                  src="/Immagine 2025-07-30 221835.png" 
-                  alt="Dashboard analytics con grafici performance del centro wellness" 
-                  className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
+              <div className="rounded-wellness overflow-hidden mb-4 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/11.png')}>
+                <img
+                  src="/11.png"
+                  alt="Dashboard prenotazioni con riepilogo totale, clienti unici e andamento mensile"
+                  className="w-full h-auto object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
-              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 9: Analytics e Performance</h4>
+              <div className="rounded-wellness overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/12.webp')}>
+                <img
+                  src="/12.webp"
+                  alt="Dashboard con top trattamenti, distribuzione e prenotazioni per operatore"
+                  className="w-full h-auto object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
+                  style={{ imageRendering: 'crisp-edges' }}
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                  <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </div>
+              <h4 className="font-serif font-bold text-gray-900 mb-2 sm:mb-3 text-base sm:text-lg">Passo 9: Analytics e Performance (Dashboard Prenotazioni)</h4>
               <p className="text-gray-700 leading-relaxed text-sm sm:text-base">
-                Esempio di grafici e dati per analizzare come sta andando l'attività: 
-                in alto a sinistra i <strong>contatti nuovi</strong> ottenuti mese per mese, 
-                in alto a destra tutte le <strong>prenotazioni effettuate</strong> dai clienti 
-                e in basso a sinistra tutte le <strong>Gift Card vendute</strong>. 
-                Controllo completo delle performance del tuo centro.
+                Esempio di grafici e dati per capire in pochi secondi come sta andando il centro: in alto trovi il riepilogo con <strong>totale prenotazioni</strong>, <strong>clienti unici</strong>, trattamento più richiesto e operatore più pieno. Al centro vedi l'andamento delle prenotazioni <strong>mese per mese</strong>. In basso trovi il confronto tra prenotazioni normali e <strong>pacchetti/prepagati</strong> (con percentuale), così capisci quanta parte del fatturato viene da vendite "ricorrenti".
+                <br /><br />
+                Nella seconda schermata hai il dettaglio: a sinistra la <strong>classifica dei trattamenti</strong> più prenotati e il grafico che mostra la loro distribuzione, mentre in basso vedi come sono distribuite le prenotazioni tra gli <strong>operatori/calendari</strong>, utile per bilanciare il carico di lavoro e ridurre i buchi in agenda.
               </p>
             </div>
           </div>
