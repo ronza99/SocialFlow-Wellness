@@ -65,10 +65,10 @@ const VideoDemo = () => {
 
             {/* Foto 2 */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/ea43067f-a01a-4617-9203-b2317592f072.png')}>
-                <img 
-                  src="/ea43067f-a01a-4617-9203-b2317592f072.png" 
-                  alt="Cliente sceglie massaggio sportivo con opzioni di pagamento" 
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image.png')}>
+                <img
+                  src="/image.png"
+                  alt="Cliente sceglie massaggio sportivo con opzioni di pagamento"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
                 />
