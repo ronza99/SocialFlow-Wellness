@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Star, UserCheck, ChevronRight, Shield, Info } from 'lucide-react';
+import { Bell, UserCheck, ChevronRight, Shield, Info } from 'lucide-react';
 
 const benefitCards = [
   {
@@ -12,17 +12,6 @@ const benefitCards = [
       'Il promemoria è automatico: non devi ricordarti di inviarlo ogni volta.',
     ],
     when: 'Ha senso per tutti i centri con appuntamenti ricorrenti o servizi ad alta no-show.',
-  },
-  {
-    icon: Star,
-    color: 'bg-misty-teal/10 text-misty-teal',
-    border: 'border-misty-teal/25',
-    title: 'Feedback e recensione',
-    bullets: [
-      'Dopo il trattamento, un messaggio gentile chiede com\'è andata e invita a lasciare una recensione.',
-      'Raccogliere feedback in modo semplice aiuta a migliorare e a costruire reputazione online.',
-    ],
-    when: 'Ha senso quando si vuole aumentare le recensioni su Google o altri canali, senza chiedere manualmente.',
   },
   {
     icon: UserCheck,
@@ -50,11 +39,6 @@ const steps = [
   },
   {
     num: '3',
-    title: 'Dopo il trattamento',
-    text: 'Se il cliente ha dato consenso, riceve un messaggio per lasciare un feedback o una recensione.',
-  },
-  {
-    num: '4',
     title: 'Clienti inattivi',
     text: 'Solo a chi ha autorizzato le comunicazioni marketing: un messaggio per invitarli a tornare.',
   },
