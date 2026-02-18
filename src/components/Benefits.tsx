@@ -251,31 +251,8 @@ const Benefits = () => {
                   Non ti senti ancora sicuro? Offriamo servizi dopo la consegna finale 
                   per accompagnarti fino alla completa autonomia.
                 </p>
-                <button 
-                  onClick={() => {
-                    // Scroll direttamente alla sezione MaintenanceService
-                    const maintenanceSection = document.querySelector('h2');
-                    const allH2 = document.querySelectorAll('h2');
-                    let targetSection = null;
-                    
-                    // Cerca il titolo che contiene "Servizio di Manutenzione"
-                    allH2.forEach(h2 => {
-                      if (h2.textContent && h2.textContent.includes('Servizio di Manutenzione')) {
-                        targetSection = h2.closest('section');
-                      }
-                    });
-                    
-                    if (targetSection) {
-                      targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    } else {
-                      // Fallback: cerca per classe o ID se disponibile
-                      const fallbackSection = document.querySelector('[class*="maintenance"]') || 
-                                            document.querySelector('section:has(h2:contains("🛡"))');
-                      if (fallbackSection) {
-                        fallbackSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }
-                    }
-                  }}
+                <button
+                  onClick={scrollToPricing}
                   className="wellness-button-secondary text-base sm:text-lg"
                 >
                   Scopri i Nostri Piani di Assistenza
