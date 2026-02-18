@@ -107,9 +107,9 @@ const VideoDemo = () => {
 
             {/* Foto 4 - Scelta Operatore */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy copy copy.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image_scelta_operatore.png')}>
                 <img
-                  src="/image copy copy copy copy.png"
+                  src="/image_scelta_operatore.png"
                   alt="Scelta operatore e personalizzazione del trattamento in chat"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -169,9 +169,9 @@ const VideoDemo = () => {
 
             {/* Foto 7 - Ecommerce in Chat */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-29 221527.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/immagine_ecommerce_chat.png')}>
                 <img
-                  src="/Immagine 2025-07-29 221527.png"
+                  src="/immagine_ecommerce_chat.png"
                   alt="Ecommerce integrato in chat - Cliente seleziona creme per la pelle"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -190,9 +190,9 @@ const VideoDemo = () => {
 
             {/* Foto 8 - Google Calendar Sincronizzato */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image copy copy.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/image_google_calendar.png')}>
                 <img
-                  src="/image copy copy.png"
+                  src="/image_google_calendar.png"
                   alt="Google Calendar con prenotazioni sincronizzate automaticamente"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}
@@ -213,9 +213,9 @@ const VideoDemo = () => {
 
             {/* Foto 9 - Dashboard CRM HubSpot */}
             <div className="wellness-card p-4 sm:p-6 text-center">
-              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/Immagine 2025-07-29 223038.png')}>
+              <div className="rounded-wellness h-56 sm:h-64 overflow-hidden mb-6 shadow-wellness cursor-pointer relative group" onClick={() => openZoom('/immagine_crm_hubspot.png')}>
                 <img
-                  src="/Immagine 2025-07-29 223038.png"
+                  src="/immagine_crm_hubspot.png"
                   alt="Dashboard CRM HubSpot con gestione clienti completa"
                   className="w-full h-full object-contain bg-white hover:scale-105 transition-transform duration-300 image-rendering-crisp"
                   style={{ imageRendering: 'crisp-edges' }}

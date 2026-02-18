@@ -19,7 +19,7 @@ const About = () => {
               <div className="md:w-1/3 bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center p-8 sm:p-12">
                 <div className="w-full max-w-[200px] aspect-square rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
                   <img
-                    src="/untitled_(1).png"
+                    src="/profile_photo.png"
                     alt="Francesco Farì"
                     className="w-full h-full object-cover"
                   />
