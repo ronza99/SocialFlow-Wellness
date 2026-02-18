@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Heart, Sparkles, Star, Zap } from 'lucide-react';
+import { ArrowRight, Heart, Play, CheckCircle, Clock } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
 import Logo from './Logo';
@@ -12,77 +12,101 @@ const Footer = () => {
     scrollToPricingSection(location.pathname, navigate);
   };
 
+  const scrollToDemo = () => {
+    if (location.pathname !== '/come-funziona') {
+      navigate('/come-funziona');
+      setTimeout(() => {
+        const el = document.getElementById('video-demo');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
+    } else {
+      const el = document.getElementById('video-demo');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
-      {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-sage-green/10 organic-blob opacity-30"></div>
       <div className="absolute bottom-0 right-0 w-48 h-48 bg-misty-teal/10 organic-blob-2 opacity-20"></div>
-      
-      {/* Main CTA Section */}
-      <div className="py-24 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-16 animate-fade-in">
-            <div className="flex items-center justify-center mb-8">
-              <Sparkles className="w-8 h-8 sm:w-12 sm:h-12 text-sage-green mr-3 sm:mr-4" />
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif font-bold text-white mb-8 sm:mb-12 px-2">
-                Configura il tuo sistema SocialFlow Wellness
-              </h2>
-            </div>
-            <p className="text-2xl sm:text-3xl md:text-4xl text-gray-200 mb-12 sm:mb-16 max-w-4xl mx-auto font-light px-4">
-              Prenotazioni e vendite direttamente in chat
+
+      <div className="py-20 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+          <div className="mb-4 animate-fade-in">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-sans font-black text-white leading-tight">
+              Configura SocialFlow Wellness
+            </h2>
+          </div>
+
+          <div className="mb-10 animate-fade-in">
+            <p className="text-lg sm:text-xl text-gray-300 font-light max-w-2xl mx-auto">
+              Prenotazioni e vendite direttamente in chat, con calendario e flusso operativo collegati.
             </p>
           </div>
 
-          <div className="space-y-8 animate-fade-in-up">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 animate-fade-in-up">
             <button
               onClick={scrollToPricing}
-              className="group bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white text-lg sm:text-xl md:text-2xl font-semibold px-8 sm:px-12 md:px-16 py-4 sm:py-6 md:py-8 rounded-wellness shadow-wellness-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto animate-pulse-subtle"
+              className="w-full sm:w-auto group bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white font-semibold text-base sm:text-lg px-8 py-4 rounded-wellness shadow-wellness hover:shadow-wellness-xl transform hover:scale-[1.02] transition-all duration-200 flex flex-col items-center gap-0.5"
             >
-              <span className="flex items-center justify-center">
-                <Zap className="mr-3 sm:mr-4 w-6 h-6 sm:w-8 sm:h-8" />
-                Calcola il Tuo Preventivo
-                <ArrowRight className="ml-3 sm:ml-4 w-6 h-6 sm:w-8 sm:h-8 group-hover:translate-x-2 transition-transform duration-300" />
+              <span className="flex items-center gap-2">
+                Calcola il preventivo
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
               </span>
+              <span className="text-xs font-normal text-white/75">Ci metti 2 minuti.</span>
+            </button>
+            <button
+              onClick={scrollToDemo}
+              className="w-full sm:w-auto font-semibold text-base sm:text-lg px-8 py-4 rounded-wellness border border-white/30 text-white hover:bg-white/10 transition-all duration-200 flex flex-col items-center gap-0.5"
+            >
+              <span className="flex items-center gap-2">
+                <Play className="w-5 h-5 flex-shrink-0" />
+                Richiedi una demo
+              </span>
+              <span className="text-xs font-normal text-white/60">Ti mostro il flusso su ambiente demo.</span>
             </button>
           </div>
 
-          {/* Demo info */}
-          <div className="mt-16 p-10 glass-dark rounded-wellness max-w-3xl mx-auto animate-fade-in-up">
-            <div className="flex items-center justify-center mb-4">
-              <Star className="w-8 h-8 text-sage-green mr-3" />
-              <span className="text-2xl font-serif font-bold text-white">Vuoi vedere il sistema in azione?</span>
-            </div>
-            <p className="text-xl text-gray-200">
-              Contattami per testare tutto con un centro fittizio funzionante. 
-              Vedrai l'intero processo dalla chat al pagamento in tempo reale.
+          <div className="mt-12 p-8 rounded-wellness border border-white/15 bg-white/5 max-w-2xl mx-auto animate-fade-in-up text-left">
+            <p className="text-base font-semibold text-white mb-2">Vuoi vedere il flusso completo prima di partire?</p>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Ti mostro una demo guidata su ambiente di prova: prenotazione in chat → calendario → notifiche interne → (se previsto) pagamento. Nessun accesso ai tuoi account in questa fase.
             </p>
           </div>
 
-          {/* Enhanced Trust indicators */}
-          <div className="mt-20 pt-16 border-t border-gray-700">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 text-center">
-              <div className="group hover-lift">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🚀</div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-3">Setup in media 7–14 giorni</h3>
-                <p className="text-gray-300 text-lg">dalla conferma accessi e materiali</p>
+          <div className="mt-12 pt-10 border-t border-gray-700 animate-fade-in-up">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+              <div className="bg-white/5 border border-white/10 rounded-wellness p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <Clock className="w-5 h-5 text-sage-green flex-shrink-0" />
+                  <h3 className="text-base font-bold text-white">Go-live stimato: 7–14 giorni lavorativi*</h3>
+                </div>
+                <p className="text-sm text-gray-400">Da quando abbiamo accessi e materiali completi.</p>
               </div>
-              <div className="group hover-lift">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">🛡️</div>
-                <h3 className="text-2xl font-serif font-bold text-white mb-3">Garanzia di avvio</h3>
-                <p className="text-gray-300 text-lg">se non funziona ciò che concordiamo, ti rimborsiamo il setup (condizioni chiare)</p>
+              <div className="bg-white/5 border border-white/10 rounded-wellness p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle className="w-5 h-5 text-sage-green flex-shrink-0" />
+                  <h3 className="text-base font-bold text-white">Avvio controllato</h3>
+                </div>
+                <p className="text-sm text-gray-400">Checklist + test del flusso (prenotazione, calendario, notifiche, tag/CRM) prima della messa online.</p>
               </div>
-              <div className="group hover-lift">
-                <div className="text-6xl mb-6 group-hover:scale-110 transition-transform duration-300">📞</div>
-                <h3 className="text-2xl font-bold text-white mb-3">Supporto diretto incluso</h3>
-                <p className="text-gray-300 text-lg">avvio guidato + piccoli fix post-lancio</p>
+              <div className="bg-white/5 border border-white/10 rounded-wellness p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle className="w-5 h-5 text-misty-teal flex-shrink-0" />
+                  <h3 className="text-base font-bold text-white">Supporto iniziale incluso</h3>
+                </div>
+                <p className="text-sm text-gray-400">Avvio guidato e piccoli aggiustamenti post-go-live, entro limiti definiti.</p>
               </div>
             </div>
+            <p className="text-xs text-gray-500 mt-4 text-center">
+              *Tempistiche indicative: possono variare in base a rapidità di consegna accessi/materiali e ai moduli attivati.
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Enhanced Bottom section with Logo */}
-      <div className="border-t border-gray-700 py-12 relative z-10">
+      <div className="border-t border-gray-700 py-10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="flex items-center mb-6 sm:mb-0">
@@ -91,8 +115,8 @@ const Footer = () => {
               </div>
               <div>
                 <div className="flex items-center mb-2">
-                  <Heart className="w-6 h-6 text-terracotta mr-3" />
-                  <p className="text-gray-300 text-lg">
+                  <Heart className="w-5 h-5 text-terracotta mr-3" />
+                  <p className="text-gray-300 text-base">
                     Fatto con passione per il settore wellness
                   </p>
                 </div>
