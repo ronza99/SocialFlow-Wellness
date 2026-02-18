@@ -109,22 +109,22 @@ const Benefits = () => {
           {/* Enhanced Comparison */}
           <div className="wellness-card p-8 sm:p-12 max-w-6xl mx-auto mb-12 sm:mb-16 shadow-organic-lg animate-fade-in-up">
             <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-8 sm:mb-12">
-              SocialFlow vs Software Tradizionali
+              SocialFlow vs Gestionali classici
             </h3>
             <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-12">
               <div className="glass rounded-wellness p-8 sm:p-10 border-2 border-red-200 hover-lift">
                 <h4 className="font-serif font-bold text-terracotta mb-8 flex items-center text-xl sm:text-2xl">
                   <Users className="w-8 h-8 mr-4" />
-                  Software Tradizionali
+                  Gestionali classici
                 </h4>
                 <ul className="text-readable space-y-4 sm:space-y-5 text-left">
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>Solo gestione passiva delle prenotazioni</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>App esterne: più passi = più abbandoni</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>Registrazioni obbligatorie = abbandoni</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>Limitazioni prenotazioni multiple</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>Poca acquisizione: non si collegano alle sponsorizzazioni</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>Sistemi rigidi e difficili da modificare</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">✗</span>No-show frequenti senza pagamento anticipato</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Prenotazioni gestite su pagine/portali esterni</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Più passaggi → più abbandoni</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Spesso form o login per prenotare</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Regole rigide, difficili da adattare</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Social e ads poco collegati alla prenotazione</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Caparra/pagamento anticipato non sempre nel flusso</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-terracotta mr-4 mt-1 text-xl flex-shrink-0">–</span>Modifiche lente o limitate</li>
                 </ul>
               </div>
               <div className="glass rounded-wellness p-8 sm:p-10 border-2 border-sage-green hover-lift">
@@ -133,13 +133,13 @@ const Benefits = () => {
                   SocialFlow Wellness
                 </h4>
                 <ul className="text-readable space-y-4 sm:space-y-5 text-left">
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Acquisizione + gestione in un unico sistema</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Tutto nei social che i clienti già usano</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Niente registrazioni = meno abbandoni</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Prenotazioni senza limiti inutili</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Ads Facebook/Instagram → Chat diretta = Vendita</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Modificabile velocemente in base alle esigenze del centro</li>
-                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Buoni regalo e trattamenti prepagati (se ti servono)</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Da social → chat → calendario: un flusso unico</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Tutto dove i clienti già scrivono (Instagram/Facebook)</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Senza account o portali esterni</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Percorsi e regole adattati al tuo centro</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Ads → chat diretta → prenotazione (e pagamento se vuoi)</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Buoni regalo, pacchetti e abbonamenti (opzionale)</li>
+                  <li className="flex items-start text-base sm:text-lg"><span className="text-sage-green-dark mr-4 mt-1 text-xl flex-shrink-0">✓</span>Per il centro è semplice: calendario + gestione eccezioni</li>
                 </ul>
               </div>
             </div>
