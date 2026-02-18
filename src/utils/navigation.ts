@@ -14,3 +14,19 @@ export const scrollToPricingSection = (currentPath: string, navigate: (path: str
     }
   }
 };
+
+export const scrollToMaintenancePlans = (currentPath: string, navigate: (path: string) => void) => {
+  const scrollToSection = () => {
+    const section = document.getElementById('piani-manutenzione');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  if (currentPath !== '/') {
+    navigate('/');
+    setTimeout(scrollToSection, 300);
+  } else {
+    scrollToSection();
+  }
+};

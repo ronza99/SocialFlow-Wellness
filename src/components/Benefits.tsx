@@ -1,7 +1,7 @@
 import React from 'react';
 import { Instagram, Bot, CreditCard, Palette, Calculator, Shield, Users, Zap, Target, Gift, TrendingUp, Calendar, Sparkles, Brain, MessageSquare } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { scrollToPricingSection } from '../utils/navigation';
+import { scrollToPricingSection, scrollToMaintenancePlans } from '../utils/navigation';
 
 const Benefits = () => {
   const navigate = useNavigate();
@@ -9,6 +9,10 @@ const Benefits = () => {
 
   const scrollToPricing = () => {
     scrollToPricingSection(location.pathname, navigate);
+  };
+
+  const scrollToMaintenance = () => {
+    scrollToMaintenancePlans(location.pathname, navigate);
   };
 
   const benefits = [
@@ -252,7 +256,7 @@ const Benefits = () => {
                   per accompagnarti fino alla completa autonomia.
                 </p>
                 <button
-                  onClick={scrollToPricing}
+                  onClick={scrollToMaintenance}
                   className="wellness-button-secondary text-base sm:text-lg"
                 >
                   Scopri i Nostri Piani di Assistenza

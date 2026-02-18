@@ -953,7 +953,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             </div>
 
             {/* Piani di manutenzione */}
-            <div className="mb-12">
+            <div id="piani-manutenzione" className="mb-12">
               <h4 className="text-2xl font-serif font-bold text-gray-900 mb-8 text-center">
                 Dopo il primo mese: abbonamento o interventi a ore
               </h4>
