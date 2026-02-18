@@ -91,7 +91,7 @@ export default function Navigation() {
           {navLinks.map((link) => {
             const Icon = link.icon;
             const isActive = location.pathname === link.path;
-            const shortLabel = link.label === 'Come funziona' ? 'Funziona' : link.label;
+            const shortLabel = link.label;
             return (
               <Link
                 key={link.path}
