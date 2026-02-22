@@ -116,6 +116,26 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Dati legali */}
+      <div className="border-t border-gray-700/50 py-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap gap-x-5 gap-y-1 text-gray-500" style={{ fontSize: '12px', lineHeight: '1.6' }}>
+            <span className="text-gray-400 font-medium">FRANCESCO FARÌ</span>
+            <span>P. IVA: 04244930360</span>
+            <span>REA: MO-454717</span>
+            <a href="mailto:francesco@socialflowwellness.it" className="hover:text-gray-300 transition-colors duration-200">
+              francesco@socialflowwellness.it
+            </a>
+            <span>PEC:&nbsp;
+              <a href="mailto:francesco.fari@registerpec.it" className="hover:text-gray-300 transition-colors duration-200">
+                francesco.fari@registerpec.it
+              </a>
+            </span>
+            <span>Via Erbedole 13 int. 3, 41015 Nonantola (MO), Italia</span>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 };
