@@ -39,6 +39,7 @@ export default function LeadDetail() {
   const [pianoManutenzioneAttivo, setPianoManutenzioneAttivo] = useState<string>('');
   const [costoConcordato, setCostoConcordato] = useState<string>('');
   const [costoManuale, setCostoManuale] = useState(false);
+  const [setupTotaleManuale, setSetupTotaleManuale] = useState(false);
 
   const [driveLink, setDriveLink] = useState<string>('');
   const [setupTotale, setSetupTotale] = useState<string>('');
@@ -83,6 +84,12 @@ export default function LeadDetail() {
   }, [tipoCentroAttivo, tipoCentroCalcolo, flussiPrincipaliAttivi, flussiExtraAttivi, costoManuale]);
 
   useEffect(() => {
+    if (isConverted) return;
+    if (setupTotaleManuale) return;
+    if (costoConcordato) setSetupTotale(costoConcordato);
+  }, [costoConcordato, setupTotaleManuale, isConverted]);
+
+  useEffect(() => {
     if (upsellTotaleManuale) return;
     if (!isConverted) return;
     const calcolato = calcCostoUpsell(tipoCentroAttivo, upsellMainFlows, upsellExtraFlows);
@@ -115,7 +122,10 @@ export default function LeadDetail() {
           : parseFlowField(data.extra_flows).map(labelToExtraId)
       );
       const setupFallback = data.costo_concordato ?? (calcolatoSetup > 0 ? calcolatoSetup : data.costo_totale) ?? null;
-      setSetupTotale(data.setup_totale != null ? String(data.setup_totale) : (setupFallback != null ? String(setupFallback) : ''));
+      const setupVal = data.setup_totale != null ? String(data.setup_totale) : (setupFallback != null ? String(setupFallback) : '');
+      setSetupTotale(setupVal);
+      const concVal = data.costo_concordato != null ? String(data.costo_concordato) : (calcolatoSetup > 0 ? String(calcolatoSetup) : String(data.costo_totale || ''));
+      setSetupTotaleManuale(data.setup_totale != null && String(data.setup_totale) !== concVal);
       setGoLiveDate(data.golive_date || '');
       setPagamento40Stato((data.pagamento_40_stato as 'non_pagato' | 'pagato') || 'non_pagato');
       setPagamento40Data(data.pagamento_40_data || '');
@@ -424,7 +434,7 @@ export default function LeadDetail() {
         <PaymentTracker
           lead={lead}
           setupTotale={setupTotale}
-          onSetupTotaleChange={setSetupTotale}
+          onSetupTotaleChange={v => { setSetupTotale(v); setSetupTotaleManuale(true); }}
           goLiveDate={goLiveDate}
           onGoLiveDateChange={setGoLiveDate}
           pagamento40Stato={pagamento40Stato}
