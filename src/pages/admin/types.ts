@@ -13,13 +13,13 @@ export interface QuoteRequest {
   tipo_centro: string | null;
   flussi_principali: { id: string; name: string }[] | null;
   flussi_extra: { id: string; name: string }[] | null;
-  core_flows: string | null;
-  extra_flows: string | null;
+  core_flows: string | string[] | null;
+  extra_flows: string | string[] | null;
   piano_manutenzione: string | null;
   costo_totale: number;
   maintenance_service: boolean | null;
   contatto_preferito: string | null;
-  sfide_principali: string | null;
+  sfide_principali: string | string[] | null;
   tempistiche: string | null;
   note: string | null;
   message: string | null;

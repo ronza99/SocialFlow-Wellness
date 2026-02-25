@@ -80,14 +80,10 @@ export default function LeadDetail() {
         data.tipo_centro_attivo ?? data.tipo_centro ?? '',
         data.flussi_principali_attivi
           ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-          : data.core_flows
-          ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
-          : [],
+          : parseFlowField(data.core_flows).map(labelToId),
         data.flussi_extra_attivi
           ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-          : data.extra_flows
-          ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
-          : []
+          : parseFlowField(data.extra_flows).map(labelToExtraId)
       );
       const setupFallback = data.costo_concordato ?? (calcolatoSetup > 0 ? calcolatoSetup : data.costo_totale) ?? null;
       setSetupTotale(data.setup_totale != null ? String(data.setup_totale) : (setupFallback != null ? String(setupFallback) : ''));
@@ -100,14 +96,10 @@ export default function LeadDetail() {
       const centro = data.tipo_centro_attivo ?? data.tipo_centro ?? '';
       const mainAttivi = data.flussi_principali_attivi
         ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-        : data.core_flows
-        ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
-        : [];
+        : parseFlowField(data.core_flows).map(labelToId);
       const extraAttivi = data.flussi_extra_attivi
         ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-        : data.extra_flows
-        ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
-        : [];
+        : parseFlowField(data.extra_flows).map(labelToExtraId);
 
       setTipoCentroAttivo(centro);
       if (centro.startsWith('team_custom_')) {
@@ -281,15 +273,9 @@ export default function LeadDetail() {
     );
   }
 
-  const mainFlowsOriginal = lead.core_flows
-    ? lead.core_flows.split('|').map(f => f.trim()).filter(Boolean)
-    : [];
-  const extraFlowsOriginal = lead.extra_flows
-    ? lead.extra_flows.split('|').map(f => f.trim()).filter(Boolean)
-    : [];
-  const challenges = lead.sfide_principali
-    ? lead.sfide_principali.split('|').map(f => f.trim()).filter(Boolean)
-    : [];
+  const mainFlowsOriginal = parseFlowField(lead.core_flows);
+  const extraFlowsOriginal = parseFlowField(lead.extra_flows);
+  const challenges = parseFlowField(lead.sfide_principali);
 
   return (
     <div className="min-h-screen bg-warm-sand">
@@ -733,6 +719,12 @@ export default function LeadDetail() {
       )}
     </div>
   );
+}
+
+function parseFlowField(field: string | string[] | null): string[] {
+  if (!field) return [];
+  if (Array.isArray(field)) return field.filter(Boolean);
+  return field.split('|').map(f => f.trim()).filter(Boolean);
 }
 
 function labelToId(label: string): string {
