@@ -85,7 +85,7 @@ export function calcCosto(
   mainFlows: string[],
   extraFlows: string[]
 ): number {
-  const isTeam = tipoCentro === 'team';
+  const isTeam = tipoCentro === 'team' || tipoCentro.startsWith('team_custom_');
   let main = 0;
   if (mainFlows.length === 3) {
     main = isTeam ? 1350 : 1200;

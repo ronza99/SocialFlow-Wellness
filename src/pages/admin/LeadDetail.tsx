@@ -301,34 +301,58 @@ export default function LeadDetail() {
     navigate('/admin/dashboard');
   };
 
-  const toggleMainFlow = (flowId: string) => {
-    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
-    if (isOriginal) return;
+  const [confirmDeselect, setConfirmDeselect] = useState<{ type: 'main' | 'extra'; flowId: string; label: string } | null>(null);
+
+  const doToggleMainFlow = (flowId: string) => {
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
     if (isConverted) {
       if (isCustomPricing) {
-        setPendingUpsellTotaleManuale(true);
+        setPendingUpsellTotale('');
+        setPendingUpsellTotaleManuale(false);
       } else {
         setPendingUpsellTotaleManuale(false);
       }
     }
   };
 
-  const toggleExtraFlow = (flowId: string) => {
-    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
-    if (isOriginal) return;
+  const doToggleExtraFlow = (flowId: string) => {
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
     if (isConverted) {
       if (isCustomPricing) {
-        setPendingUpsellTotaleManuale(true);
+        setPendingUpsellTotale('');
+        setPendingUpsellTotaleManuale(false);
       } else {
         setPendingUpsellTotaleManuale(false);
       }
     }
+  };
+
+  const toggleMainFlow = (flowId: string) => {
+    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
+    if (isOriginal) return;
+    const isActive = flussiPrincipaliAttivi.includes(flowId);
+    if (isActive && isConverted) {
+      const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === flowId);
+      setConfirmDeselect({ type: 'main', flowId, label: flow?.label ?? flowId });
+      return;
+    }
+    doToggleMainFlow(flowId);
+  };
+
+  const toggleExtraFlow = (flowId: string) => {
+    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
+    if (isOriginal) return;
+    const isActive = flussiExtraAttivi.includes(flowId);
+    if (isActive && isConverted) {
+      const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === flowId);
+      setConfirmDeselect({ type: 'extra', flowId, label: flow?.label ?? flowId });
+      return;
+    }
+    doToggleExtraFlow(flowId);
   };
 
   const formatDate = (dateString: string) => {
@@ -892,6 +916,35 @@ export default function LeadDetail() {
           </div>
         )}
       </main>
+
+      {confirmDeselect && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full">
+            <h3 className="text-base font-bold text-gray-800 mb-2">Rimuovere il flusso?</h3>
+            <p className="text-sm text-gray-600 mb-5">
+              Stai per rimuovere <span className="font-semibold">"{confirmDeselect.label}"</span> dalla configurazione attiva. Sei sicuro?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setConfirmDeselect(null)}
+                className="flex-1 px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+              >
+                Annulla
+              </button>
+              <button
+                onClick={() => {
+                  if (confirmDeselect.type === 'main') doToggleMainFlow(confirmDeselect.flowId);
+                  else doToggleExtraFlow(confirmDeselect.flowId);
+                  setConfirmDeselect(null);
+                }}
+                className="flex-1 px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition-colors"
+              >
+                Rimuovi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showConversionDialog && (
         <ConversionDialog
