@@ -48,14 +48,16 @@ export default function ModuliAcquistati({
   const totale = moduli.reduce((sum, m) => sum + m.prezzo, 0);
 
   const nomiGiaAcquistati = new Set(moduli.map(m => m.nome.toLowerCase()));
+  const idInConfigurazione = new Set([...flussiPrincipaliAttivi, ...flussiExtraAttivi]);
 
-  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(f => !nomiGiaAcquistati.has(f.label.toLowerCase()));
-  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(f => !nomiGiaAcquistati.has(f.label.toLowerCase()));
+  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(
+    f => !nomiGiaAcquistati.has(f.label.toLowerCase()) && !idInConfigurazione.has(f.id)
+  );
+  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(
+    f => !nomiGiaAcquistati.has(f.label.toLowerCase()) && !idInConfigurazione.has(f.id)
+  );
 
   const getPrezzoForAdd = (modId: string): number => {
-    if (prezziBloccati && prezziBloccati[modId] !== undefined) {
-      return prezziBloccati[modId];
-    }
     return getPrezzoAttuale(modId, tipoCentro);
   };
 
@@ -153,7 +155,7 @@ export default function ModuliAcquistati({
             </div>
             <button
               onClick={handleAdd}
-              disabled={!selectedMod || !prezzoCustom || loading}
+              disabled={!selectedMod || prezzoCustom === '' || loading}
               className="px-4 py-2 rounded-xl bg-misty-teal hover:bg-misty-teal-dark text-white text-sm font-medium transition-colors disabled:opacity-50"
             >
               Salva
@@ -167,7 +169,7 @@ export default function ModuliAcquistati({
           </div>
           {selectedMod && (
             <p className="text-xs text-gray-400 mt-2">
-              Il prezzo inserito sara' fissato e non cambiera' con il listino.
+              Il prezzo riflette il listino attuale. Puoi modificarlo manualmente prima di salvare.
             </p>
           )}
         </div>

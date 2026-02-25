@@ -676,10 +676,12 @@ export default function LeadDetail() {
           onModuliChange={setModuli}
           onPrezzoAggiunto={async (prezzo) => {
             const nuovoSetup = (Number(setupTotale) || 0) + prezzo;
+            const nuovoCostoTotale = (lead.costo_totale || 0) + prezzo;
             setSetupTotale(String(nuovoSetup));
+            setLead(prev => prev ? { ...prev, costo_totale: nuovoCostoTotale } : null);
             await supabase
               .from('quote_requests')
-              .update({ setup_totale: nuovoSetup })
+              .update({ setup_totale: nuovoSetup, costo_totale: nuovoCostoTotale })
               .eq('id', lead.id);
           }}
         />
