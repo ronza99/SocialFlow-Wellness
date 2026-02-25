@@ -6,7 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-const RESEND_API_KEY = "re_2QojUsat_GzUFsTBizo9cRcN5NLdKZzee";
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
