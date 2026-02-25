@@ -350,10 +350,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-6xl font-serif font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-gray-900 mb-6">
               Componi il tuo sistema
             </h2>
-            <p className="text-xl sm:text-2xl text-gray-700 max-w-3xl mx-auto font-light mb-8">
+            <p className="text-base sm:text-xl md:text-2xl text-gray-700 max-w-3xl mx-auto font-light mb-8">
               Segui i 4 passaggi per costruire il sistema perfetto per il tuo centro
             </p>
 
@@ -402,10 +402,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
           {/* PASSO 1 - Che tipo di centro sei */}
           <div className="mb-20 scroll-mt-24" id="step-1">
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-sage-green text-white w-16 h-16 rounded-wellness flex items-center justify-center font-bold text-2xl mr-4 shadow-organic">
+              <div className="bg-sage-green text-white w-12 h-12 sm:w-16 sm:h-16 rounded-wellness flex items-center justify-center font-bold text-xl sm:text-2xl mr-3 sm:mr-4 shadow-organic flex-shrink-0">
                 1
               </div>
-              <h3 className="text-3xl font-serif font-bold text-gray-900">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-gray-900">
                 Seleziona il tipo di centro
               </h3>
             </div>
@@ -414,27 +414,27 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             </p>
             
             <div className="flex justify-center mb-8">
-              <div className="bg-white rounded-wellness p-3 shadow-wellness inline-flex">
+              <div className="bg-white rounded-wellness p-2 sm:p-3 shadow-wellness flex flex-col sm:flex-row w-full sm:w-auto gap-2 sm:gap-0">
                 <button
                   onClick={() => handleCenterTypeChange('single')}
-                  className={`px-8 py-4 rounded-wellness font-semibold text-lg transition-all flex items-center ${
+                  className={`px-4 sm:px-8 py-3 sm:py-4 rounded-wellness font-semibold text-base sm:text-lg transition-all flex items-center justify-center ${
                     selectedCenterType === 'single'
                       ? 'bg-sage-green text-white shadow-wellness'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  <Home className="w-5 h-5 mr-3" />
+                  <Home className="w-5 h-5 mr-2 sm:mr-3 flex-shrink-0" />
                   Studio singolo (1 operatore)
                 </button>
                 <button
                   onClick={() => handleCenterTypeChange('team')}
-                  className={`px-8 py-4 rounded-wellness font-semibold text-lg transition-all flex items-center ml-2 ${
+                  className={`px-4 sm:px-8 py-3 sm:py-4 rounded-wellness font-semibold text-base sm:text-lg transition-all flex items-center justify-center sm:ml-2 ${
                     selectedCenterType === 'team'
                       ? 'bg-sage-green text-white shadow-wellness'
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  <Users className="w-5 h-5 mr-3" />
+                  <Users className="w-5 h-5 mr-2 sm:mr-3 flex-shrink-0" />
                   Piccolo team (2–4 operatori)
                 </button>
               </div>
@@ -480,17 +480,17 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                   setSkipToClientInfo(true);
                   setShowContactModal(true);
                 }}
-                className="bg-gradient-to-r from-mocha-mousse to-mocha-mousse-dark rounded-wellness p-8 max-w-3xl w-full text-center border-2 border-mocha-mousse-dark hover:scale-105 transition-all shadow-wellness hover:shadow-2xl cursor-pointer"
+                className="bg-gradient-to-r from-mocha-mousse to-mocha-mousse-dark rounded-wellness p-4 sm:p-8 max-w-3xl w-full text-center border-2 border-mocha-mousse-dark hover:scale-105 transition-all shadow-wellness hover:shadow-2xl cursor-pointer"
               >
                 <div className="flex items-center justify-center mb-4">
-                  <Building className="w-8 h-8 text-white mr-3" />
-                  <h5 className="font-serif font-bold text-white text-xl">Centro strutturato (5+ operatori)?</h5>
+                  <Building className="w-7 h-7 sm:w-8 sm:h-8 text-white mr-2 sm:mr-3 flex-shrink-0" />
+                  <h5 className="font-serif font-bold text-white text-base sm:text-xl">Centro strutturato (5+ operatori)?</h5>
                 </div>
-                <p className="text-white text-lg mb-4">
+                <p className="text-white text-sm sm:text-lg mb-4">
                   Per centri più grandi preparo sempre un progetto su misura.
                 </p>
-                <div className="bg-white rounded-wellness px-6 py-3 inline-flex items-center font-bold text-mocha-mousse-dark text-lg">
-                  <Mail className="w-5 h-5 mr-2" />
+                <div className="bg-white rounded-wellness px-4 sm:px-6 py-2 sm:py-3 inline-flex items-center font-bold text-mocha-mousse-dark text-sm sm:text-lg">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" />
                   Contattami per un preventivo personalizzato
                 </div>
               </button>
@@ -500,10 +500,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
           {/* PASSO 2 - Flussi principali */}
           <div className="mb-20 scroll-mt-24" id="step-2">
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-sage-green text-white w-16 h-16 rounded-wellness flex items-center justify-center font-bold text-2xl mr-4 shadow-organic">
+              <div className="bg-sage-green text-white w-12 h-12 sm:w-16 sm:h-16 rounded-wellness flex items-center justify-center font-bold text-xl sm:text-2xl mr-3 sm:mr-4 shadow-organic flex-shrink-0">
                 2
               </div>
-              <h3 className="text-3xl font-serif font-bold text-gray-900">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-gray-900">
                 Scegli i flussi principali
               </h3>
             </div>
@@ -566,7 +566,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
                   {selectedMainFlows.includes('bookings') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
-                <div className="text-3xl font-serif font-bold text-sage-green mb-6">
+                <div className="text-2xl sm:text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].bookings.price} €
                 </div>
                 <div className="space-y-3 text-gray-700">
@@ -599,7 +599,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
                   {selectedMainFlows.includes('subscriptions') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
-                <div className="text-3xl font-serif font-bold text-sage-green mb-6">
+                <div className="text-2xl sm:text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].subscriptions.price} €
                 </div>
                 <div className="space-y-3 text-gray-700">
@@ -632,7 +632,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 <div className="text-xs font-semibold text-sage-green mb-4 uppercase tracking-wide">
                   {selectedMainFlows.includes('cosmetics') ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                 </div>
-                <div className="text-3xl font-serif font-bold text-sage-green mb-6">
+                <div className="text-2xl sm:text-3xl font-serif font-bold text-sage-green mb-6">
                   {mainFlows[selectedCenterType].cosmetics.price} €
                 </div>
                 <div className="space-y-3 text-gray-700">
@@ -682,10 +682,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
           {/* PASSO 3 - Flussi extra */}
           <div className="mb-20 scroll-mt-24" id="step-3">
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-misty-teal text-white w-16 h-16 rounded-wellness flex items-center justify-center font-bold text-2xl mr-4 shadow-organic">
+              <div className="bg-misty-teal text-white w-12 h-12 sm:w-16 sm:h-16 rounded-wellness flex items-center justify-center font-bold text-xl sm:text-2xl mr-3 sm:mr-4 shadow-organic flex-shrink-0">
                 3
               </div>
-              <h3 className="text-3xl font-serif font-bold text-gray-900">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-gray-900">
                 Aggiungi funzionalità extra (opzionale)
               </h3>
             </div>
@@ -722,7 +722,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                     {selectedExtraFlows.includes(flow.id) ? '✓ Selezionato' : '👆 Clicca per selezionare'}
                   </div>
 
-                  <div className="text-3xl font-serif font-bold text-misty-teal mb-6">
+                  <div className="text-2xl sm:text-3xl font-serif font-bold text-misty-teal mb-6">
                     {flow.price} €
                   </div>
 
@@ -776,10 +776,10 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
           {/* PASSO 4 - Riepilogo e Totale */}
           <div className="mb-20 scroll-mt-24" id="step-4">
             <div className="flex items-center justify-center mb-8">
-              <div className="bg-mocha-mousse text-white w-16 h-16 rounded-wellness flex items-center justify-center font-bold text-2xl mr-4 shadow-organic">
+              <div className="bg-mocha-mousse text-white w-12 h-12 sm:w-16 sm:h-16 rounded-wellness flex items-center justify-center font-bold text-xl sm:text-2xl mr-3 sm:mr-4 shadow-organic flex-shrink-0">
                 4
               </div>
-              <h3 className="text-3xl font-serif font-bold text-gray-900">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-gray-900">
                 Riepilogo e preventivo
               </h3>
             </div>
@@ -817,8 +817,8 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 </div>
 
                 <h3 className="text-2xl font-serif font-bold mb-4 relative z-10">Il tuo investimento</h3>
-                <div className="text-7xl font-serif font-bold mb-4 relative z-10">€{calculateGrandTotal()}</div>
-                <p className="text-white/90 mb-8 text-xl relative z-10 font-medium">Pagamento unico • Sistema personalizzato</p>
+                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-4 relative z-10">€{calculateGrandTotal()}</div>
+                <p className="text-white/90 mb-8 text-base sm:text-xl relative z-10 font-medium">Pagamento unico • Sistema personalizzato</p>
               
               {selectedMainFlows.length > 0 && (
                 <div className="bg-white/10 backdrop-blur-md rounded-wellness p-6 mb-6 relative z-10">
@@ -848,13 +848,13 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
                 <button
                   onClick={handleContactClick}
-                  className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white font-bold px-16 py-7 rounded-wellness hover:from-orange-600 hover:via-red-600 hover:to-pink-600 transition-all duration-300 shadow-2xl text-2xl hover:scale-110 hover:shadow-[0_20px_60px_rgba(255,100,0,0.5)] transform relative z-10 hover:-translate-y-2 ring-4 ring-orange-300/40 hover:ring-yellow-400 border-4 border-white/40 flash-button"
+                  className="w-full sm:w-auto bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white font-bold px-6 sm:px-10 md:px-16 py-4 sm:py-5 md:py-7 rounded-wellness hover:from-orange-600 hover:via-red-600 hover:to-pink-600 transition-all duration-300 shadow-2xl text-lg sm:text-xl md:text-2xl hover:scale-110 hover:shadow-[0_20px_60px_rgba(255,100,0,0.5)] transform relative z-10 hover:-translate-y-2 ring-2 sm:ring-4 ring-orange-300/40 hover:ring-yellow-400 border-2 sm:border-4 border-white/40 flash-button"
                   style={{
                     animation: 'flash-pulse 2.5s ease-in-out infinite, gentle-bounce 3s ease-in-out infinite'
                   }}
                 >
                   <span className="flex items-center justify-center relative z-10">
-                    <Phone className="w-7 h-7 mr-3" style={{ animation: 'phone-ring 2s ease-in-out infinite' }} />
+                    <Phone className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 mr-2 sm:mr-3 flex-shrink-0" style={{ animation: 'phone-ring 2s ease-in-out infinite' }} />
                     Invia preventivo e richiedi demo
                   </span>
                   <span className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 via-orange-400/10 to-red-400/10 rounded-wellness animate-shimmer"></span>
@@ -1005,7 +1005,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
 
                     <button
                       onClick={() => handleMaintenanceClick(plan.name.toLowerCase())}
-                      className={`w-full mt-6 py-4 px-6 rounded-wellness font-bold text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden ${
+                      className={`w-full mt-6 py-3 sm:py-4 px-4 sm:px-6 rounded-wellness font-bold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 relative overflow-hidden ${
                         plan.popular
                           ? 'bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white shadow-wellness hover:shadow-2xl animate-pulse-subtle'
                           : 'bg-gradient-to-r from-sage-green to-misty-teal hover:from-sage-green-dark hover:to-misty-teal-dark text-white shadow-lg hover:shadow-xl animate-pulse-subtle'
@@ -1041,7 +1041,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                 </div>
                 <button
                   onClick={() => handleMaintenanceClick('none')}
-                  className="w-full bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-gray-950 text-white font-bold px-8 py-4 rounded-wellness transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse-subtle relative overflow-hidden"
+                  className="w-full bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-gray-950 text-white font-bold px-4 sm:px-8 py-3 sm:py-4 rounded-wellness transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl animate-pulse-subtle relative overflow-hidden"
                 >
                   <span className="flex items-center justify-center relative z-10">
                     <Phone className="w-5 h-5 mr-2" />
