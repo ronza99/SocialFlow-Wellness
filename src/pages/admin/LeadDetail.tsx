@@ -7,12 +7,11 @@ import {
   Settings, FolderOpen, ExternalLink, BadgeCheck, Trash2
 } from 'lucide-react';
 import {
-  QuoteRequest, ModuloAcquistato, LeadStatus, STATUS_LABELS, STATUS_COLORS,
+  QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
   MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto
 } from './types';
 import PaymentTracker from './PaymentTracker';
 import ConversionDialog from './ConversionDialog';
-import ModuliAcquistati from './ModuliAcquistati';
 
 const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
   { value: 'new', label: 'Nuovo' },
@@ -50,7 +49,6 @@ export default function LeadDetail() {
   const [showConversionDialog, setShowConversionDialog] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
-  const [moduli, setModuli] = useState<ModuloAcquistato[]>([]);
   const [convertingLoading, setConvertingLoading] = useState(false);
 
   const isConverted = stato === 'converted';
@@ -120,13 +118,6 @@ export default function LeadDetail() {
         setCostoManuale(false);
       }
 
-      const { data: moduliData } = await supabase
-        .from('moduli_acquistati')
-        .select('*')
-        .eq('lead_id', id)
-        .order('data_acquisto', { ascending: true });
-
-      setModuli(moduliData || []);
       setLoading(false);
     };
     fetchLead();
@@ -220,25 +211,6 @@ export default function LeadDetail() {
       .eq('id', lead.id);
 
     if (!error) {
-      const moduliDaInserire = [
-        ...flussiPrincipaliAttivi.map(flowId => {
-          const f = MAIN_FLOWS_OPTIONS.find(o => o.id === flowId);
-          return f ? { lead_id: lead.id, nome: f.label, prezzo: prezziBloccati[flowId] ?? 0 } : null;
-        }),
-        ...flussiExtraAttivi.map(flowId => {
-          const f = EXTRA_FLOWS_OPTIONS.find(o => o.id === flowId);
-          return f ? { lead_id: lead.id, nome: f.label, prezzo: prezziBloccati[flowId] ?? 0 } : null;
-        }),
-      ].filter(Boolean) as { lead_id: string; nome: string; prezzo: number }[];
-
-      if (moduliDaInserire.length > 0) {
-        const { data: moduliInseriti } = await supabase
-          .from('moduli_acquistati')
-          .insert(moduliDaInserire)
-          .select();
-        if (moduliInseriti) setModuli(moduliInseriti);
-      }
-
       setStato('converted');
       setLead(prev => prev ? {
         ...prev,
@@ -254,7 +226,6 @@ export default function LeadDetail() {
   const handleDelete = async () => {
     if (!lead) return;
     setDeleting(true);
-    await supabase.from('moduli_acquistati').delete().eq('lead_id', lead.id);
     await supabase.from('quote_requests').delete().eq('id', lead.id);
     setDeleting(false);
     navigate('/admin/dashboard');
@@ -669,26 +640,6 @@ export default function LeadDetail() {
           )}
         </div>
 
-        <ModuliAcquistati
-          leadId={lead.id}
-          moduli={moduli}
-          isConverted={isConverted}
-          tipoCentro={tipoCentroAttivo}
-          prezziBloccati={lead.prezzi_bloccati}
-          flussiPrincipaliAttivi={flussiPrincipaliAttivi}
-          flussiExtraAttivi={flussiExtraAttivi}
-          onModuliChange={setModuli}
-          onPrezzoAggiunto={async (prezzo) => {
-            const nuovoSetup = (Number(setupTotale) || 0) + prezzo;
-            const nuovoCostoTotale = (lead.costo_totale || 0) + prezzo;
-            setSetupTotale(String(nuovoSetup));
-            setLead(prev => prev ? { ...prev, costo_totale: nuovoCostoTotale } : null);
-            await supabase
-              .from('quote_requests')
-              .update({ setup_totale: nuovoSetup, costo_totale: nuovoCostoTotale })
-              .eq('id', lead.id);
-          }}
-        />
 
         {challenges.length > 0 && (
           <div className="bg-white rounded-2xl shadow-wellness p-6">
