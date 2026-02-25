@@ -790,17 +790,55 @@ export default function LeadDetail() {
               />
             </div>
             {!costoManuale && flussiPrincipaliAttivi.length > 0 && !isConverted && (
-              <p className="text-xs text-gray-400 mt-1">
-                Calcolato automaticamente dai blocchi selezionati
-                {flussiPrincipaliAttivi.length === 3 && ' (sconto 3 flussi applicato)'}
-              </p>
+              <div className="mt-2 space-y-1">
+                <p className="text-xs text-gray-400">
+                  Calcolato automaticamente dai blocchi selezionati
+                  {flussiPrincipaliAttivi.length === 3 && ' (sconto 3 flussi applicato)'}
+                </p>
+                <div className="bg-gray-50 rounded-xl px-3 py-2 space-y-1">
+                  {flussiPrincipaliAttivi.length === 3 ? (
+                    <div className="flex justify-between text-xs">
+                      <span className="text-gray-500">Pacchetto 3 flussi principali</span>
+                      <span className="font-semibold text-gray-700">€{(tipoCentroCalcolo === 'team' || tipoCentroCalcolo.startsWith('team_custom_') ? 1350 : 1200).toLocaleString('it-IT')}</span>
+                    </div>
+                  ) : (
+                    flussiPrincipaliAttivi.map(fid => {
+                      const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
+                      const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                      return flow ? (
+                        <div key={fid} className="flex justify-between text-xs">
+                          <span className="text-gray-500">{flow.label}</span>
+                          <span className="font-semibold text-gray-700">€{prezzo.toLocaleString('it-IT')}</span>
+                        </div>
+                      ) : null;
+                    })
+                  )}
+                  {flussiExtraAttivi.map(fid => {
+                    const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
+                    const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                    return flow ? (
+                      <div key={fid} className="flex justify-between text-xs">
+                        <span className="text-gray-500">{flow.label}</span>
+                        <span className="font-semibold text-gray-700">€{prezzo.toLocaleString('it-IT')}</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
             )}
           </div>
 
           {(tipoCentroAttivo || flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
             <div className="mt-5 pt-4 border-t border-gray-100 space-y-4">
               <div>
-                <p className="text-xs text-gray-400 mb-2">Setup originale</p>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs text-gray-400">Setup originale</p>
+                  {costoConcordato && (
+                    <span className="text-sm font-bold text-forest-green">
+                      Totale: €{Number(costoConcordato).toLocaleString('it-IT')}
+                    </span>
+                  )}
+                </div>
                 <div className="flex flex-wrap gap-1.5">
                   {tipoCentroAttivo && (
                     <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-medium">
@@ -812,25 +850,24 @@ export default function LeadDetail() {
                   )}
                   {flussiPrincipaliAttivi.filter(fid => !allUpsellMainFlows.includes(fid)).map(fid => {
                     const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
+                    const prezzo = prezziBloccatiSnapshot?.[fid] ?? getPrezzoAttualeFlow(fid, tipoCentroAttivo);
                     return flow ? (
-                      <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
+                      <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1.5">
                         {flow.label}
+                        <span className="text-misty-teal/70 font-semibold">€{prezzo.toLocaleString('it-IT')}</span>
                       </span>
                     ) : null;
                   })}
                   {flussiExtraAttivi.filter(fid => !allUpsellExtraFlows.includes(fid)).map(fid => {
                     const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
+                    const prezzo = prezziBloccatiSnapshot?.[fid] ?? getPrezzoAttualeFlow(fid, tipoCentroAttivo);
                     return flow ? (
-                      <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
+                      <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1.5">
                         {flow.label}
+                        <span className="text-forest-green/70 font-semibold">€{prezzo.toLocaleString('it-IT')}</span>
                       </span>
                     ) : null;
                   })}
-                  {costoConcordato && (
-                    <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium">
-                      €{Number(costoConcordato).toLocaleString('it-IT')}
-                    </span>
-                  )}
                 </div>
               </div>
               {(allUpsellMainFlows.length > 0 || allUpsellExtraFlows.length > 0) && (
