@@ -10,12 +10,17 @@ export default function AdminGuard({ children }: { children: React.ReactNode }) 
   useEffect(() => {
     const check = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user?.app_metadata?.role === 'admin') {
-        setIsAdmin(true);
-      }
+      setIsAdmin(session?.user?.app_metadata?.role === 'admin');
       setChecking(false);
     };
     check();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAdmin(session?.user?.app_metadata?.role === 'admin');
+      setChecking(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   if (checking) {
