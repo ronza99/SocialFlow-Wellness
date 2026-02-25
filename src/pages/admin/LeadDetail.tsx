@@ -66,6 +66,20 @@ export default function LeadDetail() {
   const isConverted = stato === 'converted';
   const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
 
+  const getOperatoriCount = (tipo: string): number => {
+    if (tipo === 'single') return 1;
+    if (tipo === 'team') return 4;
+    if (tipo.startsWith('team_custom_')) return parseInt(tipo.replace('team_custom_', ''), 10) || 5;
+    return 0;
+  };
+
+  const canChangeTipoCentro = (newTipo: string): boolean => {
+    if (!isConverted) return true;
+    return getOperatoriCount(newTipo) >= getOperatoriCount(tipoCentroAttivo);
+  };
+
+  const isCustomPricing = tipoCentroAttivo.startsWith('team_custom_');
+
   const prezziBloccatiSnapshot = lead?.prezzi_bloccati ?? null;
   const allUpsellMainFlows = isConverted && prezziBloccatiSnapshot
     ? flussiPrincipaliAttivi.filter(fid => !(fid in prezziBloccatiSnapshot))
@@ -293,7 +307,13 @@ export default function LeadDetail() {
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
-    if (isConverted) setPendingUpsellTotaleManuale(false);
+    if (isConverted) {
+      if (isCustomPricing) {
+        setPendingUpsellTotaleManuale(true);
+      } else {
+        setPendingUpsellTotaleManuale(false);
+      }
+    }
   };
 
   const toggleExtraFlow = (flowId: string) => {
@@ -302,7 +322,13 @@ export default function LeadDetail() {
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
-    if (isConverted) setPendingUpsellTotaleManuale(false);
+    if (isConverted) {
+      if (isCustomPricing) {
+        setPendingUpsellTotaleManuale(true);
+      } else {
+        setPendingUpsellTotaleManuale(false);
+      }
+    }
   };
 
   const formatDate = (dateString: string) => {
@@ -451,6 +477,7 @@ export default function LeadDetail() {
           onPendingUpsellTotaleChange={setPendingUpsellTotale}
           pendingUpsellTotaleManuale={pendingUpsellTotaleManuale}
           onPendingUpsellTotaleManualeChange={setPendingUpsellTotaleManuale}
+          isCustomPricing={isCustomPricing}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -517,38 +544,55 @@ export default function LeadDetail() {
           </div>
 
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tipo di centro</label>
+            <div className="flex items-center gap-2 mb-2">
+              <label className="block text-sm font-medium text-gray-700">Tipo di centro</label>
+              {isConverted && (
+                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-lg">
+                  Puoi solo aumentare il numero di operatori
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap gap-2">
               {[
                 { value: 'single', label: '1 operatore' },
                 { value: 'team', label: '2-4 operatori' },
-              ].map(opt => (
-                <button
-                  key={opt.value}
-                  onClick={() => !isConverted && setTipoCentroAttivo(opt.value)}
-                  disabled={isConverted}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
-                    tipoCentroAttivo === opt.value
-                      ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
-                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  } disabled:cursor-default`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+              ].map(opt => {
+                const canChange = canChangeTipoCentro(opt.value);
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => canChange && setTipoCentroAttivo(opt.value)}
+                    disabled={!canChange}
+                    title={!canChange ? 'Non puoi ridurre il numero di operatori' : undefined}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                      tipoCentroAttivo === opt.value
+                        ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
+                        : canChange
+                        ? 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                        : 'bg-gray-50 text-gray-300 border-transparent opacity-40 cursor-not-allowed'
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
               <button
                 onClick={() => {
-                  if (isConverted) return;
                   const n = operatoriCustom || '5';
+                  const newTipo = `team_custom_${n}`;
+                  if (!canChangeTipoCentro(newTipo)) return;
                   setOperatoriCustom(n);
-                  setTipoCentroAttivo(`team_custom_${n}`);
+                  setTipoCentroAttivo(newTipo);
                 }}
-                disabled={isConverted}
+                disabled={!canChangeTipoCentro(`team_custom_${operatoriCustom || '5'}`)}
+                title={!canChangeTipoCentro(`team_custom_${operatoriCustom || '5'}`) ? 'Non puoi ridurre il numero di operatori' : undefined}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                   tipoCentroAttivo.startsWith('team_custom_')
                     ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
-                    : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                } disabled:cursor-default`}
+                    : canChangeTipoCentro(`team_custom_${operatoriCustom || '5'}`)
+                    ? 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                    : 'bg-gray-50 text-gray-300 border-transparent opacity-40 cursor-not-allowed'
+                }`}
               >
                 5+ operatori
               </button>
@@ -558,17 +602,23 @@ export default function LeadDetail() {
                 <label className="text-sm text-gray-500">Numero esatto di operatori:</label>
                 <input
                   type="number"
-                  min={5}
+                  min={isConverted ? getOperatoriCount(lead?.tipo_centro_attivo ?? tipoCentroAttivo) : 5}
                   value={operatoriCustom}
-                  disabled={isConverted}
                   onChange={e => {
                     const val = e.target.value;
+                    const newTipo = `team_custom_${val}`;
+                    if (isConverted && !canChangeTipoCentro(newTipo)) return;
                     setOperatoriCustom(val);
-                    if (val) setTipoCentroAttivo(`team_custom_${val}`);
+                    if (val) setTipoCentroAttivo(newTipo);
                   }}
-                  className="w-20 px-3 py-1.5 rounded-xl border border-misty-teal text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white disabled:bg-gray-50 disabled:cursor-default"
+                  className="w-20 px-3 py-1.5 rounded-xl border border-misty-teal text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white"
                 />
               </div>
+            )}
+            {isConverted && isCustomPricing && (
+              <p className="text-xs text-amber-600 mt-2 flex items-center gap-1">
+                <span className="font-semibold">Nota:</span> Per 5+ operatori i prezzi dei nuovi upsell non hanno una tariffa standard — inseriscili manualmente nel totale upsell.
+              </p>
             )}
           </div>
 

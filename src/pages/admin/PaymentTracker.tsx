@@ -25,6 +25,7 @@ interface Props {
   onPendingUpsellTotaleChange: (v: string) => void;
   pendingUpsellTotaleManuale: boolean;
   onPendingUpsellTotaleManualeChange: (v: boolean) => void;
+  isCustomPricing?: boolean;
 }
 
 function today(): string {
@@ -65,6 +66,7 @@ export default function PaymentTracker({
   onPendingUpsellTotaleChange,
   pendingUpsellTotaleManuale,
   onPendingUpsellTotaleManualeChange,
+  isCustomPricing = false,
 }: Props) {
   const totale = parseFloat(setupTotale) || 0;
   const imp40 = Math.round(totale * 0.4);
@@ -254,11 +256,20 @@ export default function PaymentTracker({
                   Non ancora salvati come tranche
                 </span>
               </div>
+              {isCustomPricing && (
+                <div className="mb-3 flex items-start gap-2 bg-amber-100 rounded-lg px-3 py-2">
+                  <span className="text-amber-600 text-xs font-semibold mt-0.5">!</span>
+                  <p className="text-xs text-amber-700">
+                    Centro 5+ operatori: i prezzi indicati sono basati sulla tariffa team standard. Inserisci manualmente il totale concordato.
+                  </p>
+                </div>
+              )}
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {pendingUpsellFlows.map(f => (
-                  <span key={f.id} className="bg-white border border-amber-200 text-amber-700 text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1">
+                  <span key={f.id} className={`bg-white border text-xs px-2.5 py-1 rounded-full font-medium flex items-center gap-1 ${isCustomPricing ? 'border-amber-300 text-amber-700' : 'border-amber-200 text-amber-700'}`}>
                     {f.label}
-                    <span className="text-amber-400">€{f.prezzo.toLocaleString('it-IT')}</span>
+                    {!isCustomPricing && <span className="text-amber-400">€{f.prezzo.toLocaleString('it-IT')}</span>}
+                    {isCustomPricing && <span className="text-amber-400 line-through">€{f.prezzo.toLocaleString('it-IT')}</span>}
                   </span>
                 ))}
               </div>
@@ -270,11 +281,18 @@ export default function PaymentTracker({
                     value={pendingUpsellTotale}
                     onChange={e => { onPendingUpsellTotaleChange(e.target.value); onPendingUpsellTotaleManualeChange(true); }}
                     placeholder="0"
-                    className="w-full pl-7 pr-3 py-2 rounded-xl border border-amber-300 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white transition-all"
+                    className={`w-full pl-7 pr-3 py-2 rounded-xl border text-sm text-gray-700 focus:outline-none focus:ring-2 bg-white transition-all ${
+                      isCustomPricing
+                        ? 'border-amber-400 focus:ring-amber-200 focus:border-amber-500'
+                        : 'border-amber-300 focus:ring-amber-200 focus:border-amber-400'
+                    }`}
                   />
                 </div>
-                {!pendingUpsellTotaleManuale && (
+                {!pendingUpsellTotaleManuale && !isCustomPricing && (
                   <span className="text-xs text-gray-400">Calcolato automaticamente</span>
+                )}
+                {isCustomPricing && (
+                  <span className="text-xs text-amber-600 font-medium">Inserisci prezzo concordato</span>
                 )}
                 <button
                   onClick={handleCreateTranche}
@@ -286,7 +304,7 @@ export default function PaymentTracker({
                 </button>
               </div>
               <p className="text-xs text-amber-600 mt-2">
-                Salva per creare una nuova tranche separata. Potrai poi segnare il pagamento indipendentemente.
+                Crea una nuova tranche separata. Potrai poi segnare il pagamento indipendentemente.
               </p>
             </div>
           )}
