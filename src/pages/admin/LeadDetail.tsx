@@ -13,6 +13,7 @@ import {
 } from './types';
 import PaymentTracker from './PaymentTracker';
 import ConversionDialog from './ConversionDialog';
+import StripeSubscription, { StripeSubscriptionData } from './StripeSubscription';
 
 const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
   { value: 'new', label: 'Nuovo' },
@@ -57,6 +58,11 @@ export default function LeadDetail() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [convertingLoading, setConvertingLoading] = useState(false);
+
+  const [stripeCustomerId, setStripeCustomerId] = useState<string | null>(null);
+  const [stripeLastCheck, setStripeLastCheck] = useState<string | null>(null);
+  const [stripeLastCheckResult, setStripeLastCheckResult] = useState<string | null>(null);
+  const [stripeSubscriptionData, setStripeSubscriptionData] = useState<Record<string, unknown> | null>(null);
 
   const isConverted = stato === 'converted';
   const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
@@ -146,6 +152,11 @@ export default function LeadDetail() {
       setUpsellPagamentoStato((data.upsell_pagamento_stato as 'non_pagato' | 'pagato') || 'non_pagato');
       setUpsellPagamentoData(data.upsell_pagamento_data || '');
       setUpsellGoLiveDate(data.upsell_golive_date || '');
+
+      setStripeCustomerId(data.stripe_customer_id || null);
+      setStripeLastCheck(data.stripe_last_check || null);
+      setStripeLastCheckResult(data.stripe_last_check_result || null);
+      setStripeSubscriptionData(data.stripe_subscription_data || null);
 
       setLoading(false);
     };
@@ -763,6 +774,21 @@ export default function LeadDetail() {
             </div>
           </div>
         )}
+
+        <StripeSubscription
+          leadId={lead.id}
+          email={lead.email}
+          stripeCustomerId={stripeCustomerId}
+          stripeLastCheck={stripeLastCheck}
+          stripeLastCheckResult={stripeLastCheckResult}
+          stripeSubscriptionData={stripeSubscriptionData as StripeSubscriptionData | null}
+          onUpdate={(fields) => {
+            if (fields.stripe_customer_id !== undefined) setStripeCustomerId(fields.stripe_customer_id || null);
+            if (fields.stripe_last_check !== undefined) setStripeLastCheck(fields.stripe_last_check || null);
+            if (fields.stripe_last_check_result !== undefined) setStripeLastCheckResult(fields.stripe_last_check_result || null);
+            if (fields.stripe_subscription_data !== undefined) setStripeSubscriptionData(fields.stripe_subscription_data as Record<string, unknown> | null);
+          }}
+        />
 
         <div className="bg-white rounded-2xl shadow-wellness p-6">
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Gestione lead</h2>

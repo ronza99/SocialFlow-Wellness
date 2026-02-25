@@ -41,6 +41,10 @@ export interface QuoteRequest {
   upsell_pagamento_stato: 'non_pagato' | 'pagato' | null;
   upsell_pagamento_data: string | null;
   upsell_golive_date: string | null;
+  stripe_customer_id: string | null;
+  stripe_last_check: string | null;
+  stripe_last_check_result: string | null;
+  stripe_subscription_data: Record<string, unknown> | null;
 }
 
 export interface ModuloAcquistato {
