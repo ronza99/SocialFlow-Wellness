@@ -10,6 +10,10 @@ import ComeFunziona from './pages/ComeFunziona';
 import Vantaggi from './pages/Vantaggi';
 import FAQPage from './pages/FAQPage';
 import ChiSono from './pages/ChiSono';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import LeadDetail from './pages/admin/LeadDetail';
+import AdminGuard from './pages/admin/AdminGuard';
 
 // Interfaccia per i dati del pricing
 export interface PricingData {
@@ -44,30 +48,54 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-white">
-        <UrgencyTimer />
-        <Navigation />
-        <div className="pt-36">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Home
-                  currentPricingData={currentPricingData}
-                  setCurrentPricingData={setCurrentPricingData}
-                />
-              }
-            />
-            <Route path="/come-funziona" element={<ComeFunziona />} />
-            <Route path="/vantaggi" element={<Vantaggi />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/chi-sono" element={<ChiSono />} />
-          </Routes>
-          <Footer />
-        </div>
-        <ExitIntentPopup />
-        <InteractiveChatbot />
-      </div>
+      <Routes>
+        <Route path="/admin" element={<AdminLogin />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminGuard>
+              <AdminDashboard />
+            </AdminGuard>
+          }
+        />
+        <Route
+          path="/admin/lead/:id"
+          element={
+            <AdminGuard>
+              <LeadDetail />
+            </AdminGuard>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <div className="min-h-screen bg-white">
+              <UrgencyTimer />
+              <Navigation />
+              <div className="pt-36">
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <Home
+                        currentPricingData={currentPricingData}
+                        setCurrentPricingData={setCurrentPricingData}
+                      />
+                    }
+                  />
+                  <Route path="/come-funziona" element={<ComeFunziona />} />
+                  <Route path="/vantaggi" element={<Vantaggi />} />
+                  <Route path="/faq" element={<FAQPage />} />
+                  <Route path="/chi-sono" element={<ChiSono />} />
+                </Routes>
+                <Footer />
+              </div>
+              <ExitIntentPopup />
+              <InteractiveChatbot />
+            </div>
+          }
+        />
+      </Routes>
     </Router>
   );
 }
