@@ -55,6 +55,18 @@ export interface ModuloAcquistato {
   data_acquisto: string;
 }
 
+export interface UpsellTranche {
+  id: string;
+  lead_id: string;
+  flussi_ids: string[];
+  flussi_labels: string[];
+  totale: number;
+  golive_date: string | null;
+  pagamento_stato: 'non_pagato' | 'pagato';
+  pagamento_data: string | null;
+  created_at: string;
+}
+
 export const MAIN_FLOWS_OPTIONS = [
   { id: 'bookings', label: 'Prenotazioni in chat', priceSingle: 490, priceTeam: 540 },
   { id: 'subscriptions', label: 'Abbonamenti ricorrenti', priceSingle: 440, priceTeam: 490 },

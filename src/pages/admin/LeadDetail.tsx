@@ -7,9 +7,9 @@ import {
   Settings, FolderOpen, ExternalLink, BadgeCheck, Trash2
 } from 'lucide-react';
 import {
-  QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
+  QuoteRequest, UpsellTranche, LeadStatus, STATUS_LABELS, STATUS_COLORS,
   MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto,
-  calcCostoUpsell, getPrezzoAttualeFlow
+  getPrezzoAttualeFlow
 } from './types';
 import PaymentTracker from './PaymentTracker';
 import ConversionDialog from './ConversionDialog';
@@ -49,11 +49,9 @@ export default function LeadDetail() {
   const [pagamento60Stato, setPagamento60Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
   const [pagamento60Data, setPagamento60Data] = useState<string>('');
 
-  const [upsellTotale, setUpsellTotale] = useState<string>('');
-  const [upsellTotaleManuale, setUpsellTotaleManuale] = useState(false);
-  const [upsellPagamentoStato, setUpsellPagamentoStato] = useState<'non_pagato' | 'pagato'>('non_pagato');
-  const [upsellPagamentoData, setUpsellPagamentoData] = useState<string>('');
-  const [upsellGoLiveDate, setUpsellGoLiveDate] = useState<string>('');
+  const [upsellTranche, setUpsellTranche] = useState<UpsellTranche[]>([]);
+  const [pendingUpsellTotale, setPendingUpsellTotale] = useState<string>('');
+  const [pendingUpsellTotaleManuale, setPendingUpsellTotaleManuale] = useState(false);
 
   const [showConversionDialog, setShowConversionDialog] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -69,13 +67,28 @@ export default function LeadDetail() {
   const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
 
   const prezziBloccatiSnapshot = lead?.prezzi_bloccati ?? null;
-  const upsellMainFlows = isConverted && prezziBloccatiSnapshot
+  const allUpsellMainFlows = isConverted && prezziBloccatiSnapshot
     ? flussiPrincipaliAttivi.filter(fid => !(fid in prezziBloccatiSnapshot))
     : [];
-  const upsellExtraFlows = isConverted && prezziBloccatiSnapshot
+  const allUpsellExtraFlows = isConverted && prezziBloccatiSnapshot
     ? flussiExtraAttivi.filter(fid => !(fid in prezziBloccatiSnapshot))
     : [];
-  const hasUpsell = upsellMainFlows.length > 0 || upsellExtraFlows.length > 0;
+
+  const trancheFlowIds = new Set(upsellTranche.flatMap(t => t.flussi_ids));
+  const pendingUpsellFlows: { id: string; label: string; prezzo: number }[] = [
+    ...allUpsellMainFlows
+      .filter(fid => !trancheFlowIds.has(fid))
+      .map(fid => {
+        const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
+        return { id: fid, label: flow?.label ?? fid, prezzo: getPrezzoAttualeFlow(fid, tipoCentroAttivo) };
+      }),
+    ...allUpsellExtraFlows
+      .filter(fid => !trancheFlowIds.has(fid))
+      .map(fid => {
+        const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
+        return { id: fid, label: flow?.label ?? fid, prezzo: getPrezzoAttualeFlow(fid, tipoCentroAttivo) };
+      }),
+  ];
 
   useEffect(() => {
     if (costoManuale) return;
@@ -90,25 +103,24 @@ export default function LeadDetail() {
   }, [costoConcordato, setupTotaleManuale, isConverted]);
 
   useEffect(() => {
-    if (upsellTotaleManuale) return;
-    if (!isConverted) return;
-    const calcolato = calcCostoUpsell(tipoCentroAttivo, upsellMainFlows, upsellExtraFlows);
-    setUpsellTotale(calcolato > 0 ? String(calcolato) : '');
-  }, [tipoCentroAttivo, upsellMainFlows.join(','), upsellExtraFlows.join(','), upsellTotaleManuale, isConverted]);
+    if (pendingUpsellTotaleManuale) return;
+    const calcolato = pendingUpsellFlows.reduce((sum, f) => sum + f.prezzo, 0);
+    setPendingUpsellTotale(calcolato > 0 ? String(calcolato) : '');
+  }, [pendingUpsellFlows.map(f => f.id).join(','), pendingUpsellTotaleManuale]);
 
   useEffect(() => {
     const fetchLead = async () => {
-      const { data, error } = await supabase
-        .from('quote_requests')
-        .select('*')
-        .eq('id', id)
-        .maybeSingle();
+      const [{ data, error }, { data: trancheData }] = await Promise.all([
+        supabase.from('quote_requests').select('*').eq('id', id).maybeSingle(),
+        supabase.from('upsell_tranche').select('*').eq('lead_id', id).order('created_at'),
+      ]);
 
       if (error || !data) {
         navigate('/admin/dashboard');
         return;
       }
       setLead(data);
+      setUpsellTranche((trancheData as UpsellTranche[]) || []);
       setStato(data.stato);
       setNote(data.note || '');
       setDriveLink(data.drive_link || '');
@@ -157,12 +169,6 @@ export default function LeadDetail() {
         setCostoManuale(false);
       }
 
-      setUpsellTotale(data.upsell_totale != null ? String(data.upsell_totale) : '');
-      if (data.upsell_totale != null) setUpsellTotaleManuale(true);
-      setUpsellPagamentoStato((data.upsell_pagamento_stato as 'non_pagato' | 'pagato') || 'non_pagato');
-      setUpsellPagamentoData(data.upsell_pagamento_data || '');
-      setUpsellGoLiveDate(data.upsell_golive_date || '');
-
       setStripeCustomerId(data.stripe_customer_id || null);
       setStripeLastCheck(data.stripe_last_check || null);
       setStripeLastCheckResult(data.stripe_last_check_result || null);
@@ -196,10 +202,6 @@ export default function LeadDetail() {
         pagamento_40_data: pagamento40Data || null,
         pagamento_60_stato: pagamento60Stato,
         pagamento_60_data: pagamento60Data || null,
-        upsell_totale: upsellTotale ? Number(upsellTotale) : null,
-        upsell_pagamento_stato: upsellPagamentoStato,
-        upsell_pagamento_data: upsellPagamentoData || null,
-        upsell_golive_date: upsellGoLiveDate || null,
       })
       .eq('id', lead.id);
 
@@ -221,10 +223,6 @@ export default function LeadDetail() {
         pagamento_40_data: pagamento40Data || null,
         pagamento_60_stato: pagamento60Stato,
         pagamento_60_data: pagamento60Data || null,
-        upsell_totale: upsellTotale ? Number(upsellTotale) : null,
-        upsell_pagamento_stato: upsellPagamentoStato,
-        upsell_pagamento_data: upsellPagamentoData || null,
-        upsell_golive_date: upsellGoLiveDate || null,
       } : null);
       setTimeout(() => setSaved(false), 2500);
     }
@@ -295,7 +293,7 @@ export default function LeadDetail() {
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
-    if (isConverted) setUpsellTotaleManuale(false);
+    if (isConverted) setPendingUpsellTotaleManuale(false);
   };
 
   const toggleExtraFlow = (flowId: string) => {
@@ -304,7 +302,7 @@ export default function LeadDetail() {
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
-    if (isConverted) setUpsellTotaleManuale(false);
+    if (isConverted) setPendingUpsellTotaleManuale(false);
   };
 
   const formatDate = (dateString: string) => {
@@ -446,17 +444,13 @@ export default function LeadDetail() {
           onPagamento60StatoChange={(s, d) => { setPagamento60Stato(s); setPagamento60Data(d); }}
           pagamento60DataChange={setPagamento60Data}
           isConverted={isConverted}
-          hasUpsell={hasUpsell}
-          upsellTotale={upsellTotale}
-          onUpsellTotaleChange={setUpsellTotale}
-          upsellTotaleManuale={upsellTotaleManuale}
-          onUpsellTotaleManualeChange={setUpsellTotaleManuale}
-          upsellGoLiveDate={upsellGoLiveDate}
-          onUpsellGoLiveDateChange={setUpsellGoLiveDate}
-          upsellPagamentoStato={upsellPagamentoStato}
-          upsellPagamentoData={upsellPagamentoData}
-          onUpsellPagamentoStatoChange={(s, d) => { setUpsellPagamentoStato(s); setUpsellPagamentoData(d); }}
-          upsellPagamentoDataChange={setUpsellPagamentoData}
+          upsellTranche={upsellTranche}
+          onUpsellTrancheChange={setUpsellTranche}
+          pendingUpsellFlows={pendingUpsellFlows}
+          pendingUpsellTotale={pendingUpsellTotale}
+          onPendingUpsellTotaleChange={setPendingUpsellTotale}
+          pendingUpsellTotaleManuale={pendingUpsellTotaleManuale}
+          onPendingUpsellTotaleManualeChange={setPendingUpsellTotaleManuale}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -712,7 +706,7 @@ export default function LeadDetail() {
                        tipoCentroAttivo}
                     </span>
                   )}
-                  {flussiPrincipaliAttivi.filter(fid => !upsellMainFlows.includes(fid)).map(fid => {
+                  {flussiPrincipaliAttivi.filter(fid => !allUpsellMainFlows.includes(fid)).map(fid => {
                     const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
                     return flow ? (
                       <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
@@ -720,7 +714,7 @@ export default function LeadDetail() {
                       </span>
                     ) : null;
                   })}
-                  {flussiExtraAttivi.filter(fid => !upsellExtraFlows.includes(fid)).map(fid => {
+                  {flussiExtraAttivi.filter(fid => !allUpsellExtraFlows.includes(fid)).map(fid => {
                     const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
                     return flow ? (
                       <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
@@ -735,35 +729,34 @@ export default function LeadDetail() {
                   )}
                 </div>
               </div>
-              {hasUpsell && (
+              {(allUpsellMainFlows.length > 0 || allUpsellExtraFlows.length > 0) && (
                 <div>
                   <p className="text-xs text-amber-600 font-semibold mb-2">Upsell aggiuntivi</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {upsellMainFlows.map(fid => {
+                    {allUpsellMainFlows.map(fid => {
                       const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
                       const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                      const inTranche = trancheFlowIds.has(fid);
                       return flow ? (
-                        <span key={fid} className="bg-amber-50 text-amber-700 border border-amber-200 text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                        <span key={fid} className={`border text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1 ${inTranche ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
                           {flow.label}
-                          <span className="text-amber-500">€{prezzo.toLocaleString('it-IT')}</span>
+                          <span className={inTranche ? 'text-emerald-400' : 'text-amber-400'}>€{prezzo.toLocaleString('it-IT')}</span>
+                          {inTranche && <span className="text-xs bg-emerald-100 text-emerald-600 px-1 rounded">tranche</span>}
                         </span>
                       ) : null;
                     })}
-                    {upsellExtraFlows.map(fid => {
+                    {allUpsellExtraFlows.map(fid => {
                       const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
                       const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                      const inTranche = trancheFlowIds.has(fid);
                       return flow ? (
-                        <span key={fid} className="bg-amber-50 text-amber-700 border border-amber-200 text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                        <span key={fid} className={`border text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1 ${inTranche ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-amber-50 text-amber-700 border-amber-200'}`}>
                           {flow.label}
-                          <span className="text-amber-500">€{prezzo.toLocaleString('it-IT')}</span>
+                          <span className={inTranche ? 'text-emerald-400' : 'text-amber-400'}>€{prezzo.toLocaleString('it-IT')}</span>
+                          {inTranche && <span className="text-xs bg-emerald-100 text-emerald-600 px-1 rounded">tranche</span>}
                         </span>
                       ) : null;
                     })}
-                    {upsellTotale && (
-                      <span className="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold">
-                        Totale upsell: €{Number(upsellTotale).toLocaleString('it-IT')}
-                      </span>
-                    )}
                   </div>
                 </div>
               )}
