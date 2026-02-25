@@ -67,7 +67,7 @@ export default function ModuliAcquistati({
   };
 
   const handleAdd = async () => {
-    if (!selectedMod || !prezzoCustom) return;
+    if (!selectedMod || prezzoCustom === '') return;
     setLoading(true);
     const modLabel = ALL_MODULES.find(m => m.id === selectedMod)?.label || selectedMod;
     const { data, error } = await supabase
