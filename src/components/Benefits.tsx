@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, Bot, CreditCard, Palette, Calculator, Shield, Users, Zap, Target, Gift, TrendingUp, Calendar, Sparkles, Brain, MessageSquare } from 'lucide-react';
+import { Instagram, Palette, Calculator, Shield, Users, Zap, Target, TrendingUp, Calendar, Sparkles, Brain } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection, scrollToMaintenancePlans } from '../utils/navigation';
 
@@ -35,30 +35,6 @@ const Benefits = () => {
       color: "from-mocha-mousse to-mocha-mousse-dark"
     },
     {
-      icon: Bot,
-      title: "Automazione H24 intelligente",
-      description: "Opzionale: una segreteria in chat che risponde alle domande più comuni (prezzi, durata, differenze tra trattamenti) e indirizza il cliente verso la scelta giusta. Non crea né modifica appuntamenti: informa e guida.",
-      color: "from-sage-green to-sage-green-dark"
-    },
-    {
-      icon: MessageSquare,
-      title: "Riattivazione clienti automatica",
-      description: "Opzionale su WhatsApp: promemoria appuntamento e messaggi di richiamo per chi non viene da un po', solo con consenso e testi chiari. Utile anche per chi ha iniziato un percorso e si è fermato.",
-      color: "from-misty-teal to-misty-teal-dark"
-    },
-    {
-      icon: CreditCard,
-      title: "Gift Card con QR Code",
-      description: "Opzionale: card e gift card digitali con codice/QR e registro utilizzi. La card è legata al trattamento, non a una data: chi la riceve ti scrive in chat e prenota quando preferisce.",
-      color: "from-misty-teal to-misty-teal-dark"
-    },
-    {
-      icon: Gift,
-      title: "Coupon che spingono all'acquisto",
-      description: "Coupon collegati alle card: sconto fisso in euro, personalizzabile. Perfetti per promozioni semplici (periodi più calmi, feste) senza confusione e senza gestione manuale.",
-      color: "from-mocha-mousse to-mocha-mousse-dark"
-    },
-    {
       icon: Zap,
       title: "Sempre modificabile e aggiornabile",
       description: "Non è un sistema rigido: testi, prezzi, servizi e promozioni si possono aggiornare facilmente, mantenendo il percorso in chat chiaro per i clienti.",
@@ -74,7 +50,7 @@ const Benefits = () => {
       icon: Shield,
       title: "Conformità GDPR integrata",
       description: "Gestione consensi e privacy: il cliente può scegliere se ricevere comunicazioni. I messaggi automatici (quando attivi WhatsApp) vengono impostati con testi chiari e nel rispetto delle regole della piattaforma.",
-      color: "from-purple-600 to-purple-800"
+      color: "from-misty-teal to-misty-teal-dark"
     },
     {
       icon: Calculator,
