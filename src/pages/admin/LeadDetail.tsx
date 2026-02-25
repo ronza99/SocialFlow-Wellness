@@ -653,6 +653,8 @@ export default function LeadDetail() {
           isConverted={isConverted}
           tipoCentro={tipoCentroAttivo}
           prezziBloccati={lead.prezzi_bloccati}
+          flussiPrincipaliAttivi={flussiPrincipaliAttivi}
+          flussiExtraAttivi={flussiExtraAttivi}
           onModuliChange={setModuli}
         />
 

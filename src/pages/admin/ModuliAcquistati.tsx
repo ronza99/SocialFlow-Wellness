@@ -9,6 +9,8 @@ interface Props {
   isConverted: boolean;
   tipoCentro: string;
   prezziBloccati: Record<string, number> | null;
+  flussiPrincipaliAttivi: string[];
+  flussiExtraAttivi: string[];
   onModuliChange: (moduli: ModuloAcquistato[]) => void;
 }
 
@@ -32,6 +34,8 @@ export default function ModuliAcquistati({
   isConverted,
   tipoCentro,
   prezziBloccati,
+  flussiPrincipaliAttivi,
+  flussiExtraAttivi,
   onModuliChange,
 }: Props) {
   const [showAdd, setShowAdd] = useState(false);
@@ -40,6 +44,11 @@ export default function ModuliAcquistati({
   const [loading, setLoading] = useState(false);
 
   const totale = moduli.reduce((sum, m) => sum + m.prezzo, 0);
+
+  const configurazioneAttivaIds = new Set([...flussiPrincipaliAttivi, ...flussiExtraAttivi]);
+
+  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(f => !configurazioneAttivaIds.has(f.id));
+  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(f => !configurazioneAttivaIds.has(f.id));
 
   const getPrezzoForAdd = (modId: string): number => {
     if (prezziBloccati && prezziBloccati[modId] !== undefined) {
@@ -114,16 +123,20 @@ export default function ModuliAcquistati({
               className="flex-1 px-3 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal"
             >
               <option value="">Seleziona modulo...</option>
-              <optgroup label="Flussi principali">
-                {MAIN_FLOWS_OPTIONS.map(f => (
-                  <option key={f.id} value={f.id}>{f.label}</option>
-                ))}
-              </optgroup>
-              <optgroup label="Flussi extra">
-                {EXTRA_FLOWS_OPTIONS.map(f => (
-                  <option key={f.id} value={f.id}>{f.label}</option>
-                ))}
-              </optgroup>
+              {mainFlowsDisponibili.length > 0 && (
+                <optgroup label="Flussi principali">
+                  {mainFlowsDisponibili.map(f => (
+                    <option key={f.id} value={f.id}>{f.label}</option>
+                  ))}
+                </optgroup>
+              )}
+              {extraFlowsDisponibili.length > 0 && (
+                <optgroup label="Flussi extra">
+                  {extraFlowsDisponibili.map(f => (
+                    <option key={f.id} value={f.id}>{f.label}</option>
+                  ))}
+                </optgroup>
+              )}
             </select>
             <div className="relative w-32 flex-shrink-0">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
