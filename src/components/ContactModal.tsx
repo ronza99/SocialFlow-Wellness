@@ -280,6 +280,38 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
 
       if (error) throw error;
 
+      try {
+        const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+        const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+        await fetch(`${supabaseUrl}/functions/v1/send-quote-email`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${supabaseAnonKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: clientData.name,
+            cognome: clientData.surname,
+            email: clientData.email,
+            telefono: clientData.phone,
+            nome_centro: clientData.businessName,
+            citta: clientData.city,
+            tipo_attivita: clientData.businessType,
+            clienti_attuali: clientData.currentClients,
+            sfide_principali: clientData.mainChallenges.join('  |  '),
+            contatto_preferito: clientData.preferredContact,
+            tempistiche: clientData.timeframe,
+            tipo_centro: pricingData.centerType || null,
+            core_flows: mainFlowsWithNames.map(f => f.name).join('  |  '),
+            extra_flows: extraFlowsWithNames.map(f => f.name).join('  |  '),
+            piano_manutenzione: selectedPlan?.name || 'Da definire',
+            costo_totale: totalSetupCost,
+            is_custom_quote: pricingData.isCustomQuote || false,
+          }),
+        });
+      } catch (_emailError) {
+      }
+
       setCurrentStep(3);
     } catch (error: any) {
       console.error('Error submitting quote:', error);
