@@ -3,12 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import {
   ArrowLeft, Save, Phone, Mail, MapPin, Building2,
-  MessageSquare, Euro, Calendar, User, Check, Loader2, Settings
+  MessageSquare, Euro, Calendar, User, Check, Loader2,
+  Settings, FolderOpen, ExternalLink, BadgeCheck
 } from 'lucide-react';
 import {
-  QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
+  QuoteRequest, ModuloAcquistato, LeadStatus, STATUS_LABELS, STATUS_COLORS,
   MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto
 } from './types';
+import PaymentTracker from './PaymentTracker';
+import ConversionDialog from './ConversionDialog';
+import ModuliAcquistati from './ModuliAcquistati';
 
 const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
   { value: 'new', label: 'Nuovo' },
@@ -35,6 +39,19 @@ export default function LeadDetail() {
   const [costoConcordato, setCostoConcordato] = useState<string>('');
   const [costoManuale, setCostoManuale] = useState(false);
 
+  const [driveLink, setDriveLink] = useState<string>('');
+  const [setupTotale, setSetupTotale] = useState<string>('');
+  const [goLiveDate, setGoLiveDate] = useState<string>('');
+  const [pagamento40Stato, setPagamento40Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
+  const [pagamento40Data, setPagamento40Data] = useState<string>('');
+  const [pagamento60Stato, setPagamento60Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
+  const [pagamento60Data, setPagamento60Data] = useState<string>('');
+
+  const [showConversionDialog, setShowConversionDialog] = useState(false);
+  const [moduli, setModuli] = useState<ModuloAcquistato[]>([]);
+  const [convertingLoading, setConvertingLoading] = useState(false);
+
+  const isConverted = stato === 'converted';
   const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
 
   useEffect(() => {
@@ -58,6 +75,13 @@ export default function LeadDetail() {
       setLead(data);
       setStato(data.stato);
       setNote(data.note || '');
+      setDriveLink(data.drive_link || '');
+      setSetupTotale(data.setup_totale != null ? String(data.setup_totale) : '');
+      setGoLiveDate(data.golive_date || '');
+      setPagamento40Stato((data.pagamento_40_stato as 'non_pagato' | 'pagato') || 'non_pagato');
+      setPagamento40Data(data.pagamento_40_data || '');
+      setPagamento60Stato((data.pagamento_60_stato as 'non_pagato' | 'pagato') || 'non_pagato');
+      setPagamento60Data(data.pagamento_60_data || '');
 
       const centro = data.tipo_centro_attivo ?? data.tipo_centro ?? '';
       const mainAttivi = data.flussi_principali_attivi
@@ -80,7 +104,6 @@ export default function LeadDetail() {
       setPianoManutenzioneAttivo(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? '');
 
       const calcolato = calcCosto(centro, mainAttivi, extraAttivi);
-
       if (data.costo_concordato != null && data.costo_concordato !== calcolato) {
         setCostoConcordato(String(data.costo_concordato));
         setCostoManuale(true);
@@ -89,6 +112,13 @@ export default function LeadDetail() {
         setCostoManuale(false);
       }
 
+      const { data: moduliData } = await supabase
+        .from('moduli_acquistati')
+        .select('*')
+        .eq('lead_id', id)
+        .order('data_acquisto', { ascending: true });
+
+      setModuli(moduliData || []);
       setLoading(false);
     };
     fetchLead();
@@ -108,31 +138,97 @@ export default function LeadDetail() {
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
         piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
         costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+        drive_link: driveLink || null,
+        setup_totale: setupTotale ? Number(setupTotale) : null,
+        golive_date: goLiveDate || null,
+        pagamento_40_stato: pagamento40Stato,
+        pagamento_40_data: pagamento40Data || null,
+        pagamento_60_stato: pagamento60Stato,
+        pagamento_60_data: pagamento60Data || null,
       })
       .eq('id', lead.id);
 
     setSaving(false);
     if (!error) {
       setSaved(true);
-      setLead({
-        ...lead, stato, note,
+      setLead(prev => prev ? {
+        ...prev, stato, note,
         tipo_centro_attivo: tipoCentroAttivo || null,
         flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
         piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
         costo_concordato: costoConcordato ? Number(costoConcordato) : null,
-      });
+        drive_link: driveLink || null,
+        setup_totale: setupTotale ? Number(setupTotale) : null,
+        golive_date: goLiveDate || null,
+        pagamento_40_stato: pagamento40Stato,
+        pagamento_40_data: pagamento40Data || null,
+        pagamento_60_stato: pagamento60Stato,
+        pagamento_60_data: pagamento60Data || null,
+      } : null);
       setTimeout(() => setSaved(false), 2500);
     }
   };
 
+  const handleConvertConfirm = async () => {
+    if (!lead) return;
+    setConvertingLoading(true);
+
+    const isTeam = tipoCentroAttivo === 'team' || tipoCentroAttivo.startsWith('team_custom_');
+    const prezziBloccati: Record<string, number> = {};
+    flussiPrincipaliAttivi.forEach(flowId => {
+      const f = MAIN_FLOWS_OPTIONS.find(o => o.id === flowId);
+      if (f) prezziBloccati[flowId] = isTeam ? f.priceTeam : f.priceSingle;
+    });
+    flussiExtraAttivi.forEach(flowId => {
+      const f = EXTRA_FLOWS_OPTIONS.find(o => o.id === flowId);
+      if (f) prezziBloccati[flowId] = f.price;
+    });
+
+    const { error } = await supabase
+      .from('quote_requests')
+      .update({
+        stato: 'converted',
+        data_conversione: new Date().toISOString(),
+        prezzi_bloccati: prezziBloccati,
+        costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+        tipo_centro_attivo: tipoCentroAttivo || null,
+        flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
+        flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
+        piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
+        drive_link: driveLink || null,
+        setup_totale: setupTotale ? Number(setupTotale) : null,
+        golive_date: goLiveDate || null,
+        pagamento_40_stato: pagamento40Stato,
+        pagamento_40_data: pagamento40Data || null,
+        pagamento_60_stato: pagamento60Stato,
+        pagamento_60_data: pagamento60Data || null,
+        note,
+      })
+      .eq('id', lead.id);
+
+    if (!error) {
+      setStato('converted');
+      setLead(prev => prev ? {
+        ...prev,
+        stato: 'converted',
+        data_conversione: new Date().toISOString(),
+        prezzi_bloccati: prezziBloccati,
+      } : null);
+    }
+    setShowConversionDialog(false);
+    setConvertingLoading(false);
+  };
+
   const toggleMainFlow = (flowId: string) => {
+    if (isConverted) return;
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
   };
 
   const toggleExtraFlow = (flowId: string) => {
+    if (isConverted) return;
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
@@ -173,20 +269,43 @@ export default function LeadDetail() {
             <ArrowLeft size={16} />
             <span>Torna alla lista</span>
           </button>
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="flex items-center gap-2 bg-misty-teal hover:bg-misty-teal-dark text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors disabled:opacity-60"
-          >
-            {saving ? (
-              <Loader2 size={15} className="animate-spin" />
-            ) : saved ? (
-              <Check size={15} />
-            ) : (
-              <Save size={15} />
+          <div className="flex items-center gap-2">
+            {!isConverted && (
+              <button
+                onClick={() => setShowConversionDialog(true)}
+                disabled={convertingLoading}
+                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors disabled:opacity-60"
+              >
+                <BadgeCheck size={15} />
+                Converti cliente
+              </button>
             )}
-            {saved ? 'Salvato!' : 'Salva modifiche'}
-          </button>
+            {isConverted && (
+              <span className="flex items-center gap-1.5 text-emerald-700 bg-emerald-100 text-xs font-semibold px-3 py-1.5 rounded-xl">
+                <BadgeCheck size={13} />
+                Convertito
+                {lead.data_conversione && (
+                  <span className="text-emerald-500 font-normal">
+                    {' '}· {new Date(lead.data_conversione).toLocaleDateString('it-IT')}
+                  </span>
+                )}
+              </span>
+            )}
+            <button
+              onClick={handleSave}
+              disabled={saving}
+              className="flex items-center gap-2 bg-misty-teal hover:bg-misty-teal-dark text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors disabled:opacity-60"
+            >
+              {saving ? (
+                <Loader2 size={15} className="animate-spin" />
+              ) : saved ? (
+                <Check size={15} />
+              ) : (
+                <Save size={15} />
+              )}
+              {saved ? 'Salvato!' : 'Salva'}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -209,7 +328,51 @@ export default function LeadDetail() {
               </div>
             </div>
           </div>
+
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <label className="block text-xs font-semibold text-gray-500 mb-1.5 flex items-center gap-1.5">
+              <FolderOpen size={12} />
+              Cartella Google Drive
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                value={driveLink}
+                onChange={e => setDriveLink(e.target.value)}
+                placeholder="https://drive.google.com/drive/folders/..."
+                className="flex-1 px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white transition-all"
+              />
+              {driveLink && (
+                <a
+                  href={driveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-misty-teal/10 hover:bg-misty-teal/20 text-misty-teal-dark text-sm font-medium transition-colors flex-shrink-0"
+                >
+                  <ExternalLink size={13} />
+                  Apri Drive
+                </a>
+              )}
+            </div>
+          </div>
         </div>
+
+        <PaymentTracker
+          lead={lead}
+          setupTotale={setupTotale}
+          onSetupTotaleChange={setSetupTotale}
+          goLiveDate={goLiveDate}
+          onGoLiveDateChange={setGoLiveDate}
+          pagamento40Stato={pagamento40Stato}
+          pagamento40Data={pagamento40Data}
+          onPagamento40StatoChange={(s, d) => { setPagamento40Stato(s); setPagamento40Data(d); }}
+          pagamento40DataChange={setPagamento40Data}
+          pagamento60Stato={pagamento60Stato}
+          pagamento60Data={pagamento60Data}
+          onPagamento60StatoChange={(s, d) => { setPagamento60Stato(s); setPagamento60Data(d); }}
+          pagamento60DataChange={setPagamento60Data}
+          isConverted={isConverted}
+        />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div className="bg-white rounded-2xl shadow-wellness p-6">
@@ -272,6 +435,11 @@ export default function LeadDetail() {
           <div className="flex items-center gap-2 mb-5">
             <Settings size={16} className="text-misty-teal" />
             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Configurazione attiva (post-call)</h2>
+            {isConverted && (
+              <span className="ml-auto text-xs text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
+                Bloccata dopo conversione
+              </span>
+            )}
           </div>
 
           <div className="mb-5">
@@ -283,27 +451,30 @@ export default function LeadDetail() {
               ].map(opt => (
                 <button
                   key={opt.value}
-                  onClick={() => setTipoCentroAttivo(opt.value)}
+                  onClick={() => !isConverted && setTipoCentroAttivo(opt.value)}
+                  disabled={isConverted}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                     tipoCentroAttivo === opt.value
                       ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
                       : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  }`}
+                  } disabled:cursor-default`}
                 >
                   {opt.label}
                 </button>
               ))}
               <button
                 onClick={() => {
+                  if (isConverted) return;
                   const n = operatoriCustom || '5';
                   setOperatoriCustom(n);
                   setTipoCentroAttivo(`team_custom_${n}`);
                 }}
+                disabled={isConverted}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                   tipoCentroAttivo.startsWith('team_custom_')
                     ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
                     : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                }`}
+                } disabled:cursor-default`}
               >
                 5+ operatori
               </button>
@@ -315,12 +486,13 @@ export default function LeadDetail() {
                   type="number"
                   min={5}
                   value={operatoriCustom}
+                  disabled={isConverted}
                   onChange={e => {
                     const val = e.target.value;
                     setOperatoriCustom(val);
                     if (val) setTipoCentroAttivo(`team_custom_${val}`);
                   }}
-                  className="w-20 px-3 py-1.5 rounded-xl border border-misty-teal text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white"
+                  className="w-20 px-3 py-1.5 rounded-xl border border-misty-teal text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white disabled:bg-gray-50 disabled:cursor-default"
                 />
               </div>
             )}
@@ -333,11 +505,12 @@ export default function LeadDetail() {
                 <button
                   key={flow.id}
                   onClick={() => toggleMainFlow(flow.id)}
+                  disabled={isConverted}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                     flussiPrincipaliAttivi.includes(flow.id)
                       ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
                       : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  }`}
+                  } disabled:cursor-default`}
                 >
                   {flussiPrincipaliAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
                 </button>
@@ -352,11 +525,12 @@ export default function LeadDetail() {
                 <button
                   key={flow.id}
                   onClick={() => toggleExtraFlow(flow.id)}
+                  disabled={isConverted}
                   className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                     flussiExtraAttivi.includes(flow.id)
                       ? 'bg-sage-green/10 text-forest-green border-sage-green'
                       : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  }`}
+                  } disabled:cursor-default`}
                 >
                   {flussiExtraAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
                 </button>
@@ -380,16 +554,18 @@ export default function LeadDetail() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-700">Costo concordato (€)</label>
-              <button
-                onClick={() => setCostoManuale(m => !m)}
-                className={`text-xs px-2 py-0.5 rounded-lg transition-all border ${
-                  costoManuale
-                    ? 'bg-amber-50 text-amber-700 border-amber-200'
-                    : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'
-                }`}
-              >
-                {costoManuale ? 'Manuale (clicca per auto)' : 'Automatico (clicca per modificare)'}
-              </button>
+              {!isConverted && (
+                <button
+                  onClick={() => setCostoManuale(m => !m)}
+                  className={`text-xs px-2 py-0.5 rounded-lg transition-all border ${
+                    costoManuale
+                      ? 'bg-amber-50 text-amber-700 border-amber-200'
+                      : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'
+                  }`}
+                >
+                  {costoManuale ? 'Manuale (clicca per auto)' : 'Automatico (clicca per modificare)'}
+                </button>
+              )}
             </div>
             <div className="relative">
               <Euro size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -397,16 +573,16 @@ export default function LeadDetail() {
                 type="number"
                 value={costoConcordato}
                 onChange={e => setCostoConcordato(e.target.value)}
-                disabled={!costoManuale}
+                disabled={!costoManuale || isConverted}
                 placeholder="Seleziona i blocchi per calcolare"
                 className={`w-full pl-8 pr-4 py-2 rounded-xl border text-sm transition-all ${
-                  costoManuale
+                  costoManuale && !isConverted
                     ? 'border-amber-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white'
                     : 'border-gray-200 text-gray-700 bg-gray-50 cursor-default'
                 }`}
               />
             </div>
-            {!costoManuale && flussiPrincipaliAttivi.length > 0 && (
+            {!costoManuale && flussiPrincipaliAttivi.length > 0 && !isConverted && (
               <p className="text-xs text-gray-400 mt-1">
                 Calcolato automaticamente dai blocchi selezionati
                 {flussiPrincipaliAttivi.length === 3 && ' (sconto 3 flussi applicato)'}
@@ -426,18 +602,18 @@ export default function LeadDetail() {
                      tipoCentroAttivo}
                   </span>
                 )}
-                {flussiPrincipaliAttivi.map(id => {
-                  const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === id);
+                {flussiPrincipaliAttivi.map(fid => {
+                  const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
                   return flow ? (
-                    <span key={id} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
+                    <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
                       {flow.label}
                     </span>
                   ) : null;
                 })}
-                {flussiExtraAttivi.map(id => {
-                  const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === id);
+                {flussiExtraAttivi.map(fid => {
+                  const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
                   return flow ? (
-                    <span key={id} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
+                    <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
                       {flow.label}
                     </span>
                   ) : null;
@@ -451,6 +627,15 @@ export default function LeadDetail() {
             </div>
           )}
         </div>
+
+        <ModuliAcquistati
+          leadId={lead.id}
+          moduli={moduli}
+          isConverted={isConverted}
+          tipoCentro={tipoCentroAttivo}
+          prezziBloccati={lead.prezzi_bloccati}
+          onModuliChange={setModuli}
+        />
 
         {challenges.length > 0 && (
           <div className="bg-white rounded-2xl shadow-wellness p-6">
@@ -506,6 +691,13 @@ export default function LeadDetail() {
           </div>
         )}
       </main>
+
+      {showConversionDialog && (
+        <ConversionDialog
+          onConfirm={handleConvertConfirm}
+          onCancel={() => setShowConversionDialog(false)}
+        />
+      )}
     </div>
   );
 }

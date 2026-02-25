@@ -28,6 +28,23 @@ export interface QuoteRequest {
   flussi_extra_attivi: string | null;
   piano_manutenzione_attivo: string | null;
   costo_concordato: number | null;
+  drive_link: string | null;
+  setup_totale: number | null;
+  golive_date: string | null;
+  pagamento_40_stato: 'non_pagato' | 'pagato' | null;
+  pagamento_40_data: string | null;
+  pagamento_60_stato: 'non_pagato' | 'pagato' | null;
+  pagamento_60_data: string | null;
+  data_conversione: string | null;
+  prezzi_bloccati: Record<string, number> | null;
+}
+
+export interface ModuloAcquistato {
+  id: string;
+  lead_id: string;
+  nome: string;
+  prezzo: number;
+  data_acquisto: string;
 }
 
 export const MAIN_FLOWS_OPTIONS = [
@@ -87,3 +104,19 @@ export const STATUS_COLORS: Record<LeadStatus, string> = {
   converted: 'bg-emerald-100 text-emerald-700',
   declined: 'bg-red-100 text-red-600',
 };
+
+export function getPrezzoModulo(
+  modulo: string,
+  tipoCentro: string,
+  prezziBloccati: Record<string, number> | null
+): number {
+  if (prezziBloccati && prezziBloccati[modulo] !== undefined) {
+    return prezziBloccati[modulo];
+  }
+  const isTeam = tipoCentro === 'team' || tipoCentro.startsWith('team_custom_');
+  const main = MAIN_FLOWS_OPTIONS.find(o => o.id === modulo);
+  if (main) return isTeam ? main.priceTeam : main.priceSingle;
+  const extra = EXTRA_FLOWS_OPTIONS.find(o => o.id === modulo);
+  if (extra) return extra.price;
+  return 0;
+}
