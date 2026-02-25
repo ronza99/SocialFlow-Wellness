@@ -172,7 +172,7 @@ export default function LeadDetail() {
       }
       setFlussiPrincipaliAttivi(mainAttivi);
       setFlussiExtraAttivi(extraAttivi);
-      setPianoManutenzioneAttivo(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? '');
+      setPianoManutenzioneAttivo(normalizePianoManutenzione(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? ''));
 
       const calcolato = calcCosto(centro, mainAttivi, extraAttivi);
       if (data.costo_concordato != null && data.costo_concordato !== calcolato) {
@@ -1057,6 +1057,17 @@ export default function LeadDetail() {
       )}
     </div>
   );
+}
+
+function normalizePianoManutenzione(value: string): string {
+  if (!value) return '';
+  const normalized = value.toLowerCase().trim();
+  const MAINTENANCE_IDS = ['piano manutenzione tecnica', 'piano crescita dm', 'none'];
+  if (MAINTENANCE_IDS.includes(normalized)) return normalized;
+  if (normalized.includes('crescita')) return 'piano crescita dm';
+  if (normalized.includes('manutenzione') || normalized.includes('tecnica')) return 'piano manutenzione tecnica';
+  if (normalized === 'solo interventi spot' || normalized === 'spot') return 'none';
+  return '';
 }
 
 function parseFlowField(field: string | string[] | null): string[] {
