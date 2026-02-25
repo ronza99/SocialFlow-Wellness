@@ -3,9 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import {
   ArrowLeft, Save, Phone, Mail, MapPin, Building2,
-  MessageSquare, Euro, Calendar, User, Check, Loader2
+  MessageSquare, Euro, Calendar, User, Check, Loader2, Settings
 } from 'lucide-react';
-import { QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS } from './types';
+import {
+  QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
+  MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS
+} from './types';
 
 const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
   { value: 'new', label: 'Nuovo' },
@@ -24,6 +27,12 @@ export default function LeadDetail() {
   const [stato, setStato] = useState<LeadStatus>('new');
   const [note, setNote] = useState('');
 
+  const [tipoCentroAttivo, setTipoCentroAttivo] = useState<string>('');
+  const [flussiPrincipaliAttivi, setFlussiPrincipaliAttivi] = useState<string[]>([]);
+  const [flussiExtraAttivi, setFlussiExtraAttivi] = useState<string[]>([]);
+  const [pianoManutenzioneAttivo, setPianoManutenzioneAttivo] = useState<string>('');
+  const [costoConcordato, setCostoConcordato] = useState<string>('');
+
   useEffect(() => {
     const fetchLead = async () => {
       const { data, error } = await supabase
@@ -39,6 +48,24 @@ export default function LeadDetail() {
       setLead(data);
       setStato(data.stato);
       setNote(data.note || '');
+
+      setTipoCentroAttivo(data.tipo_centro_attivo ?? data.tipo_centro ?? '');
+      setFlussiPrincipaliAttivi(
+        data.flussi_principali_attivi
+          ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+          : data.core_flows
+          ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
+          : []
+      );
+      setFlussiExtraAttivi(
+        data.flussi_extra_attivi
+          ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+          : data.extra_flows
+          ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
+          : []
+      );
+      setPianoManutenzioneAttivo(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? '');
+      setCostoConcordato(data.costo_concordato != null ? String(data.costo_concordato) : String(data.costo_totale || ''));
       setLoading(false);
     };
     fetchLead();
@@ -50,15 +77,42 @@ export default function LeadDetail() {
 
     const { error } = await supabase
       .from('quote_requests')
-      .update({ stato, note })
+      .update({
+        stato,
+        note,
+        tipo_centro_attivo: tipoCentroAttivo || null,
+        flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
+        flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
+        piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
+        costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+      })
       .eq('id', lead.id);
 
     setSaving(false);
     if (!error) {
       setSaved(true);
-      setLead({ ...lead, stato, note });
+      setLead({
+        ...lead, stato, note,
+        tipo_centro_attivo: tipoCentroAttivo || null,
+        flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
+        flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
+        piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
+        costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+      });
       setTimeout(() => setSaved(false), 2500);
     }
+  };
+
+  const toggleMainFlow = (flowId: string) => {
+    setFlussiPrincipaliAttivi(prev =>
+      prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
+    );
+  };
+
+  const toggleExtraFlow = (flowId: string) => {
+    setFlussiExtraAttivi(prev =>
+      prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
+    );
   };
 
   const formatDate = (dateString: string) => {
@@ -75,10 +129,10 @@ export default function LeadDetail() {
     );
   }
 
-  const mainFlows = lead.core_flows
+  const mainFlowsOriginal = lead.core_flows
     ? lead.core_flows.split('|').map(f => f.trim()).filter(Boolean)
     : [];
-  const extraFlows = lead.extra_flows
+  const extraFlowsOriginal = lead.extra_flows
     ? lead.extra_flows.split('|').map(f => f.trim()).filter(Boolean)
     : [];
   const challenges = lead.sfide_principali
@@ -148,45 +202,166 @@ export default function LeadDetail() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-wellness p-6">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Configurazione</h2>
+            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Preventivo originale</h2>
             <div className="space-y-3">
               <InfoRow label="Tipo centro" value={lead.tipo_centro === 'single' ? '1 operatore' : lead.tipo_centro === 'team' ? '2-4 operatori' : '—'} />
               <InfoRow label="Piano manutenzione" value={lead.piano_manutenzione || 'Nessuno'} />
               <InfoRow label="Tempistiche" value={lead.tempistiche || '—'} />
-              <InfoRow label="Costo setup" value={`€${(lead.costo_totale || 0).toLocaleString('it-IT')}`} />
+              <InfoRow label="Costo preventivo" value={`€${(lead.costo_totale || 0).toLocaleString('it-IT')}`} />
             </div>
+            {(mainFlowsOriginal.length > 0 || extraFlowsOriginal.length > 0) && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                {mainFlowsOriginal.length > 0 && (
+                  <div className="mb-2">
+                    <p className="text-xs text-gray-400 mb-1">Flussi principali richiesti</p>
+                    <div className="flex flex-wrap gap-1">
+                      {mainFlowsOriginal.map((f, i) => (
+                        <span key={i} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-2 py-0.5 rounded-full">
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {extraFlowsOriginal.length > 0 && (
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">Flussi extra richiesti</p>
+                    <div className="flex flex-wrap gap-1">
+                      {extraFlowsOriginal.map((f, i) => (
+                        <span key={i} className="bg-sage-green/10 text-forest-green text-xs px-2 py-0.5 rounded-full">
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
-        {(mainFlows.length > 0 || extraFlows.length > 0) && (
-          <div className="bg-white rounded-2xl shadow-wellness p-6">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Flussi selezionati</h2>
-            {mainFlows.length > 0 && (
-              <div className="mb-3">
-                <p className="text-xs text-gray-400 mb-2">Flussi principali</p>
-                <div className="flex flex-wrap gap-2">
-                  {mainFlows.map((f, i) => (
-                    <span key={i} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {extraFlows.length > 0 && (
-              <div>
-                <p className="text-xs text-gray-400 mb-2">Flussi extra</p>
-                <div className="flex flex-wrap gap-2">
-                  {extraFlows.map((f, i) => (
-                    <span key={i} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+        <div className="bg-white rounded-2xl shadow-wellness p-6">
+          <div className="flex items-center gap-2 mb-5">
+            <Settings size={16} className="text-misty-teal" />
+            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Configurazione attiva (post-call)</h2>
           </div>
-        )}
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Tipo di centro</label>
+            <div className="flex gap-2">
+              {[
+                { value: 'single', label: '1 operatore' },
+                { value: 'team', label: '2-4 operatori' },
+              ].map(opt => (
+                <button
+                  key={opt.value}
+                  onClick={() => setTipoCentroAttivo(opt.value)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                    tipoCentroAttivo === opt.value
+                      ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
+                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Flussi principali attivi</label>
+            <div className="flex flex-wrap gap-2">
+              {MAIN_FLOWS_OPTIONS.map(flow => (
+                <button
+                  key={flow.id}
+                  onClick={() => toggleMainFlow(flow.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                    flussiPrincipaliAttivi.includes(flow.id)
+                      ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
+                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                  }`}
+                >
+                  {flussiPrincipaliAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Flussi extra attivi</label>
+            <div className="flex flex-wrap gap-2">
+              {EXTRA_FLOWS_OPTIONS.map(flow => (
+                <button
+                  key={flow.id}
+                  onClick={() => toggleExtraFlow(flow.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                    flussiExtraAttivi.includes(flow.id)
+                      ? 'bg-sage-green/10 text-forest-green border-sage-green'
+                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                  }`}
+                >
+                  {flussiExtraAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-5">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Piano manutenzione concordato</label>
+            <select
+              value={pianoManutenzioneAttivo}
+              onChange={e => setPianoManutenzioneAttivo(e.target.value)}
+              className="w-full px-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal transition-all bg-white"
+            >
+              {MAINTENANCE_OPTIONS.map(opt => (
+                <option key={opt.id} value={opt.id}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Costo concordato (€)</label>
+            <div className="relative">
+              <Euro size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="number"
+                value={costoConcordato}
+                onChange={e => setCostoConcordato(e.target.value)}
+                placeholder="es. 1200"
+                className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal transition-all"
+              />
+            </div>
+          </div>
+
+          {(flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
+            <div className="mt-5 pt-4 border-t border-gray-100">
+              <p className="text-xs text-gray-400 mb-2">Riepilogo configurazione attiva</p>
+              <div className="flex flex-wrap gap-1.5">
+                {flussiPrincipaliAttivi.map(id => {
+                  const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === id);
+                  return flow ? (
+                    <span key={id} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
+                      {flow.label}
+                    </span>
+                  ) : null;
+                })}
+                {flussiExtraAttivi.map(id => {
+                  const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === id);
+                  return flow ? (
+                    <span key={id} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
+                      {flow.label}
+                    </span>
+                  ) : null;
+                })}
+                {costoConcordato && (
+                  <span className="bg-amber-50 text-amber-700 text-xs px-3 py-1 rounded-full font-medium">
+                    €{Number(costoConcordato).toLocaleString('it-IT')}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
 
         {challenges.length > 0 && (
           <div className="bg-white rounded-2xl shadow-wellness p-6">
@@ -244,6 +419,29 @@ export default function LeadDetail() {
       </main>
     </div>
   );
+}
+
+function labelToId(label: string): string {
+  const map: Record<string, string> = {
+    'prenotazioni in chat': 'bookings',
+    'prenotazioni trattamenti in chat': 'bookings',
+    'abbonamenti ricorrenti': 'subscriptions',
+    'vendita cosmetici in chat': 'cosmetics',
+    'vendita cosmetici': 'cosmetics',
+  };
+  return map[label.toLowerCase()] ?? label;
+}
+
+function labelToExtraId(label: string): string {
+  const map: Record<string, string> = {
+    'segretaria ai in chat': 'ai-assistant',
+    'card & gift card digitali (con coupon)': 'gift-cards',
+    'card & gift card digitali': 'gift-cards',
+    'pacchetti di sedute': 'packages',
+    'promemoria e follow-up su whatsapp': 'whatsapp',
+    'promemoria e follow-up whatsapp': 'whatsapp',
+  };
+  return map[label.toLowerCase()] ?? label;
 }
 
 function ContactRow({

@@ -23,7 +23,32 @@ export interface QuoteRequest {
   tempistiche: string | null;
   note: string | null;
   message: string | null;
+  tipo_centro_attivo: string | null;
+  flussi_principali_attivi: string | null;
+  flussi_extra_attivi: string | null;
+  piano_manutenzione_attivo: string | null;
+  costo_concordato: number | null;
 }
+
+export const MAIN_FLOWS_OPTIONS = [
+  { id: 'bookings', label: 'Prenotazioni in chat' },
+  { id: 'subscriptions', label: 'Abbonamenti ricorrenti' },
+  { id: 'cosmetics', label: 'Vendita cosmetici in chat' },
+];
+
+export const EXTRA_FLOWS_OPTIONS = [
+  { id: 'ai-assistant', label: 'Segretaria AI in chat' },
+  { id: 'gift-cards', label: 'Card & Gift Card digitali' },
+  { id: 'packages', label: 'Pacchetti di sedute' },
+  { id: 'whatsapp', label: 'Promemoria e follow-up WhatsApp' },
+];
+
+export const MAINTENANCE_OPTIONS = [
+  { id: '', label: 'Nessuno' },
+  { id: 'piano manutenzione tecnica', label: 'Piano Manutenzione tecnica (€59/mese)' },
+  { id: 'piano crescita dm', label: 'Piano Crescita DM (€129/mese)' },
+  { id: 'none', label: 'Solo interventi spot' },
+];
 
 export type LeadStatus = QuoteRequest['stato'];
 
