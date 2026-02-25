@@ -136,6 +136,7 @@ export default function LeadDetail() {
     if (!lead) return;
     setSaving(true);
 
+    const nuovoCostoTotale = costoConcordato ? Number(costoConcordato) : lead.costo_totale;
     const { error } = await supabase
       .from('quote_requests')
       .update({
@@ -146,6 +147,7 @@ export default function LeadDetail() {
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
         piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
         costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+        costo_totale: nuovoCostoTotale,
         drive_link: driveLink || null,
         setup_totale: setupTotale ? Number(setupTotale) : null,
         golive_date: goLiveDate || null,
@@ -166,6 +168,7 @@ export default function LeadDetail() {
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
         piano_manutenzione_attivo: pianoManutenzioneAttivo || null,
         costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+        costo_totale: nuovoCostoTotale,
         drive_link: driveLink || null,
         setup_totale: setupTotale ? Number(setupTotale) : null,
         golive_date: goLiveDate || null,
@@ -200,6 +203,7 @@ export default function LeadDetail() {
         data_conversione: new Date().toISOString(),
         prezzi_bloccati: prezziBloccati,
         costo_concordato: costoConcordato ? Number(costoConcordato) : null,
+        costo_totale: costoConcordato ? Number(costoConcordato) : lead.costo_totale,
         tipo_centro_attivo: tipoCentroAttivo || null,
         flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,

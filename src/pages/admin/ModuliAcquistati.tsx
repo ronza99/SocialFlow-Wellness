@@ -47,15 +47,8 @@ export default function ModuliAcquistati({
 
   const totale = moduli.reduce((sum, m) => sum + m.prezzo, 0);
 
-  const nomiGiaAcquistati = new Set(moduli.map(m => m.nome.toLowerCase()));
-  const idInConfigurazione = new Set([...flussiPrincipaliAttivi, ...flussiExtraAttivi]);
-
-  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(
-    f => !nomiGiaAcquistati.has(f.label.toLowerCase()) && !idInConfigurazione.has(f.id)
-  );
-  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(
-    f => !nomiGiaAcquistati.has(f.label.toLowerCase()) && !idInConfigurazione.has(f.id)
-  );
+  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS;
+  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS;
 
   const getPrezzoForAdd = (modId: string): number => {
     return getPrezzoAttuale(modId, tipoCentro);
