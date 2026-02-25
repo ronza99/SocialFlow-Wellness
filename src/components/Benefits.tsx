@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, Palette, Calculator, Shield, Users, Zap, Target, TrendingUp, Calendar, Sparkles, Brain } from 'lucide-react';
+import { Instagram, Palette, Calculator, Shield, Users, Zap, Target, TrendingUp, Calendar, Sparkles, Brain, Gift } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection, scrollToMaintenancePlans } from '../utils/navigation';
 
