@@ -38,10 +38,8 @@ export interface QuoteRequest {
   data_conversione: string | null;
   prezzi_bloccati: Record<string, number> | null;
   upsell_totale: number | null;
-  upsell_pagamento_40_stato: 'non_pagato' | 'pagato' | null;
-  upsell_pagamento_40_data: string | null;
-  upsell_pagamento_60_stato: 'non_pagato' | 'pagato' | null;
-  upsell_pagamento_60_data: string | null;
+  upsell_pagamento_stato: 'non_pagato' | 'pagato' | null;
+  upsell_pagamento_data: string | null;
   upsell_golive_date: string | null;
 }
 

@@ -24,14 +24,10 @@ interface Props {
   onUpsellTotaleManualeChange: (v: boolean) => void;
   upsellGoLiveDate: string;
   onUpsellGoLiveDateChange: (v: string) => void;
-  upsellPagamento40Stato: 'non_pagato' | 'pagato';
-  upsellPagamento40Data: string;
-  onUpsellPagamento40StatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
-  upsellPagamento40DataChange: (v: string) => void;
-  upsellPagamento60Stato: 'non_pagato' | 'pagato';
-  upsellPagamento60Data: string;
-  onUpsellPagamento60StatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
-  upsellPagamento60DataChange: (v: string) => void;
+  upsellPagamentoStato: 'non_pagato' | 'pagato';
+  upsellPagamentoData: string;
+  onUpsellPagamentoStatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
+  upsellPagamentoDataChange: (v: string) => void;
 }
 
 function today(): string {
@@ -71,14 +67,10 @@ export default function PaymentTracker({
   onUpsellTotaleManualeChange,
   upsellGoLiveDate,
   onUpsellGoLiveDateChange,
-  upsellPagamento40Stato,
-  upsellPagamento40Data,
-  onUpsellPagamento40StatoChange,
-  upsellPagamento40DataChange,
-  upsellPagamento60Stato,
-  upsellPagamento60Data,
-  onUpsellPagamento60StatoChange,
-  upsellPagamento60DataChange,
+  upsellPagamentoStato,
+  upsellPagamentoData,
+  onUpsellPagamentoStatoChange,
+  upsellPagamentoDataChange,
 }: Props) {
   const totale = parseFloat(setupTotale) || 0;
   const imp40 = Math.round(totale * 0.4);
@@ -86,9 +78,6 @@ export default function PaymentTracker({
   const scadenza60 = goLiveDate ? addDays(goLiveDate, 30) : '';
 
   const upsellTot = parseFloat(upsellTotale) || 0;
-  const upsellImp40 = Math.round(upsellTot * 0.4);
-  const upsellImp60 = Math.round(upsellTot * 0.6);
-  const upsellScadenza60 = upsellGoLiveDate ? addDays(upsellGoLiveDate, 30) : '';
 
   return (
     <div className="space-y-4">
@@ -164,7 +153,7 @@ export default function PaymentTracker({
         <div className="bg-white rounded-2xl shadow-wellness p-6 border-2 border-amber-100">
           <div className="flex items-center gap-2 mb-5">
             <TrendingUp size={16} className="text-amber-500" />
-            <h2 className="text-sm font-semibold text-amber-600 uppercase tracking-wide">Pagamenti Upsell</h2>
+            <h2 className="text-sm font-semibold text-amber-600 uppercase tracking-wide">Pagamento Upsell</h2>
             <span className="ml-auto text-xs text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
               Prezzi aggiornati al listino attuale
             </span>
@@ -210,34 +199,56 @@ export default function PaymentTracker({
                   className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white transition-all"
                 />
               </div>
-              {upsellScadenza60 && (
-                <p className="text-xs text-gray-400 mt-1">Scadenza 60%: {formatDateIT(upsellScadenza60)}</p>
-              )}
             </div>
           </div>
 
-          <div className="space-y-4">
-            <PaymentSlice
-              label="Acconto upsell 40%"
-              importo={upsellImp40}
-              stato={upsellPagamento40Stato}
-              data={upsellPagamento40Data}
-              onSegna={() => onUpsellPagamento40StatoChange('pagato', today())}
-              onDataChange={upsellPagamento40DataChange}
-              onAnnulla={() => onUpsellPagamento40StatoChange('non_pagato', '')}
-              colorAccent="amber"
-            />
-            <PaymentSlice
-              label="Saldo upsell 60%"
-              importo={upsellImp60}
-              stato={upsellPagamento60Stato}
-              data={upsellPagamento60Data}
-              onSegna={() => onUpsellPagamento60StatoChange('pagato', today())}
-              onDataChange={upsellPagamento60DataChange}
-              onAnnulla={() => onUpsellPagamento60StatoChange('non_pagato', '')}
-              scadenza={upsellScadenza60}
-              colorAccent="amber"
-            />
+          <div className={`rounded-xl border-2 p-4 transition-all ${upsellPagamentoStato === 'pagato' ? 'border-emerald-200 bg-emerald-50/50' : 'border-gray-100 bg-gray-50/50'}`}>
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-2">
+                {upsellPagamentoStato === 'pagato' ? (
+                  <CheckCircle2 size={16} className="text-emerald-500 flex-shrink-0" />
+                ) : (
+                  <Clock size={16} className="text-gray-400 flex-shrink-0" />
+                )}
+                <div>
+                  <p className="text-sm font-semibold text-gray-700">Pagamento upsell</p>
+                  <p className="text-lg font-bold text-gray-800">
+                    {upsellTot > 0 ? `€${upsellTot.toLocaleString('it-IT')}` : '—'}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-2 min-w-[140px]">
+                <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${upsellPagamentoStato === 'pagato' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
+                  {upsellPagamentoStato === 'pagato' ? 'Pagato' : 'Non pagato'}
+                </span>
+                {upsellPagamentoStato !== 'pagato' ? (
+                  <button
+                    onClick={() => onUpsellPagamentoStatoChange('pagato', today())}
+                    className="text-xs bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+                  >
+                    Segna come pagato
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => onUpsellPagamentoStatoChange('non_pagato', '')}
+                    className="text-xs bg-white hover:bg-gray-100 text-gray-500 border border-gray-200 px-3 py-1.5 rounded-lg font-medium transition-colors"
+                  >
+                    Annulla pagamento
+                  </button>
+                )}
+              </div>
+            </div>
+            {upsellPagamentoStato === 'pagato' && (
+              <div className="mt-3 pt-3 border-t border-emerald-100">
+                <label className="block text-xs text-gray-500 mb-1">Data pagamento (modificabile)</label>
+                <input
+                  type="date"
+                  value={upsellPagamentoData}
+                  onChange={e => upsellPagamentoDataChange(e.target.value)}
+                  className="w-40 px-3 py-1.5 rounded-lg border border-emerald-200 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-emerald-300 bg-white"
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -254,7 +265,6 @@ function PaymentSlice({
   onDataChange,
   onAnnulla,
   scadenza,
-  colorAccent = 'teal',
 }: {
   label: string;
   importo: number;
@@ -264,7 +274,6 @@ function PaymentSlice({
   onDataChange: (v: string) => void;
   onAnnulla: () => void;
   scadenza?: string;
-  colorAccent?: 'teal' | 'amber';
 }) {
   const pagato = stato === 'pagato';
 
@@ -295,11 +304,7 @@ function PaymentSlice({
           {!pagato ? (
             <button
               onClick={onSegna}
-              className={`text-xs text-white px-3 py-1.5 rounded-lg font-medium transition-colors ${
-                colorAccent === 'amber'
-                  ? 'bg-amber-500 hover:bg-amber-600'
-                  : 'bg-misty-teal hover:bg-misty-teal-dark'
-              }`}
+              className="text-xs bg-misty-teal hover:bg-misty-teal-dark text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
             >
               Segna come pagato
             </button>
