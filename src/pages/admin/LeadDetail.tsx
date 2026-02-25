@@ -971,7 +971,7 @@ export default function LeadDetail() {
               onChange={e => setNote(e.target.value)}
               rows={4}
               placeholder="Aggiungi note sul contatto, stato trattativa, follow-up previsti..."
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal resize-none transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal resize-y transition-all min-h-[100px]"
             />
           </div>
         </div>
