@@ -891,12 +891,7 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
             </p>
 
             {/* Onboarding incluso */}
-            <div className="flex items-center gap-4 mb-8">
-              <div className="flex-1 h-px bg-gray-200" />
-              <span className="text-sm font-semibold text-gray-400 uppercase tracking-widest whitespace-nowrap">Incluso nel setup</span>
-              <div className="flex-1 h-px bg-gray-200" />
-            </div>
-            <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-wellness p-8 mb-8 text-center">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-wellness p-8 mb-8 text-center">
               <Phone className="w-12 h-12 mx-auto mb-4" />
               <h4 className="text-2xl font-serif font-bold mb-4">Onboarding incluso nei Core</h4>
               <div className="bg-white/10 rounded-wellness p-6 text-left max-w-3xl mx-auto">
@@ -936,13 +931,6 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
               </div>
             </div>
 
-            {/* Separatore pagamento */}
-            <div className="flex items-center gap-4 my-10">
-              <div className="flex-1 h-px bg-gray-200" />
-              <span className="text-sm font-semibold text-gray-400 uppercase tracking-widest whitespace-nowrap">Pagamento</span>
-              <div className="flex-1 h-px bg-gray-200" />
-            </div>
-
             {/* Come funziona il pagamento */}
             <div className="mb-12">
               <div className="bg-gradient-to-r from-gray-100 to-gray-50 rounded-wellness p-8 border-l-4 border-sage-green max-w-4xl mx-auto">
@@ -962,13 +950,6 @@ const PricingCalculator: React.FC<PricingCalculatorProps> = ({
                   Nessun vincolo: gli account restano tuoi e i dati sono sempre accessibili. Se un domani vuoi cambiare gestione o fornitore, puoi farlo.
                 </p>
               </div>
-            </div>
-
-            {/* Separatore manutenzione */}
-            <div className="flex items-center gap-4 my-10">
-              <div className="flex-1 h-px bg-gray-200" />
-              <span className="text-sm font-semibold text-gray-400 uppercase tracking-widest whitespace-nowrap">Assistenza continuativa</span>
-              <div className="flex-1 h-px bg-gray-200" />
             </div>
 
             {/* Piani di manutenzione */}
