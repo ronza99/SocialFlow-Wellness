@@ -81,7 +81,7 @@ const Benefits = () => {
               </div>
               <div className="text-center">
                 <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold gradient-text mb-3 sm:mb-4 md:mb-6">40-60%</div>
-                <p className="text-sm sm:text-base md:text-lg text-readable leading-relaxed">crescita delle conversioni con il funnel interno ai social</p>
+                <p className="text-sm sm:text-base md:text-lg text-readable leading-relaxed">crescita delle prenotazioni tenendo il cliente all'interno dei social, senza rimandarlo su siti esterni</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ const Benefits = () => {
                 <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
               </div>
               <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-6 sm:mb-8">
-                Onboarding guidato: ti rendiamo autonomo
+                Affiancamento iniziale: ti rendiamo autonomo
               </h3>
               <p className="text-xl sm:text-2xl text-readable leading-relaxed mb-8 sm:mb-10">
                 Non ti lasciamo un sistema e basta: configuriamo tutto insieme e ti seguiamo nel primo mese di utilizzo reale per rifinire i dettagli. Poi scegli tu: supporto mensile oppure chiamate solo quando serve.
@@ -221,7 +221,7 @@ const Benefits = () => {
                   💡 La Nostra Promessa
                 </h5>
                 <p className="text-base sm:text-lg leading-relaxed">
-                  Ti accompagniamo nel setup e nel primo periodo di utilizzo reale, così diventi autonomo. La tecnologia deve semplificarti il lavoro, non complicarlo.
+                  Ti accompagniamo nella configurazione iniziale e nel primo periodo di utilizzo reale, così diventi autonomo. La tecnologia deve semplificarti il lavoro, non complicarlo.
                 </p>
               </div>
             </div>
@@ -279,22 +279,22 @@ const Benefits = () => {
                 <Gift className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
               </div>
               <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-6 sm:mb-8">
-                Sistema Gift Card + Coupon Strategico
+                Buoni Regalo e Codici Sconto Strategici
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 text-left">
                 <div className="wellness-card p-6 sm:p-8 hover-lift">
-                  <h4 className="font-serif font-bold text-mocha-mousse-dark mb-4 sm:mb-6 text-lg sm:text-xl">🎁 Gift Card con QR:</h4>
+                  <h4 className="font-serif font-bold text-mocha-mousse-dark mb-4 sm:mb-6 text-lg sm:text-xl">🎁 Buoni regalo digitali con codice QR:</h4>
                   <ul className="text-readable space-y-3 sm:space-y-4">
-                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Il cliente acquista una card per sé o una gift card da regalare</li>
-                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Riceve in chat un codice/QR</li>
-                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>La card è legata al trattamento (non a una data): può prenotare quando vuole</li>
+                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Il cliente acquista un buono per sé o da regalare a qualcuno</li>
+                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Riceve in chat un codice o un codice QR da mostrare in sede</li>
+                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Il buono è legato al trattamento, non a una data: prenota quando vuole</li>
                     <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>In sede si verifica in un attimo e si aggiorna il registro utilizzi</li>
                   </ul>
                 </div>
                 <div className="wellness-card p-6 sm:p-8 hover-lift">
-                  <h4 className="font-serif font-bold text-mocha-mousse-dark mb-4 sm:mb-6 text-lg sm:text-xl">🎯 Coupon Strategici:</h4>
+                  <h4 className="font-serif font-bold text-mocha-mousse-dark mb-4 sm:mb-6 text-lg sm:text-xl">🎯 Codici sconto strategici:</h4>
                   <ul className="text-readable space-y-3 sm:space-y-4">
-                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Sbloccano card scontate con sconto fisso in euro</li>
+                    <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Sbloccano buoni scontati con sconto fisso in euro</li>
                     <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Perfetti per periodi più calmi e festività</li>
                     <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Utili anche per richiamare clienti che non vengono da un po' (se attivi WhatsApp)</li>
                     <li className="flex items-start"><span className="text-sage-green-dark mr-3 mt-1">•</span>Promozioni semplici, senza gestione manuale</li>

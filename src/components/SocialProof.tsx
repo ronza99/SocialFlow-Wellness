@@ -27,7 +27,7 @@ const SocialProof = () => {
     {
       icon: Target,
       title: "Flessibilità Totale",
-      description: "Gift card opzionali con QR code per chi desidera pagare subito, ma senza obblighi per chi preferisce pagare in loco",
+      description: "Buoni regalo digitali opzionali con codice QR per chi desidera pagare subito, ma senza obblighi per chi preferisce pagare in sede",
       color: "from-mocha-mousse to-mocha-mousse-dark"
     }
   ];
@@ -35,8 +35,8 @@ const SocialProof = () => {
   const benefits = [
     {
       icon: CheckCircle,
-      title: "Riduzione No-Show",
-      description: "Conferme automatiche e promemoria riducono drasticamente le assenze",
+      title: "Meno assenze ingiustificate",
+      description: "Conferme automatiche e promemoria riducono drasticamente i clienti che non si presentano",
       stat: "Meno appuntamenti persi",
       color: "bg-sage-green"
     },

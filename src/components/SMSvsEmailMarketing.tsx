@@ -11,13 +11,13 @@ const benefitCards = [
       'Il cliente riceve un messaggio il giorno prima: meno dimenticanze, meno buchi in agenda.',
       'Il promemoria è automatico: non devi ricordarti di inviarlo ogni volta.',
     ],
-    when: 'Ha senso per tutti i centri con appuntamenti ricorrenti o servizi ad alta no-show.',
+    when: 'Ha senso per tutti i centri con appuntamenti ricorrenti o servizi con alto tasso di assenze.',
   },
   {
     icon: UserCheck,
     color: 'bg-mocha-mousse/10 text-mocha-mousse',
     border: 'border-mocha-mousse/25',
-    title: 'Riattivazione soft',
+    title: 'Riattivazione discreta',
     bullets: [
       'Per clienti che non si vedono da tempo: un messaggio discreto per ricordare che ci sei.',
       'Può includere un\'offerta o semplicemente un invito a prenotare, senza essere invadenti.',
@@ -52,10 +52,10 @@ const SMSvsEmailMarketing = () => {
         {/* Hero sezione */}
         <div className="text-center mb-14 sm:mb-18">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-high-contrast mb-4">
-            Promemoria e follow-up su WhatsApp
+            Promemoria e messaggi di richiamo su WhatsApp
           </h2>
           <p className="text-base sm:text-lg text-medium-contrast font-light max-w-2xl mx-auto mb-5 leading-relaxed">
-            WhatsApp viene letto con più regolarità rispetto all'email, soprattutto per messaggi brevi legati a un appuntamento. Per questo, in molti casi, è il canale più efficace per promemoria e follow-up post-trattamento.
+            WhatsApp viene letto con più regolarità rispetto all'email, soprattutto per messaggi brevi legati a un appuntamento. Per questo, in molti casi, è il canale più efficace per promemoria e messaggi di ricontatto dopo il trattamento.
           </p>
           <span className="inline-flex items-center gap-2 text-xs font-semibold text-sage-green-dark bg-sage-green/10 border border-sage-green/25 px-4 py-2 rounded-wellness">
             <Shield className="w-3.5 h-3.5" />
@@ -136,7 +136,7 @@ const SMSvsEmailMarketing = () => {
             <div>
               <p className="text-sm font-semibold text-high-contrast mb-1">Preferenze modificabili</p>
               <p className="text-sm text-medium-contrast leading-relaxed">
-                Il cliente può revocare il consenso in qualsiasi momento. L'opt-out è semplice e rispettato immediatamente.
+                Il cliente può revocare il consenso in qualsiasi momento. La cancellazione dalla lista è semplice e rispettata immediatamente.
               </p>
             </div>
             <div>
@@ -155,7 +155,7 @@ const SMSvsEmailMarketing = () => {
             <div>
               <h3 className="text-base font-serif font-bold text-high-contrast mb-2">Costi WhatsApp: cosa sapere</h3>
               <p className="text-sm text-medium-contrast leading-relaxed mb-2">
-                I messaggi WhatsApp Business hanno un costo variabile che dipende dal Paese del destinatario, dalla categoria del messaggio (servizio, marketing) e dall'uso di template approvati fuori dalla finestra di conversazione attiva.
+                I messaggi WhatsApp Business hanno un costo variabile che dipende dal Paese del destinatario, dalla categoria del messaggio (servizio o promozionale) e dall'uso di modelli di testo preapprovati inviati fuori da una conversazione già aperta.
               </p>
               <p className="text-sm text-medium-contrast leading-relaxed">
                 Impostiamo regole per evitare invii inutili e usare WhatsApp solo quando porta valore concreto. Riceverai sempre visibilità sui volumi inviati.

@@ -5,7 +5,7 @@ const steps = [
   {
     icon: MessageCircle,
     title: 'Il cliente scrive',
-    text: 'Da DM, commenti o storie: riceve risposte e viene guidato nella scelta.',
+    text: 'Da un messaggio diretto, un commento o le storie: riceve risposte e viene guidato nella scelta.',
     color: 'bg-sage-green/10 text-sage-green',
     border: 'border-sage-green/30',
   },

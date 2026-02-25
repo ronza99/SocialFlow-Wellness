@@ -27,7 +27,7 @@ const coreFeatures: Feature[] = [
     details: {
       howItWorks: [
         'Il cliente scrive nei messaggi e sceglie il trattamento',
-        'Il sistema mostra solo gli slot liberi del calendario in tempo reale',
+        'Il sistema mostra solo le fasce orarie libere del calendario in tempo reale',
         'Conferma in pochi tocchi, senza registrazioni o link esterni',
       ],
       benefits: [
@@ -48,14 +48,14 @@ const coreFeatures: Feature[] = [
       howItWorks: [
         'Il cliente attiva l\'abbonamento con pagamento ricorrente direttamente in chat',
         'Il sistema aggiorna automaticamente lo stato attivo/scaduto',
-        'Il cliente riceve un QR personale per accedere in struttura',
+        'Il cliente riceve un codice QR personale da mostrare per accedere in struttura',
       ],
       benefits: [
         'Entrate mensili stabili, rinnovi automatici senza intervento',
         'Sempre chiaro chi ha l\'abbonamento attivo e chi no',
-        'Accesso in reception piu\' rapido con QR personale',
+        'Accesso in reception piu\' rapido: basta mostrare il codice QR personale',
       ],
-      example: 'Il cliente mostra il QR → lo scan conferma subito se e\' attivo o scaduto, senza cercarlo manualmente.'
+      example: 'Il cliente mostra il codice QR → la lettura conferma subito se l\'abbonamento e\' attivo o scaduto, senza cercarlo manualmente.'
     }
   },
   {
@@ -71,7 +71,7 @@ const coreFeatures: Feature[] = [
         'Lo stock si aggiorna automaticamente dopo ogni ordine',
       ],
       benefits: [
-        'Vendite extra senza gestire un sito e-commerce',
+        'Vendite extra senza gestire un negozio online separato',
         'Esperienza d\'acquisto guidata durante la conversazione',
         'Ordini e stock sempre tracciati, zero inserimento manuale',
       ],
@@ -105,22 +105,22 @@ const extraModules: Feature[] = [
   {
     id: 'gift-cards',
     icon: Gift,
-    title: 'Card & Gift Card digitali (con coupon)',
-    summary: 'Vendi trattamenti prepagati e Gift Card con codice QR. Aggiungi coupon sconto per promozioni o riattivare clienti fermi.',
+    title: 'Buoni trattamento e buoni regalo digitali (con codici sconto)',
+    summary: 'Vendi trattamenti prepagati e buoni regalo con codice QR. Aggiungi codici sconto per promozioni o per richiamare clienti fermi.',
     color: 'bg-misty-teal',
     isExtra: true,
     details: {
       howItWorks: [
-        'Il cliente acquista una Card o Gift Card direttamente in chat',
-        'Riceve un codice o QR personale da mostrare in struttura',
-        'I coupon scontano automaticamente l\'acquisto al momento del pagamento',
+        'Il cliente acquista un buono trattamento o un buono regalo direttamente in chat',
+        'Riceve un codice personale o un codice QR da mostrare in struttura',
+        'I codici sconto vengono applicati automaticamente al momento del pagamento',
       ],
       benefits: [
         'Se un appuntamento salta, il trattamento resta prepagato e si usa piu\' avanti',
-        'Gift Card pronte da regalare, nessuna logistica fisica',
-        'Coupon utili per riattivare clienti inattivi senza essere invasivi',
+        'Buoni regalo pronti da condividere, senza logistica fisica',
+        'Codici sconto utili per richiamare clienti inattivi senza essere invasivi',
       ],
-      example: 'Il cliente riceve un coupon in chat, vede lo sconto applicato in tempo reale e acquista la Gift Card con QR.'
+      example: 'Il cliente riceve un codice sconto in chat, vede lo sconto applicato in tempo reale e acquista il buono regalo con codice QR.'
     }
   },
   {
@@ -147,8 +147,8 @@ const extraModules: Feature[] = [
   {
     id: 'whatsapp',
     icon: Phone,
-    title: 'Promemoria e follow-up su WhatsApp',
-    summary: 'Messaggi automatici su WhatsApp per ricordare gli appuntamenti e riattivare i clienti fermi, solo con il loro consenso.',
+    title: 'Promemoria e messaggi di richiamo su WhatsApp',
+    summary: 'Messaggi automatici su WhatsApp per ricordare gli appuntamenti e ricontattare i clienti fermi, solo con il loro consenso.',
     color: 'bg-misty-teal-dark',
     isExtra: true,
     details: {
@@ -158,7 +158,7 @@ const extraModules: Feature[] = [
         'I messaggi partono solo se il cliente ha dato il consenso',
       ],
       benefits: [
-        'Meno no-show grazie ai promemoria programmati',
+        'Meno assenze ingiustificate grazie ai promemoria programmati',
         'Clienti fermi riattivati senza lavoro manuale',
         'Comunicazioni sempre nel rispetto delle preferenze del cliente',
       ],
@@ -288,11 +288,11 @@ const ExpandableFeatures = () => {
             <div className="h-px bg-gray-200 flex-1" />
             <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-1.5">
               <CheckCircle className="w-3.5 h-3.5 text-sage-green" />
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Flussi Principali</span>
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Moduli Principali</span>
             </div>
             <div className="h-px bg-gray-200 flex-1" />
           </div>
-          <p className="text-xs text-gray-400 text-center mb-6">I tre moduli base del sistema, selezionabili singolarmente o in combinazione</p>
+          <p className="text-xs text-gray-400 text-center mb-6">I tre moduli base del sistema, attivabili singolarmente o in combinazione</p>
         </div>
 
         <div className="space-y-4 mb-12">
@@ -304,7 +304,7 @@ const ExpandableFeatures = () => {
             <div className="h-px bg-amber-200 flex-1" />
             <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5">
               <Star className="w-3.5 h-3.5 text-amber-500" />
-              <span className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Flussi Extra</span>
+              <span className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Moduli Extra</span>
             </div>
             <div className="h-px bg-amber-200 flex-1" />
           </div>
@@ -318,10 +318,10 @@ const ExpandableFeatures = () => {
         <div className="text-center mt-16">
           <div className="bg-soft-apricot rounded-wellness p-6 sm:p-8 max-w-3xl mx-auto border border-sage-green/20">
             <h3 className="text-xl sm:text-2xl font-serif font-bold text-gray-900 mb-3">
-              Tutto collegato in un flusso unico
+              Tutto collegato in un percorso unico
             </h3>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              I flussi lavorano insieme: messaggi, calendario, pagamenti e tracciamento clienti in un unico sistema. Se vuoi, ti mostro una demo completa su un centro di prova.
+              I moduli lavorano insieme: messaggi, calendario, pagamenti e storico clienti in un unico sistema. Se vuoi, ti mostro una prova completa su un centro campione.
             </p>
           </div>
         </div>

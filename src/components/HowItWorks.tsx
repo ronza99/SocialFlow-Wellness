@@ -30,7 +30,7 @@ const HowItWorks = () => {
       number: "3",
       icon: Calendar,
       title: "Scelta dell'appuntamento",
-      description: "Il cliente sceglie giorno e orario tra quelli disponibili. Il sistema mostra solo gli slot liberi e conferma la prenotazione in pochi passaggi.",
+      description: "Il cliente sceglie giorno e orario tra quelli disponibili. Il sistema mostra solo le fasce orarie libere e conferma la prenotazione in pochi passaggi.",
       color: "bg-mocha-mousse"
     },
     {
@@ -44,7 +44,7 @@ const HowItWorks = () => {
       number: "5",
       icon: QrCode,
       title: "Conferma e QR in chat",
-      description: "Dopo la prenotazione, il cliente riceve un QR/codice in chat per riconoscimento e check-in in struttura. Se l'appuntamento viene spostato, il sistema gestisce l'aggiornamento.",
+      description: "Dopo la prenotazione, il cliente riceve un codice QR in chat da mostrare all'arrivo in struttura. Se l'appuntamento viene spostato, il sistema gestisce l'aggiornamento.",
       color: "bg-misty-teal-dark"
     },
     {
