@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Instagram, Bot, CreditCard, ShoppingCart, MessageSquare, Users, Zap, Gift, Phone, CheckCircle, RotateCcw, CalendarX, Shield, Package, Repeat, Star } from 'lucide-react';
+import { ChevronDown, ChevronUp, Bot, CreditCard, ShoppingCart, Zap, Gift, Phone, CheckCircle, Calendar, Package, Star, Repeat } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { scrollToPricingSection } from '../utils/navigation';
 
@@ -19,232 +19,150 @@ interface Feature {
 
 const coreFeatures: Feature[] = [
   {
-    id: 'social-booking',
-    icon: Instagram,
-    title: 'Prenotazioni Dirette sui Social',
-    summary: 'I clienti prenotano in chat su Instagram e Facebook, scegliendo operatore e orario, senza uscire dall\'app.',
+    id: 'bookings',
+    icon: Calendar,
+    title: 'Prenotazioni in chat',
+    summary: 'I clienti prenotano direttamente su Instagram o Facebook, scegliendo trattamento, operatore e orario senza uscire dall\'app.',
     color: 'bg-sage-green',
     details: {
       howItWorks: [
-        'Il cliente scrive nei messaggi e sceglie servizio, operatore e orario',
+        'Il cliente scrive nei messaggi e sceglie il trattamento',
         'Il sistema mostra solo gli slot liberi del calendario in tempo reale',
         'Conferma in pochi tocchi, senza registrazioni o link esterni',
       ],
       benefits: [
         'Zero frizioni: nessun form, nessun sito da aprire',
-        'Il cliente prenota con l\'operatore che preferisce',
         'Niente doppie prenotazioni o conflitti di orario',
+        'Registro organizzato di tutte le prenotazioni senza intervento manuale',
       ],
-      example: 'Il cliente scrive "Prenota" → sceglie servizio e operatore → seleziona l\'orario → conferma. Tutto in chat.'
+      example: 'Il cliente scrive "Prenota" → sceglie trattamento e orario → conferma. Tutto in chat, in meno di 2 minuti.'
     }
   },
   {
-    id: 'calendar-management',
-    icon: CalendarX,
-    title: 'Gestione Calendario Avanzata',
-    summary: 'Blocca giorni e orari per tutto il centro o per singolo operatore direttamente da Google Calendar.',
+    id: 'subscriptions',
+    icon: Repeat,
+    title: 'Abbonamenti ricorrenti',
+    summary: 'Piani mensili con pagamento automatico, rinnovi e tracciamento dello stato attivo o scaduto per ogni cliente.',
     color: 'bg-misty-teal',
     details: {
       howItWorks: [
-        'Blocchi giorni o fasce orarie su Google Calendar come al solito',
-        'Le disponibilità nel bot si aggiornano automaticamente',
-        'Puoi bloccare il centro intero o un singolo operatore',
+        'Il cliente attiva l\'abbonamento con pagamento ricorrente direttamente in chat',
+        'Il sistema aggiorna automaticamente lo stato attivo/scaduto',
+        'Il cliente riceve un QR personale per accedere in struttura',
       ],
       benefits: [
-        'Usi uno strumento che già conosci: Google Calendar',
-        'Nessun intervento manuale sul bot',
-        'I clienti vedono solo gli slot davvero disponibili',
+        'Entrate mensili stabili, rinnovi automatici senza intervento',
+        'Sempre chiaro chi ha l\'abbonamento attivo e chi no',
+        'Accesso in reception piu\' rapido con QR personale',
       ],
-      example: 'Blocchi "Sabato pomeriggio" su Calendar → sparisce subito dal bot, senza toccare nient\'altro.'
+      example: 'Il cliente mostra il QR → lo scan conferma subito se e\' attivo o scaduto, senza cercarlo manualmente.'
     }
   },
   {
-    id: 'crm-integration',
-    icon: Users,
-    title: 'CRM, Calendario e Gestione Operatori',
-    summary: 'Ogni prenotazione finisce in HubSpot con cliente, servizio e pagamento collegati. Report automatici su Google Sheets.',
-    color: 'bg-sage-green',
+    id: 'cosmetics',
+    icon: ShoppingCart,
+    title: 'Vendita cosmetici in chat',
+    summary: 'Vendi creme, olii e prodotti direttamente in chat: il cliente sfoglia, aggiunge al carrello e paga senza aprire nessun sito.',
+    color: 'bg-mocha-mousse',
     details: {
       howItWorks: [
-        'Ogni prenotazione crea o aggiorna il contatto nel CRM',
-        'Puoi scegliere: il cliente seleziona l\'operatore, oppure il sistema li assegna a rotazione',
-        'Report e tabelle su Google Sheets si aggiornano da soli',
+        'Il cliente sfoglia i prodotti in chat con foto e descrizione',
+        'Aggiunge al carrello e paga senza uscire dall\'app',
+        'Lo stock si aggiorna automaticamente dopo ogni ordine',
       ],
       benefits: [
-        'Storico completo di ogni cliente in un posto solo',
-        'Distribuzione equa del lavoro tra operatori',
-        'Dati sempre aggiornati, zero inserimento manuale',
+        'Vendite extra senza gestire un sito e-commerce',
+        'Esperienza d\'acquisto guidata durante la conversazione',
+        'Ordini e stock sempre tracciati, zero inserimento manuale',
       ],
-      example: 'Con 3 operatori: 1° appuntamento a Marco, 2° a Laura, 3° a Sofia. Il sistema bilancia automaticamente.'
-    }
-  },
-  {
-    id: 'sms-followup',
-    icon: Phone,
-    title: 'Follow-up e Promemoria Automatici',
-    summary: 'Promemoria prima dell\'appuntamento e messaggi di riattivazione per i clienti fermi, tutto automatico.',
-    color: 'bg-misty-teal',
-    details: {
-      howItWorks: [
-        'Promemoria automatico inviato prima dell\'appuntamento',
-        'Il sistema rileva i clienti inattivi e invia un messaggio di riattivazione',
-        'Le promozioni partono solo se il cliente ha dato il consenso',
-      ],
-      benefits: [
-        'Meno no-show grazie ai promemoria programmati',
-        'Clienti dormienti riattivati senza lavoro manuale',
-        'Comunicazioni sempre rispettose delle preferenze',
-      ],
-      example: 'Cliente fermo da 6 settimane → il sistema gli invia un coupon dedicato. Solo se ha acconsentito.'
-    }
-  },
-  {
-    id: 'gdpr-compliance',
-    icon: Shield,
-    title: 'Conformità GDPR e Privacy',
-    summary: 'Gestione consensi integrata nel bot: il cliente sceglie cosa ricevere e su quale canale, con tracciamento automatico.',
-    color: 'bg-misty-teal-dark',
-    details: {
-      howItWorks: [
-        'Il bot raccoglie il consenso prima di qualsiasi invio promozionale',
-        'Consensi separati per dati personali e marketing',
-        'Il cliente può modificare o revocare in qualsiasi momento',
-      ],
-      benefits: [
-        'Conformità senza burocrazia: tutto integrato nel flusso',
-        'Il cliente controlla cosa riceve e su quale canale',
-        'Storico consensi sempre disponibile in caso di verifica',
-      ],
-      example: 'Il cliente rifiuta le promozioni → il sistema blocca automaticamente tutti gli invii non autorizzati.'
+      example: 'Il cliente aggiunge 2 prodotti, paga in chat → l\'ordine viene registrato e lo stock scalato in automatico.'
     }
   },
 ];
 
 const extraModules: Feature[] = [
   {
-    id: 'ecommerce-social',
-    icon: ShoppingCart,
-    title: 'Negozio nei Messaggi',
-    summary: 'Vendi cosmetici, integratori e accessori direttamente in chat, con carrello e pagamento integrati.',
-    color: 'bg-mocha-mousse',
-    isExtra: true,
-    details: {
-      howItWorks: [
-        'Il cliente sfoglia i prodotti in chat con foto e descrizione',
-        'Aggiunge al carrello (disponibile 15 minuti) e paga senza uscire dall\'app',
-        'Lo stock si aggiorna automaticamente dopo ogni ordine',
-      ],
-      benefits: [
-        'Vendite extra senza gestire un sito e-commerce',
-        'Esperienza d\'acquisto fluida e guidata',
-        'Ordini e stock sempre tracciati',
-      ],
-      example: 'Il cliente aggiunge 2 prodotti, paga in chat → l\'ordine viene registrato e lo stock scalato in automatico.'
-    }
-  },
-  {
     id: 'ai-assistant',
     icon: Bot,
-    title: 'Assistente AI H24',
-    summary: 'Risponde alle domande più comuni e guida il cliente verso il servizio giusto, anche fuori orario.',
+    title: 'Segretaria AI in chat',
+    summary: 'Un assistente virtuale che risponde alle domande frequenti su trattamenti, prezzi e regole del centro, anche fuori orario.',
     color: 'bg-sage-green-dark',
     isExtra: true,
     details: {
       howItWorks: [
         'Il cliente scrive una domanda e riceve risposta immediata',
-        'L\'AI conosce i tuoi trattamenti, prezzi e policy',
-        'Se serve, indirizza verso la prenotazione o il pagamento',
+        'L\'AI conosce i tuoi trattamenti, durate, prezzi e policy',
+        'Guida il cliente verso il flusso giusto (prenotazione, abbonamento, ecc.)',
       ],
       benefits: [
-        'Risposte immediate 24/7, anche nel weekend',
+        'Risposte immediate 24/7, anche nel weekend e fuori orario',
         'Meno messaggi ripetitivi da gestire manualmente',
-        'Tono coerente con quello del tuo centro',
+        'Non crea o modifica appuntamenti: informa e guida soltanto',
       ],
-      example: '"Che massaggio consigliate per la cervicale?" → risposta guidata + invito a prenotare, in pochi secondi.'
+      example: '"Che differenza c\'e\' tra il pacchetto 5 e 10 sedute?" → risposta dettagliata + invito a prenotare, in pochi secondi.'
     }
   },
   {
-    id: 'payment-system',
-    icon: CreditCard,
-    title: 'Pagamenti Flessibili e Gift Card con QR',
-    summary: 'Il cliente sceglie: paga in sede o paga online e riceve un QR da mostrare all\'arrivo.',
-    color: 'bg-misty-teal-dark',
-    isExtra: true,
-    details: {
-      howItWorks: [
-        'Per ogni trattamento: il cliente sceglie "Paga in sede" o "Paga ora"',
-        'Se paga online, riceve un QR univoco direttamente in chat',
-        'All\'arrivo l\'operatore scansiona il QR: valido, anti-duplicazione',
-      ],
-      benefits: [
-        'Nessuna frizione: ognuno paga come preferisce',
-        'Gift Card pronte da regalare con QR personale',
-        'Check-in più rapido e ordinato in reception',
-      ],
-      example: 'Il cliente paga online → riceve il QR in chat → lo mostra all\'arrivo → check-in in 5 secondi.'
-    }
-  },
-  {
-    id: 'multi-slot-packages',
-    icon: Package,
-    title: 'Pacchetti Multi-Slot con Sblocco Progressivo',
-    summary: 'Il cliente compra un pacchetto e prenota uno slot alla volta: il successivo si sblocca solo dopo aver completato il precedente.',
-    color: 'bg-mocha-mousse',
-    isExtra: true,
-    details: {
-      howItWorks: [
-        'Il cliente acquista il pacchetto e prenota il primo trattamento',
-        'Gli slot successivi sono bloccati finché non viene completato quello attivo',
-        'Lo scan del QR in struttura sblocca automaticamente lo slot successivo',
-      ],
-      benefits: [
-        'Niente prenotazioni "a tappeto" che poi saltano',
-        'Il cliente decide quando usare i trattamenti restanti',
-        'Sempre chiaro quanti slot sono rimasti',
-      ],
-      example: 'Finito il 1° trattamento, lo scan del QR sblocca subito la possibilità di prenotare il 2°.'
-    }
-  },
-  {
-    id: 'subscriptions',
-    icon: Repeat,
-    title: 'Abbonamenti Ricorrenti con QR Personale',
-    summary: 'Piani mensili con pagamento automatico. QR personale verificato ad ogni accesso.',
-    color: 'bg-sage-green-dark',
-    isExtra: true,
-    details: {
-      howItWorks: [
-        'Il cliente attiva l\'abbonamento con pagamento ricorrente',
-        'Riceve un QR personale con il suo stato abbonamento',
-        'Ogni scan verifica in tempo reale se l\'abbonamento è attivo',
-      ],
-      benefits: [
-        'Entrate mensili stabili, rinnovi automatici',
-        'Accesso in reception più rapido con il QR',
-        'Se l\'abbonamento è scaduto, il QR non è valido: niente errori',
-      ],
-      example: 'Il cliente mostra il QR → lo scan conferma subito se è attivo o scaduto, senza cercarlo manualmente.'
-    }
-  },
-  {
-    id: 'coupon-system',
+    id: 'gift-cards',
     icon: Gift,
-    title: 'Coupon Intelligenti e Gift Card',
-    summary: '3 tipi di coupon (Nuovo Cliente, Inattivi, Standard) per incentivare la prima prenotazione o riattivare chi non viene da un po\'.',
+    title: 'Card & Gift Card digitali (con coupon)',
+    summary: 'Vendi trattamenti prepagati e Gift Card con codice QR. Aggiungi coupon sconto per promozioni o riattivare clienti fermi.',
     color: 'bg-misty-teal',
     isExtra: true,
     details: {
       howItWorks: [
-        '3 famiglie di coupon con regole diverse: nuovo cliente, inattivo, standard',
-        'Ogni coupon sblocca una Gift Card scontata con QR personale',
-        'Scadenza e quantità gestite in automatico dal sistema',
+        'Il cliente acquista una Card o Gift Card direttamente in chat',
+        'Riceve un codice o QR personale da mostrare in struttura',
+        'I coupon scontano automaticamente l\'acquisto al momento del pagamento',
       ],
       benefits: [
-        'Trasforma i curiosi in clienti con un incentivo chiaro',
-        'Riattiva chi non prenota da tempo senza essere invasivo',
-        'Urgenza "soft": scadenza visibile, nessun spam',
+        'Se un appuntamento salta, il trattamento resta prepagato e si usa piu\' avanti',
+        'Gift Card pronte da regalare, nessuna logistica fisica',
+        'Coupon utili per riattivare clienti inattivi senza essere invasivi',
       ],
-      example: 'Il cliente riceve un coupon in chat, vede lo sconto in tempo reale e sblocca la Gift Card con QR.'
+      example: 'Il cliente riceve un coupon in chat, vede lo sconto applicato in tempo reale e acquista la Gift Card con QR.'
+    }
+  },
+  {
+    id: 'packages',
+    icon: Package,
+    title: 'Pacchetti di sedute',
+    summary: 'Gestione pacchetti personalizzabili (es. 5 o 10 sedute): il sistema tiene il conto di quelle usate e di quelle rimanenti.',
+    color: 'bg-mocha-mousse',
+    isExtra: true,
+    details: {
+      howItWorks: [
+        'Il cliente acquista il pacchetto e prenota la prima seduta',
+        'Il sistema traccia sedute usate e rimanenti nel profilo del cliente',
+        'Ogni seduta completata aggiorna automaticamente il contatore',
+      ],
+      benefits: [
+        'Sai sempre a che punto e\' il cliente nel suo percorso',
+        'Semplifica il pagamento anticipato senza confusione',
+        'Da\' continuita\' al trattamento e riduce i clienti che si fermano a meta\'',
+      ],
+      example: 'Cliente con pacchetto da 10 sedute: dopo la 3a, il sistema mostra automaticamente "7 sedute rimanenti".'
+    }
+  },
+  {
+    id: 'whatsapp',
+    icon: Phone,
+    title: 'Promemoria e follow-up su WhatsApp',
+    summary: 'Messaggi automatici su WhatsApp per ricordare gli appuntamenti e riattivare i clienti fermi, solo con il loro consenso.',
+    color: 'bg-misty-teal-dark',
+    isExtra: true,
+    details: {
+      howItWorks: [
+        'Promemoria automatico il giorno prima dell\'appuntamento',
+        'Il sistema rileva i clienti inattivi e invia un richiamo soft',
+        'I messaggi partono solo se il cliente ha dato il consenso',
+      ],
+      benefits: [
+        'Meno no-show grazie ai promemoria programmati',
+        'Clienti fermi riattivati senza lavoro manuale',
+        'Comunicazioni sempre nel rispetto delle preferenze del cliente',
+      ],
+      example: 'Cliente fermo da 6 settimane → messaggio automatico con richiamo soft. Solo se ha acconsentito, mai spam.'
     }
   },
 ];
@@ -261,7 +179,7 @@ const ExpandableFeatures = () => {
   const renderFeatureCard = (feature: Feature) => (
     <div
       key={feature.id}
-      className={`overflow-hidden mx-4 rounded-2xl border transition-all ${
+      className={`overflow-hidden rounded-2xl border transition-all ${
         feature.isExtra
           ? 'border-amber-200 bg-amber-50/20'
           : 'wellness-card border-transparent'
@@ -293,7 +211,7 @@ const ExpandableFeatures = () => {
             data-feature-button={feature.id}
           >
             <span className="text-sm font-medium text-gray-700">
-              {expandedFeature === feature.id ? 'Chiudi' : 'Scopri di più'}
+              {expandedFeature === feature.id ? 'Chiudi' : 'Scopri di piu\''}
             </span>
             {expandedFeature === feature.id ? (
               <ChevronUp className="w-4 h-4 text-gray-500" />
@@ -358,39 +276,39 @@ const ExpandableFeatures = () => {
       <div id="expandable-features" className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" data-expandable-features>
         <div className="text-center mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 px-4">
-            Funzionalità Dettagliate
+            Funzionalita\' Dettagliate
           </h2>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto font-light px-4">
-            Espandi ogni voce per capire come funziona e cosa ti cambia concretamente
+            Espandi ogni voce per capire come funziona e cosa cambia concretamente per il tuo centro
           </p>
         </div>
 
-        <div className="mb-4 mx-4">
+        <div className="mb-6">
           <div className="flex items-center gap-4 mb-3">
             <div className="h-px bg-gray-200 flex-1" />
             <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-4 py-1.5">
               <CheckCircle className="w-3.5 h-3.5 text-sage-green" />
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Flussi Inclusi</span>
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Flussi Principali</span>
             </div>
             <div className="h-px bg-gray-200 flex-1" />
           </div>
-          <p className="text-xs text-gray-400 text-center mb-6">Sempre presenti in ogni configurazione</p>
+          <p className="text-xs text-gray-400 text-center mb-6">I tre moduli base del sistema, selezionabili singolarmente o in combinazione</p>
         </div>
 
         <div className="space-y-4 mb-12">
           {coreFeatures.map((feature) => renderFeatureCard(feature))}
         </div>
 
-        <div className="mb-4 mx-4">
+        <div className="mb-6">
           <div className="flex items-center gap-4 mb-3">
             <div className="h-px bg-amber-200 flex-1" />
             <div className="flex items-center gap-2 bg-amber-50 border border-amber-200 rounded-full px-4 py-1.5">
               <Star className="w-3.5 h-3.5 text-amber-500" />
-              <span className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Moduli Extra</span>
+              <span className="text-xs font-semibold text-amber-600 uppercase tracking-widest">Flussi Extra</span>
             </div>
             <div className="h-px bg-amber-200 flex-1" />
           </div>
-          <p className="text-xs text-amber-600/60 text-center mb-6">Funzionalità opzionali aggiungibili alla configurazione base</p>
+          <p className="text-xs text-amber-600/60 text-center mb-6">Moduli aggiuntivi che potenziano il sistema base</p>
         </div>
 
         <div className="space-y-4">
@@ -403,7 +321,7 @@ const ExpandableFeatures = () => {
               Tutto collegato in un flusso unico
             </h3>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              Messaggi, calendario, pagamenti, CRM e report lavorano insieme. Se vuoi, ti mostro una demo completa su un centro di prova.
+              I flussi lavorano insieme: messaggi, calendario, pagamenti e tracciamento clienti in un unico sistema. Se vuoi, ti mostro una demo completa su un centro di prova.
             </p>
           </div>
         </div>
