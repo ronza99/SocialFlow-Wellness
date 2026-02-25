@@ -303,11 +303,30 @@ export default function LeadDetail() {
 
   const [confirmDeselect, setConfirmDeselect] = useState<{ type: 'main' | 'extra'; flowId: string; label: string } | null>(null);
 
-  const doToggleMainFlow = (flowId: string) => {
+  const updateCostoTotaleInDB = async (nuoveTranche: UpsellTranche[], nuovoSetup?: string) => {
+    if (!lead) return;
+    const setup = parseFloat(nuovoSetup ?? setupTotale) || 0;
+    const upsellSum = nuoveTranche.reduce((sum, t) => sum + t.totale, 0);
+    const nuovoTotale = setup + upsellSum;
+    await supabase.from('quote_requests').update({ costo_totale: nuovoTotale }).eq('id', lead.id);
+    setLead(prev => prev ? { ...prev, costo_totale: nuovoTotale } : null);
+  };
+
+  const doToggleMainFlow = async (flowId: string) => {
+    const isRemoving = flussiPrincipaliAttivi.includes(flowId);
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
     if (isConverted) {
+      if (isRemoving) {
+        const trancheToDelete = upsellTranche.filter(t => t.flussi_ids.includes(flowId));
+        if (trancheToDelete.length > 0) {
+          await Promise.all(trancheToDelete.map(t => supabase.from('upsell_tranche').delete().eq('id', t.id)));
+          const nuoveTranche = upsellTranche.filter(t => !t.flussi_ids.includes(flowId));
+          setUpsellTranche(nuoveTranche);
+          await updateCostoTotaleInDB(nuoveTranche);
+        }
+      }
       if (isCustomPricing) {
         setPendingUpsellTotale('');
         setPendingUpsellTotaleManuale(false);
@@ -317,11 +336,21 @@ export default function LeadDetail() {
     }
   };
 
-  const doToggleExtraFlow = (flowId: string) => {
+  const doToggleExtraFlow = async (flowId: string) => {
+    const isRemoving = flussiExtraAttivi.includes(flowId);
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
     if (isConverted) {
+      if (isRemoving) {
+        const trancheToDelete = upsellTranche.filter(t => t.flussi_ids.includes(flowId));
+        if (trancheToDelete.length > 0) {
+          await Promise.all(trancheToDelete.map(t => supabase.from('upsell_tranche').delete().eq('id', t.id)));
+          const nuoveTranche = upsellTranche.filter(t => !t.flussi_ids.includes(flowId));
+          setUpsellTranche(nuoveTranche);
+          await updateCostoTotaleInDB(nuoveTranche);
+        }
+      }
       if (isCustomPricing) {
         setPendingUpsellTotale('');
         setPendingUpsellTotaleManuale(false);
@@ -496,6 +525,7 @@ export default function LeadDetail() {
           isConverted={isConverted}
           upsellTranche={upsellTranche}
           onUpsellTrancheChange={setUpsellTranche}
+          onTotaleUpdate={(nuoveTranche) => updateCostoTotaleInDB(nuoveTranche)}
           pendingUpsellFlows={pendingUpsellFlows}
           pendingUpsellTotale={pendingUpsellTotale}
           onPendingUpsellTotaleChange={setPendingUpsellTotale}

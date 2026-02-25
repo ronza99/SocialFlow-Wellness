@@ -26,6 +26,7 @@ interface Props {
   pendingUpsellTotaleManuale: boolean;
   onPendingUpsellTotaleManualeChange: (v: boolean) => void;
   isCustomPricing?: boolean;
+  onTotaleUpdate: (nuoveTranche: UpsellTranche[]) => void;
 }
 
 function today(): string {
@@ -67,6 +68,7 @@ export default function PaymentTracker({
   pendingUpsellTotaleManuale,
   onPendingUpsellTotaleManualeChange,
   isCustomPricing = false,
+  onTotaleUpdate,
 }: Props) {
   const totale = parseFloat(setupTotale) || 0;
   const imp40 = Math.round(totale * 0.4);
@@ -91,7 +93,9 @@ export default function PaymentTracker({
       .maybeSingle();
 
     if (!error && data) {
-      onUpsellTrancheChange([...upsellTranche, data]);
+      const nuoveTranche = [...upsellTranche, data];
+      onUpsellTrancheChange(nuoveTranche);
+      onTotaleUpdate(nuoveTranche);
     }
   };
 
@@ -150,7 +154,9 @@ export default function PaymentTracker({
       .eq('id', trancheId);
 
     if (!error) {
-      onUpsellTrancheChange(upsellTranche.filter(t => t.id !== trancheId));
+      const nuoveTranche = upsellTranche.filter(t => t.id !== trancheId);
+      onUpsellTrancheChange(nuoveTranche);
+      onTotaleUpdate(nuoveTranche);
     }
   };
 
