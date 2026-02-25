@@ -31,17 +31,39 @@ export interface QuoteRequest {
 }
 
 export const MAIN_FLOWS_OPTIONS = [
-  { id: 'bookings', label: 'Prenotazioni in chat' },
-  { id: 'subscriptions', label: 'Abbonamenti ricorrenti' },
-  { id: 'cosmetics', label: 'Vendita cosmetici in chat' },
+  { id: 'bookings', label: 'Prenotazioni in chat', priceSingle: 490, priceTeam: 540 },
+  { id: 'subscriptions', label: 'Abbonamenti ricorrenti', priceSingle: 440, priceTeam: 490 },
+  { id: 'cosmetics', label: 'Vendita cosmetici in chat', priceSingle: 440, priceTeam: 490 },
 ];
 
 export const EXTRA_FLOWS_OPTIONS = [
-  { id: 'ai-assistant', label: 'Segretaria AI in chat' },
-  { id: 'gift-cards', label: 'Card & Gift Card digitali' },
-  { id: 'packages', label: 'Pacchetti di sedute' },
-  { id: 'whatsapp', label: 'Promemoria e follow-up WhatsApp' },
+  { id: 'ai-assistant', label: 'Segretaria AI in chat', price: 260 },
+  { id: 'gift-cards', label: 'Card & Gift Card digitali', price: 260 },
+  { id: 'packages', label: 'Pacchetti di sedute', price: 220 },
+  { id: 'whatsapp', label: 'Promemoria e follow-up WhatsApp', price: 220 },
 ];
+
+export function calcCosto(
+  tipoCentro: string,
+  mainFlows: string[],
+  extraFlows: string[]
+): number {
+  const isTeam = tipoCentro === 'team';
+  let main = 0;
+  if (mainFlows.length === 3) {
+    main = isTeam ? 1350 : 1200;
+  } else {
+    mainFlows.forEach(id => {
+      const f = MAIN_FLOWS_OPTIONS.find(o => o.id === id);
+      if (f) main += isTeam ? f.priceTeam : f.priceSingle;
+    });
+  }
+  const extra = extraFlows.reduce((sum, id) => {
+    const f = EXTRA_FLOWS_OPTIONS.find(o => o.id === id);
+    return sum + (f ? f.price : 0);
+  }, 0);
+  return main + extra;
+}
 
 export const MAINTENANCE_OPTIONS = [
   { id: '', label: 'Nessuno' },

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import {
   QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
-  MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS
+  MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto
 } from './types';
 
 const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
@@ -32,6 +32,13 @@ export default function LeadDetail() {
   const [flussiExtraAttivi, setFlussiExtraAttivi] = useState<string[]>([]);
   const [pianoManutenzioneAttivo, setPianoManutenzioneAttivo] = useState<string>('');
   const [costoConcordato, setCostoConcordato] = useState<string>('');
+  const [costoManuale, setCostoManuale] = useState(false);
+
+  useEffect(() => {
+    if (costoManuale) return;
+    const calcolato = calcCosto(tipoCentroAttivo, flussiPrincipaliAttivi, flussiExtraAttivi);
+    setCostoConcordato(calcolato > 0 ? String(calcolato) : '');
+  }, [tipoCentroAttivo, flussiPrincipaliAttivi, flussiExtraAttivi, costoManuale]);
 
   useEffect(() => {
     const fetchLead = async () => {
@@ -49,23 +56,33 @@ export default function LeadDetail() {
       setStato(data.stato);
       setNote(data.note || '');
 
-      setTipoCentroAttivo(data.tipo_centro_attivo ?? data.tipo_centro ?? '');
-      setFlussiPrincipaliAttivi(
-        data.flussi_principali_attivi
-          ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-          : data.core_flows
-          ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
-          : []
-      );
-      setFlussiExtraAttivi(
-        data.flussi_extra_attivi
-          ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
-          : data.extra_flows
-          ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
-          : []
-      );
+      const centro = data.tipo_centro_attivo ?? data.tipo_centro ?? '';
+      const mainAttivi = data.flussi_principali_attivi
+        ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+        : data.core_flows
+        ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
+        : [];
+      const extraAttivi = data.flussi_extra_attivi
+        ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+        : data.extra_flows
+        ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
+        : [];
+
+      setTipoCentroAttivo(centro);
+      setFlussiPrincipaliAttivi(mainAttivi);
+      setFlussiExtraAttivi(extraAttivi);
       setPianoManutenzioneAttivo(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? '');
-      setCostoConcordato(data.costo_concordato != null ? String(data.costo_concordato) : String(data.costo_totale || ''));
+
+      const calcolato = calcCosto(centro, mainAttivi, extraAttivi);
+
+      if (data.costo_concordato != null && data.costo_concordato !== calcolato) {
+        setCostoConcordato(String(data.costo_concordato));
+        setCostoManuale(true);
+      } else {
+        setCostoConcordato(calcolato > 0 ? String(calcolato) : String(data.costo_totale || ''));
+        setCostoManuale(false);
+      }
+
       setLoading(false);
     };
     fetchLead();
@@ -320,17 +337,40 @@ export default function LeadDetail() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Costo concordato (€)</label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-700">Costo concordato (€)</label>
+              <button
+                onClick={() => setCostoManuale(m => !m)}
+                className={`text-xs px-2 py-0.5 rounded-lg transition-all border ${
+                  costoManuale
+                    ? 'bg-amber-50 text-amber-700 border-amber-200'
+                    : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'
+                }`}
+              >
+                {costoManuale ? 'Manuale (clicca per auto)' : 'Automatico (clicca per modificare)'}
+              </button>
+            </div>
             <div className="relative">
               <Euro size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="number"
                 value={costoConcordato}
                 onChange={e => setCostoConcordato(e.target.value)}
-                placeholder="es. 1200"
-                className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal transition-all"
+                disabled={!costoManuale}
+                placeholder="Seleziona i blocchi per calcolare"
+                className={`w-full pl-8 pr-4 py-2 rounded-xl border text-sm transition-all ${
+                  costoManuale
+                    ? 'border-amber-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white'
+                    : 'border-gray-200 text-gray-700 bg-gray-50 cursor-default'
+                }`}
               />
             </div>
+            {!costoManuale && flussiPrincipaliAttivi.length > 0 && (
+              <p className="text-xs text-gray-400 mt-1">
+                Calcolato automaticamente dai blocchi selezionati
+                {flussiPrincipaliAttivi.length === 3 && ' (sconto 3 flussi applicato)'}
+              </p>
+            )}
           </div>
 
           {(flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
