@@ -32,6 +32,13 @@ export default function LeadDetail() {
   const [stato, setStato] = useState<LeadStatus>('new');
   const [note, setNote] = useState('');
 
+  const [editNome, setEditNome] = useState('');
+  const [editCognome, setEditCognome] = useState('');
+  const [editEmail, setEditEmail] = useState('');
+  const [editTelefono, setEditTelefono] = useState('');
+  const [editNomeCentro, setEditNomeCentro] = useState('');
+  const [editCitta, setEditCitta] = useState('');
+
   const [tipoCentroAttivo, setTipoCentroAttivo] = useState<string>('');
   const [operatoriCustom, setOperatoriCustom] = useState<string>('');
   const [flussiPrincipaliAttivi, setFlussiPrincipaliAttivi] = useState<string[]>([]);
@@ -137,6 +144,12 @@ export default function LeadDetail() {
       setUpsellTranche((trancheData as UpsellTranche[]) || []);
       setStato(data.stato);
       setNote(data.note || '');
+      setEditNome(data.nome || '');
+      setEditCognome(data.cognome || '');
+      setEditEmail(data.email || '');
+      setEditTelefono(data.telefono || '');
+      setEditNomeCentro(data.nome_centro || '');
+      setEditCitta(data.citta || '');
       setDriveLink(data.drive_link || '');
       const calcolatoSetup = calcCosto(
         data.tipo_centro_attivo ?? data.tipo_centro ?? '',
@@ -203,6 +216,12 @@ export default function LeadDetail() {
       .update({
         stato,
         note,
+        nome: editNome || lead.nome,
+        cognome: editCognome || lead.cognome,
+        email: editEmail || lead.email,
+        telefono: editTelefono || lead.telefono,
+        nome_centro: editNomeCentro || lead.nome_centro,
+        citta: editCitta || null,
         tipo_centro_attivo: tipoCentroAttivo || null,
         flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
@@ -224,6 +243,12 @@ export default function LeadDetail() {
       setSaved(true);
       setLead(prev => prev ? {
         ...prev, stato, note,
+        nome: editNome || prev.nome,
+        cognome: editCognome || prev.cognome,
+        email: editEmail || prev.email,
+        telefono: editTelefono || prev.telefono,
+        nome_centro: editNomeCentro || prev.nome_centro,
+        citta: editCitta || null,
         tipo_centro_attivo: tipoCentroAttivo || null,
         flussi_principali_attivi: flussiPrincipaliAttivi.length > 0 ? flussiPrincipaliAttivi.join(' | ') : null,
         flussi_extra_attivi: flussiExtraAttivi.length > 0 ? flussiExtraAttivi.join(' | ') : null,
@@ -465,9 +490,9 @@ export default function LeadDetail() {
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold text-gray-800">
-                {lead.nome} {lead.cognome}
+                {editNome || lead.nome} {editCognome || lead.cognome}
               </h1>
-              <p className="text-gray-500 mt-1">{lead.nome_centro}</p>
+              <p className="text-gray-500 mt-1">{editNomeCentro || lead.nome_centro}</p>
             </div>
             <div className="text-left sm:text-right">
               <div className="text-2xl font-bold text-forest-green">
@@ -538,9 +563,14 @@ export default function LeadDetail() {
           <div className="bg-white rounded-2xl shadow-wellness p-6">
             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Contatti</h2>
             <div className="space-y-3">
-              <ContactRow icon={<Mail size={15} />} label="Email" value={lead.email} href={`mailto:${lead.email}`} />
-              <ContactRow icon={<Phone size={15} />} label="Telefono" value={lead.telefono} href={`tel:${lead.telefono}`} />
-              <ContactRow icon={<MapPin size={15} />} label="Citta'" value={lead.citta || '—'} />
+              <div className="grid grid-cols-2 gap-2">
+                <EditableContactField icon={<User size={14} />} label="Nome" value={editNome} onChange={setEditNome} />
+                <EditableContactField icon={<User size={14} />} label="Cognome" value={editCognome} onChange={setEditCognome} />
+              </div>
+              <EditableContactField icon={<Mail size={14} />} label="Email" value={editEmail} onChange={setEditEmail} type="email" />
+              <EditableContactField icon={<Phone size={14} />} label="Telefono" value={editTelefono} onChange={setEditTelefono} type="tel" />
+              <EditableContactField icon={<Building2 size={14} />} label="Nome centro" value={editNomeCentro} onChange={setEditNomeCentro} />
+              <EditableContactField icon={<MapPin size={14} />} label="Citta'" value={editCitta} onChange={setEditCitta} />
               <ContactRow icon={<Building2 size={15} />} label="Tipo attivita'" value={lead.tipo_attivita || '—'} />
               <ContactRow icon={<User size={15} />} label="Clienti/mese" value={lead.clienti_attuali || '—'} />
               <ContactRow icon={<MessageSquare size={15} />} label="Contatto pref." value={lead.contatto_preferito || '—'} />
@@ -1097,6 +1127,25 @@ function labelToExtraId(label: string): string {
     'promemoria e follow-up whatsapp': 'whatsapp',
   };
   return map[label.toLowerCase()] ?? label;
+}
+
+function EditableContactField({
+  icon, label, value, onChange, type = 'text'
+}: { icon: React.ReactNode; label: string; value: string; onChange: (v: string) => void; type?: string }) {
+  return (
+    <div>
+      <label className="flex items-center gap-1.5 text-xs text-gray-400 mb-1">
+        {icon}
+        {label}
+      </label>
+      <input
+        type={type}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        className="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white transition-all"
+      />
+    </div>
+  );
 }
 
 function ContactRow({
