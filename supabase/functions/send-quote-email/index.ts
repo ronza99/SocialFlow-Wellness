@@ -129,7 +129,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "SocialFlow <onboarding@resend.dev>",
-        to: ["socialflow.ai.bot@gmail.com"],
+        to: ["francesco@socialflowwellness.it"],
         subject: `Nuova richiesta preventivo: ${nome} ${cognome} - ${nome_centro}`,
         html: htmlBody,
       }),
