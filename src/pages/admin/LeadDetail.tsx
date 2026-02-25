@@ -4,7 +4,7 @@ import { supabase } from '../../lib/supabase';
 import {
   ArrowLeft, Save, Phone, Mail, MapPin, Building2,
   MessageSquare, Euro, Calendar, User, Check, Loader2,
-  Settings, FolderOpen, ExternalLink, BadgeCheck
+  Settings, FolderOpen, ExternalLink, BadgeCheck, Trash2
 } from 'lucide-react';
 import {
   QuoteRequest, ModuloAcquistato, LeadStatus, STATUS_LABELS, STATUS_COLORS,
@@ -48,6 +48,8 @@ export default function LeadDetail() {
   const [pagamento60Data, setPagamento60Data] = useState<string>('');
 
   const [showConversionDialog, setShowConversionDialog] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [moduli, setModuli] = useState<ModuloAcquistato[]>([]);
   const [convertingLoading, setConvertingLoading] = useState(false);
 
@@ -245,6 +247,15 @@ export default function LeadDetail() {
     setConvertingLoading(false);
   };
 
+  const handleDelete = async () => {
+    if (!lead) return;
+    setDeleting(true);
+    await supabase.from('moduli_acquistati').delete().eq('lead_id', lead.id);
+    await supabase.from('quote_requests').delete().eq('id', lead.id);
+    setDeleting(false);
+    navigate('/admin/dashboard');
+  };
+
   const toggleMainFlow = (flowId: string) => {
     if (isConverted) return;
     setFlussiPrincipaliAttivi(prev =>
@@ -289,6 +300,13 @@ export default function LeadDetail() {
             <span>Torna alla lista</span>
           </button>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="flex items-center gap-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 text-sm px-3 py-2 rounded-xl transition-colors"
+              title="Elimina cliente"
+            >
+              <Trash2 size={15} />
+            </button>
             {!isConverted && (
               <button
                 onClick={() => setShowConversionDialog(true)}
@@ -718,6 +736,42 @@ export default function LeadDetail() {
           onConfirm={handleConvertConfirm}
           onCancel={() => setShowConversionDialog(false)}
         />
+      )}
+
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                <Trash2 size={18} className="text-red-500" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-gray-800">Elimina cliente</h3>
+                <p className="text-sm text-gray-500">Questa azione non e' reversibile</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              Stai per eliminare <span className="font-semibold">{lead.nome} {lead.cognome}</span> e tutti i dati associati. Sei sicuro?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+                className="flex-1 px-4 py-2 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors disabled:opacity-60"
+              >
+                Annulla
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="flex-1 px-4 py-2 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-semibold transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+              >
+                {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
+                {deleting ? 'Eliminazione...' : 'Elimina'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
