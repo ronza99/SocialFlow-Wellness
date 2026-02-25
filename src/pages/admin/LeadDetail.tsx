@@ -76,7 +76,21 @@ export default function LeadDetail() {
       setStato(data.stato);
       setNote(data.note || '');
       setDriveLink(data.drive_link || '');
-      setSetupTotale(data.setup_totale != null ? String(data.setup_totale) : '');
+      const calcolatoSetup = calcCosto(
+        data.tipo_centro_attivo ?? data.tipo_centro ?? '',
+        data.flussi_principali_attivi
+          ? data.flussi_principali_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+          : data.core_flows
+          ? data.core_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToId)
+          : [],
+        data.flussi_extra_attivi
+          ? data.flussi_extra_attivi.split('|').map((f: string) => f.trim()).filter(Boolean)
+          : data.extra_flows
+          ? data.extra_flows.split('|').map((f: string) => f.trim()).filter(Boolean).map(labelToExtraId)
+          : []
+      );
+      const setupFallback = data.costo_concordato ?? (calcolatoSetup > 0 ? calcolatoSetup : data.costo_totale) ?? null;
+      setSetupTotale(data.setup_totale != null ? String(data.setup_totale) : (setupFallback != null ? String(setupFallback) : ''));
       setGoLiveDate(data.golive_date || '');
       setPagamento40Stato((data.pagamento_40_stato as 'non_pagato' | 'pagato') || 'non_pagato');
       setPagamento40Data(data.pagamento_40_data || '');
@@ -208,6 +222,25 @@ export default function LeadDetail() {
       .eq('id', lead.id);
 
     if (!error) {
+      const moduliDaInserire = [
+        ...flussiPrincipaliAttivi.map(flowId => {
+          const f = MAIN_FLOWS_OPTIONS.find(o => o.id === flowId);
+          return f ? { lead_id: lead.id, nome: f.label, prezzo: prezziBloccati[flowId] ?? 0 } : null;
+        }),
+        ...flussiExtraAttivi.map(flowId => {
+          const f = EXTRA_FLOWS_OPTIONS.find(o => o.id === flowId);
+          return f ? { lead_id: lead.id, nome: f.label, prezzo: prezziBloccati[flowId] ?? 0 } : null;
+        }),
+      ].filter(Boolean) as { lead_id: string; nome: string; prezzo: number }[];
+
+      if (moduliDaInserire.length > 0) {
+        const { data: moduliInseriti } = await supabase
+          .from('moduli_acquistati')
+          .insert(moduliDaInserire)
+          .select();
+        if (moduliInseriti) setModuli(moduliInseriti);
+      }
+
       setStato('converted');
       setLead(prev => prev ? {
         ...prev,
