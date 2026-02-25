@@ -28,17 +28,20 @@ export default function LeadDetail() {
   const [note, setNote] = useState('');
 
   const [tipoCentroAttivo, setTipoCentroAttivo] = useState<string>('');
+  const [operatoriCustom, setOperatoriCustom] = useState<string>('');
   const [flussiPrincipaliAttivi, setFlussiPrincipaliAttivi] = useState<string[]>([]);
   const [flussiExtraAttivi, setFlussiExtraAttivi] = useState<string[]>([]);
   const [pianoManutenzioneAttivo, setPianoManutenzioneAttivo] = useState<string>('');
   const [costoConcordato, setCostoConcordato] = useState<string>('');
   const [costoManuale, setCostoManuale] = useState(false);
 
+  const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
+
   useEffect(() => {
     if (costoManuale) return;
-    const calcolato = calcCosto(tipoCentroAttivo, flussiPrincipaliAttivi, flussiExtraAttivi);
+    const calcolato = calcCosto(tipoCentroCalcolo, flussiPrincipaliAttivi, flussiExtraAttivi);
     setCostoConcordato(calcolato > 0 ? String(calcolato) : '');
-  }, [tipoCentroAttivo, flussiPrincipaliAttivi, flussiExtraAttivi, costoManuale]);
+  }, [tipoCentroAttivo, tipoCentroCalcolo, flussiPrincipaliAttivi, flussiExtraAttivi, costoManuale]);
 
   useEffect(() => {
     const fetchLead = async () => {
@@ -69,6 +72,9 @@ export default function LeadDetail() {
         : [];
 
       setTipoCentroAttivo(centro);
+      if (centro.startsWith('team_custom_')) {
+        setOperatoriCustom(centro.replace('team_custom_', ''));
+      }
       setFlussiPrincipaliAttivi(mainAttivi);
       setFlussiExtraAttivi(extraAttivi);
       setPianoManutenzioneAttivo(data.piano_manutenzione_attivo ?? data.piano_manutenzione ?? '');
@@ -221,7 +227,12 @@ export default function LeadDetail() {
           <div className="bg-white rounded-2xl shadow-wellness p-6">
             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Preventivo originale</h2>
             <div className="space-y-3">
-              <InfoRow label="Tipo centro" value={lead.tipo_centro === 'single' ? '1 operatore' : lead.tipo_centro === 'team' ? '2-4 operatori' : '—'} />
+              <InfoRow label="Tipo centro" value={
+                lead.tipo_centro === 'single' ? '1 operatore' :
+                lead.tipo_centro === 'team' ? '2-4 operatori' :
+                lead.tipo_centro?.startsWith('team_custom_') ? `${lead.tipo_centro.replace('team_custom_', '')} operatori` :
+                '—'
+              } />
               <InfoRow label="Piano manutenzione" value={lead.piano_manutenzione || 'Nessuno'} />
               <InfoRow label="Tempistiche" value={lead.tempistiche || '—'} />
               <InfoRow label="Costo preventivo" value={`€${(lead.costo_totale || 0).toLocaleString('it-IT')}`} />
@@ -265,7 +276,7 @@ export default function LeadDetail() {
 
           <div className="mb-5">
             <label className="block text-sm font-medium text-gray-700 mb-2">Tipo di centro</label>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {[
                 { value: 'single', label: '1 operatore' },
                 { value: 'team', label: '2-4 operatori' },
@@ -282,7 +293,37 @@ export default function LeadDetail() {
                   {opt.label}
                 </button>
               ))}
+              <button
+                onClick={() => {
+                  const n = operatoriCustom || '5';
+                  setOperatoriCustom(n);
+                  setTipoCentroAttivo(`team_custom_${n}`);
+                }}
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                  tipoCentroAttivo.startsWith('team_custom_')
+                    ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
+                    : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                }`}
+              >
+                5+ operatori
+              </button>
             </div>
+            {tipoCentroAttivo.startsWith('team_custom_') && (
+              <div className="mt-3 flex items-center gap-2">
+                <label className="text-sm text-gray-500">Numero esatto di operatori:</label>
+                <input
+                  type="number"
+                  min={5}
+                  value={operatoriCustom}
+                  onChange={e => {
+                    const val = e.target.value;
+                    setOperatoriCustom(val);
+                    if (val) setTipoCentroAttivo(`team_custom_${val}`);
+                  }}
+                  className="w-20 px-3 py-1.5 rounded-xl border border-misty-teal text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white"
+                />
+              </div>
+            )}
           </div>
 
           <div className="mb-5">
@@ -373,10 +414,18 @@ export default function LeadDetail() {
             )}
           </div>
 
-          {(flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
+          {(tipoCentroAttivo || flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
             <div className="mt-5 pt-4 border-t border-gray-100">
               <p className="text-xs text-gray-400 mb-2">Riepilogo configurazione attiva</p>
               <div className="flex flex-wrap gap-1.5">
+                {tipoCentroAttivo && (
+                  <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-medium">
+                    {tipoCentroAttivo === 'single' ? '1 operatore' :
+                     tipoCentroAttivo === 'team' ? '2-4 operatori' :
+                     tipoCentroAttivo.startsWith('team_custom_') ? `${tipoCentroAttivo.replace('team_custom_', '')} operatori` :
+                     tipoCentroAttivo}
+                  </span>
+                )}
                 {flussiPrincipaliAttivi.map(id => {
                   const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === id);
                   return flow ? (
