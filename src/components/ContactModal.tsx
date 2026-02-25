@@ -124,11 +124,12 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
     }));
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const isStep2Valid = () => {
     return clientData.name.trim() !== '' &&
            clientData.surname.trim() !== '' &&
-           clientData.email.trim() !== '' &&
-           clientData.email.includes('@') &&
+           emailRegex.test(clientData.email.trim()) &&
            clientData.phone.trim() !== '' &&
            clientData.businessName.trim() !== '';
   };
@@ -143,8 +144,8 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
     if (!clientData.email.trim()) {
       return 'L\'email è obbligatoria';
     }
-    if (!clientData.email.includes('@')) {
-      return 'Inserisci un\'email valida (deve contenere @)';
+    if (!emailRegex.test(clientData.email.trim())) {
+      return 'Inserisci un\'email valida (es. mario@esempio.it)';
     }
     if (!clientData.phone.trim()) {
       return 'Il numero di telefono è obbligatorio';
@@ -231,7 +232,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
 
       const mainFlowsCost = calculateMainFlowsCost();
       const extraFlowsCost = calculateExtraFlowsCost();
-      const totalSetupCost = pricingData.isCustomQuote ? 1 : (mainFlowsCost + extraFlowsCost);
+      const totalSetupCost = pricingData.isCustomQuote ? 0 : (mainFlowsCost + extraFlowsCost);
 
       const allFlows = [
         ...mainFlowsWithNames.map(f => f.name),
@@ -544,14 +545,14 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                       value={clientData.email}
                       onChange={(e) => setClientData({ ...clientData, email: e.target.value })}
                       className={`w-full px-4 py-3 rounded-wellness border focus:ring-2 focus:ring-sage-green focus:border-transparent ${
-                        clientData.email && !clientData.email.includes('@')
+                        clientData.email && !emailRegex.test(clientData.email.trim())
                           ? 'border-red-400 bg-red-50'
                           : 'border-gray-300'
                       }`}
                       placeholder="mario@esempio.it"
                     />
-                    {clientData.email && !clientData.email.includes('@') && (
-                      <p className="text-red-600 text-xs mt-1">L'email deve contenere il simbolo @</p>
+                    {clientData.email && !emailRegex.test(clientData.email.trim()) && (
+                      <p className="text-red-600 text-xs mt-1">Inserisci un'email valida (es. mario@esempio.it)</p>
                     )}
                   </div>
 
@@ -774,7 +775,7 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                 <button
                   onClick={handleSubmitQuote}
                   disabled={!isStep2Valid() || isSubmitting}
-                  className={`px-10 py-5 rounded-wellness font-bold text-xl transition-all flex items-center shadow-lg ${
+                  className={`w-full sm:w-auto px-6 sm:px-10 py-4 sm:py-5 rounded-wellness font-bold text-base sm:text-xl transition-all flex items-center justify-center shadow-lg ${
                     !isStep2Valid() || isSubmitting
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-gradient-to-r from-sage-green via-misty-teal to-sage-green-dark text-white hover:shadow-2xl hover:scale-105 animate-pulse-subtle'
@@ -782,14 +783,14 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-6 h-6 mr-3 animate-spin" />
+                      <Loader2 className="w-5 h-5 mr-2 sm:mr-3 animate-spin" />
                       Invio in corso...
                     </>
                   ) : (
                     <>
-                      <Phone className="w-6 h-6 mr-3" />
+                      <Phone className="w-5 h-5 mr-2 sm:mr-3" />
                       Invia Richiesta Preventivo
-                      <ArrowRight className="w-6 h-6 ml-3" />
+                      <ArrowRight className="w-5 h-5 ml-2 sm:ml-3" />
                     </>
                   )}
                 </button>
