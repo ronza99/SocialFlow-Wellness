@@ -318,13 +318,16 @@ ${selectedPlan ? `PIANO MANUTENZIONE: ${selectedPlan.name}
 
       let errorMessage = 'Si è verificato un errore. Riprova o contattaci direttamente.';
 
-      if (error?.message?.includes('email')) {
+      const msg = error?.message || error?.details || error?.hint || '';
+      if (msg.includes('new row violates row-level security') || msg.includes('policy')) {
+        errorMessage = 'Dati non validi. Controlla che tutti i campi obbligatori siano compilati correttamente.';
+      } else if (msg.includes('email')) {
         errorMessage = 'Email non valida. Assicurati che contenga il simbolo @';
-      } else if (error?.message?.includes('telefono') || error?.message?.includes('phone')) {
+      } else if (msg.includes('telefono') || msg.includes('phone')) {
         errorMessage = 'Numero di telefono non valido';
-      } else if (error?.message?.includes('nome') || error?.message?.includes('name')) {
+      } else if (msg.includes('nome') || msg.includes('name')) {
         errorMessage = 'Nome o cognome non valido';
-      } else if (error?.message?.includes('costo') || error?.message?.includes('cost')) {
+      } else if (msg.includes('costo') || msg.includes('cost')) {
         errorMessage = 'Errore nel calcolo del preventivo. Riprova';
       }
 
