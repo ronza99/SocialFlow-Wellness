@@ -12,6 +12,7 @@ interface Props {
   flussiPrincipaliAttivi: string[];
   flussiExtraAttivi: string[];
   onModuliChange: (moduli: ModuloAcquistato[]) => void;
+  onPrezzoAggiunto?: (prezzo: number) => void;
 }
 
 const ALL_MODULES = [
@@ -37,6 +38,7 @@ export default function ModuliAcquistati({
   flussiPrincipaliAttivi,
   flussiExtraAttivi,
   onModuliChange,
+  onPrezzoAggiunto,
 }: Props) {
   const [showAdd, setShowAdd] = useState(false);
   const [selectedMod, setSelectedMod] = useState('');
@@ -45,10 +47,10 @@ export default function ModuliAcquistati({
 
   const totale = moduli.reduce((sum, m) => sum + m.prezzo, 0);
 
-  const configurazioneAttivaIds = new Set([...flussiPrincipaliAttivi, ...flussiExtraAttivi]);
+  const nomiGiaAcquistati = new Set(moduli.map(m => m.nome.toLowerCase()));
 
-  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(f => !configurazioneAttivaIds.has(f.id));
-  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(f => !configurazioneAttivaIds.has(f.id));
+  const mainFlowsDisponibili = MAIN_FLOWS_OPTIONS.filter(f => !nomiGiaAcquistati.has(f.label.toLowerCase()));
+  const extraFlowsDisponibili = EXTRA_FLOWS_OPTIONS.filter(f => !nomiGiaAcquistati.has(f.label.toLowerCase()));
 
   const getPrezzoForAdd = (modId: string): number => {
     if (prezziBloccati && prezziBloccati[modId] !== undefined) {
@@ -74,6 +76,7 @@ export default function ModuliAcquistati({
 
     if (!error && data) {
       onModuliChange([...moduli, data]);
+      onPrezzoAggiunto?.(Number(prezzoCustom));
       setShowAdd(false);
       setSelectedMod('');
       setPrezzoCustom('');

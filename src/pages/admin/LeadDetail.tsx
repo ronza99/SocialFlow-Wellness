@@ -674,6 +674,14 @@ export default function LeadDetail() {
           flussiPrincipaliAttivi={flussiPrincipaliAttivi}
           flussiExtraAttivi={flussiExtraAttivi}
           onModuliChange={setModuli}
+          onPrezzoAggiunto={async (prezzo) => {
+            const nuovoSetup = (Number(setupTotale) || 0) + prezzo;
+            setSetupTotale(String(nuovoSetup));
+            await supabase
+              .from('quote_requests')
+              .update({ setup_totale: nuovoSetup })
+              .eq('id', lead.id);
+          }}
         />
 
         {challenges.length > 0 && (
