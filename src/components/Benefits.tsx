@@ -71,7 +71,7 @@ const Benefits = () => {
               <span className="gradient-text">SocialFlow Wellness</span>
             </h2>
           </div>
-          
+
           {/* Enhanced Key statistics */}
           <div className="glass rounded-wellness p-8 sm:p-12 max-w-5xl mx-auto mb-12 sm:mb-16 shadow-organic-lg animate-fade-in-up">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
@@ -85,9 +85,11 @@ const Benefits = () => {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Enhanced Comparison */}
-          <div className="wellness-card p-8 sm:p-12 max-w-6xl mx-auto mb-12 sm:mb-16 shadow-organic-lg animate-fade-in-up">
+        {/* BLOCCO 1: Confronto */}
+        <div className="border-t border-sage-green/20 pt-16 sm:pt-20 mb-16 sm:mb-20">
+          <div className="wellness-card p-8 sm:p-12 max-w-6xl mx-auto shadow-organic-lg animate-fade-in-up">
             <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-8 sm:mb-12">
               SocialFlow vs Gestionali classici
             </h3>
@@ -125,19 +127,22 @@ const Benefits = () => {
             </div>
           </div>
 
-          {/* Enhanced Fear addressing */}
+        </div>
+
+        {/* BLOCCO 2: Tecnologia e onboarding */}
+        <div className="border-t border-sage-green/20 pt-16 sm:pt-20 mb-16 sm:mb-20 bg-cream-white/50 rounded-wellness px-4 sm:px-8 py-12 sm:py-16">
           <div className="glass rounded-wellness p-8 sm:p-12 max-w-5xl mx-auto mb-12 sm:mb-16 shadow-organic animate-fade-in-up">
             <h3 className="text-3xl sm:text-4xl font-serif font-bold text-high-contrast mb-6 sm:mb-8">
               "La tecnologia mi spaventa"
             </h3>
             <p className="text-xl sm:text-2xl text-readable leading-relaxed">
-              SocialFlow Wellness è il compromesso perfetto: il cliente si sente coccolato nella tua pagina; 
+              SocialFlow Wellness è il compromesso perfetto: il cliente si sente coccolato nella tua pagina;
               tu non devi imparare un gestionale complicato. Tutto avviene dove già lavori ogni giorno.
             </p>
           </div>
 
           {/* Supporto tecnologico e formazione */}
-          <div className="wellness-card p-8 sm:p-12 max-w-6xl mx-auto mb-12 sm:mb-16 shadow-organic-lg animate-fade-in-up">
+          <div className="wellness-card p-8 sm:p-12 max-w-6xl mx-auto shadow-organic-lg animate-fade-in-up">
             <div className="text-center mb-8 sm:mb-10">
               <div className="bg-gradient-to-br from-sage-green to-misty-teal w-20 h-20 sm:w-24 sm:h-24 rounded-wellness flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-organic">
                 <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
@@ -240,8 +245,16 @@ const Benefits = () => {
               </div>
             </div>
           </div>
-          {/* Enhanced Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
+        </div>
+
+        {/* BLOCCO 3: Funzionalita' chiave */}
+        <div className="border-t border-sage-green/20 pt-16 sm:pt-20 mb-16 sm:mb-20">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-high-contrast animate-fade-in">
+              Funzionalita' che fanno la differenza
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
             {benefits.map((benefit, index) => (
               <div key={index} className="wellness-card p-8 sm:p-10 hover-lift animate-fade-in-up">
                 <div className={`bg-gradient-to-br ${benefit.color} w-16 h-16 sm:w-20 sm:h-20 rounded-wellness flex items-center justify-center mb-6 sm:mb-8 shadow-organic`}>
@@ -256,8 +269,10 @@ const Benefits = () => {
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Gift Card System */}
+        {/* BLOCCO 4: Gift Card */}
+        <div className="border-t border-sage-green/20 pt-16 sm:pt-20 mb-16 sm:mb-20">
           <div className="glass rounded-wellness p-8 sm:p-12 max-w-5xl mx-auto shadow-organic-lg animate-fade-in-up">
             <div className="text-center">
               <div className="bg-gradient-to-br from-mocha-mousse to-mocha-mousse-dark w-20 h-20 sm:w-24 sm:h-24 rounded-wellness flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-organic">
