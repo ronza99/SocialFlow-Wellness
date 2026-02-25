@@ -269,17 +269,21 @@ export default function LeadDetail() {
   };
 
   const toggleMainFlow = (flowId: string) => {
-    if (isConverted) return;
+    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
+    if (isOriginal) return;
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
+    if (isConverted) setUpsellTotaleManuale(false);
   };
 
   const toggleExtraFlow = (flowId: string) => {
-    if (isConverted) return;
+    const isOriginal = prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot;
+    if (isOriginal) return;
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
+    if (isConverted) setUpsellTotaleManuale(false);
   };
 
   const formatDate = (dateString: string) => {
@@ -495,11 +499,6 @@ export default function LeadDetail() {
           <div className="flex items-center gap-2 mb-5">
             <Settings size={16} className="text-misty-teal" />
             <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Configurazione attiva (post-call)</h2>
-            {isConverted && (
-              <span className="ml-auto text-xs text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
-                Bloccata dopo conversione
-              </span>
-            )}
           </div>
 
           <div className="mb-5">
@@ -559,23 +558,34 @@ export default function LeadDetail() {
           </div>
 
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Flussi principali attivi</label>
+            <div className="flex items-center gap-2 mb-2">
+              <label className="block text-sm font-medium text-gray-700">Flussi principali attivi</label>
+              {isConverted && (
+                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-lg">
+                  Accordo originale bloccato — puoi aggiungere upsell
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap gap-2">
               {MAIN_FLOWS_OPTIONS.map(flow => {
-                const isUpsell = isConverted && flussiPrincipaliAttivi.includes(flow.id) && prezziBloccatiSnapshot && !(flow.id in prezziBloccatiSnapshot);
+                const isOriginal = isConverted && prezziBloccatiSnapshot && flow.id in prezziBloccatiSnapshot;
+                const isUpsell = isConverted && flussiPrincipaliAttivi.includes(flow.id) && !isOriginal;
                 const isActive = flussiPrincipaliAttivi.includes(flow.id);
                 return (
                   <button
                     key={flow.id}
                     onClick={() => toggleMainFlow(flow.id)}
-                    disabled={isConverted}
+                    disabled={!!isOriginal}
+                    title={isOriginal ? "Bloccato — flusso dell'accordo originale" : undefined}
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                       isUpsell
-                        ? 'bg-amber-50 text-amber-700 border-amber-300'
+                        ? 'bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100'
+                        : isOriginal
+                        ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal cursor-default'
                         : isActive
                         ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
                         : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                    } disabled:cursor-default`}
+                    }`}
                   >
                     {isActive ? '✓ ' : ''}{flow.label}
                     {isUpsell && <span className="ml-1.5 text-xs bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-md">Upsell</span>}
@@ -589,20 +599,24 @@ export default function LeadDetail() {
             <label className="block text-sm font-medium text-gray-700 mb-2">Flussi extra attivi</label>
             <div className="flex flex-wrap gap-2">
               {EXTRA_FLOWS_OPTIONS.map(flow => {
-                const isUpsell = isConverted && flussiExtraAttivi.includes(flow.id) && prezziBloccatiSnapshot && !(flow.id in prezziBloccatiSnapshot);
+                const isOriginal = isConverted && prezziBloccatiSnapshot && flow.id in prezziBloccatiSnapshot;
+                const isUpsell = isConverted && flussiExtraAttivi.includes(flow.id) && !isOriginal;
                 const isActive = flussiExtraAttivi.includes(flow.id);
                 return (
                   <button
                     key={flow.id}
                     onClick={() => toggleExtraFlow(flow.id)}
-                    disabled={isConverted}
+                    disabled={!!isOriginal}
+                    title={isOriginal ? "Bloccato — flusso dell'accordo originale" : undefined}
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
                       isUpsell
-                        ? 'bg-amber-50 text-amber-700 border-amber-300'
+                        ? 'bg-amber-50 text-amber-700 border-amber-300 hover:bg-amber-100'
+                        : isOriginal
+                        ? 'bg-sage-green/10 text-forest-green border-sage-green cursor-default'
                         : isActive
                         ? 'bg-sage-green/10 text-forest-green border-sage-green'
                         : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                    } disabled:cursor-default`}
+                    }`}
                   >
                     {isActive ? '✓ ' : ''}{flow.label}
                     {isUpsell && <span className="ml-1.5 text-xs bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-md">Upsell</span>}
@@ -756,20 +770,28 @@ export default function LeadDetail() {
           <div className="mb-5">
             <label className="block text-sm font-medium text-gray-700 mb-2">Stato</label>
             <div className="flex flex-wrap gap-2">
-              {STATUS_OPTIONS.map(opt => (
-                <button
-                  key={opt.value}
-                  onClick={() => setStato(opt.value)}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
-                    stato === opt.value
-                      ? `${STATUS_COLORS[opt.value]} border-current`
-                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+              {STATUS_OPTIONS.map(opt => {
+                const isLocked = isConverted && opt.value !== 'converted';
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => !isLocked && setStato(opt.value)}
+                    disabled={isLocked}
+                    title={isLocked ? 'Non puoi rimuovere la conversione' : undefined}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                      stato === opt.value
+                        ? `${STATUS_COLORS[opt.value]} border-current`
+                        : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                    } disabled:opacity-40 disabled:cursor-not-allowed`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
             </div>
+            {isConverted && (
+              <p className="text-xs text-gray-400 mt-1.5">Lo stato "Convertito" e' permanente.</p>
+            )}
           </div>
 
           <div>
