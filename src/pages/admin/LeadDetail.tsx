@@ -8,7 +8,8 @@ import {
 } from 'lucide-react';
 import {
   QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS,
-  MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto
+  MAIN_FLOWS_OPTIONS, EXTRA_FLOWS_OPTIONS, MAINTENANCE_OPTIONS, calcCosto,
+  calcCostoUpsell, getPrezzoAttualeFlow
 } from './types';
 import PaymentTracker from './PaymentTracker';
 import ConversionDialog from './ConversionDialog';
@@ -46,6 +47,14 @@ export default function LeadDetail() {
   const [pagamento60Stato, setPagamento60Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
   const [pagamento60Data, setPagamento60Data] = useState<string>('');
 
+  const [upsellTotale, setUpsellTotale] = useState<string>('');
+  const [upsellTotaleManuale, setUpsellTotaleManuale] = useState(false);
+  const [upsellPagamento40Stato, setUpsellPagamento40Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
+  const [upsellPagamento40Data, setUpsellPagamento40Data] = useState<string>('');
+  const [upsellPagamento60Stato, setUpsellPagamento60Stato] = useState<'non_pagato' | 'pagato'>('non_pagato');
+  const [upsellPagamento60Data, setUpsellPagamento60Data] = useState<string>('');
+  const [upsellGoLiveDate, setUpsellGoLiveDate] = useState<string>('');
+
   const [showConversionDialog, setShowConversionDialog] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -54,11 +63,27 @@ export default function LeadDetail() {
   const isConverted = stato === 'converted';
   const tipoCentroCalcolo = tipoCentroAttivo.startsWith('team_custom_') ? 'team' : tipoCentroAttivo;
 
+  const prezziBloccatiSnapshot = lead?.prezzi_bloccati ?? null;
+  const upsellMainFlows = isConverted && prezziBloccatiSnapshot
+    ? flussiPrincipaliAttivi.filter(fid => !(fid in prezziBloccatiSnapshot))
+    : [];
+  const upsellExtraFlows = isConverted && prezziBloccatiSnapshot
+    ? flussiExtraAttivi.filter(fid => !(fid in prezziBloccatiSnapshot))
+    : [];
+  const hasUpsell = upsellMainFlows.length > 0 || upsellExtraFlows.length > 0;
+
   useEffect(() => {
     if (costoManuale) return;
     const calcolato = calcCosto(tipoCentroCalcolo, flussiPrincipaliAttivi, flussiExtraAttivi);
     setCostoConcordato(calcolato > 0 ? String(calcolato) : '');
   }, [tipoCentroAttivo, tipoCentroCalcolo, flussiPrincipaliAttivi, flussiExtraAttivi, costoManuale]);
+
+  useEffect(() => {
+    if (upsellTotaleManuale) return;
+    if (!isConverted) return;
+    const calcolato = calcCostoUpsell(tipoCentroAttivo, upsellMainFlows, upsellExtraFlows);
+    setUpsellTotale(calcolato > 0 ? String(calcolato) : '');
+  }, [tipoCentroAttivo, upsellMainFlows.join(','), upsellExtraFlows.join(','), upsellTotaleManuale, isConverted]);
 
   useEffect(() => {
     const fetchLead = async () => {
@@ -118,6 +143,14 @@ export default function LeadDetail() {
         setCostoManuale(false);
       }
 
+      setUpsellTotale(data.upsell_totale != null ? String(data.upsell_totale) : '');
+      if (data.upsell_totale != null) setUpsellTotaleManuale(true);
+      setUpsellPagamento40Stato((data.upsell_pagamento_40_stato as 'non_pagato' | 'pagato') || 'non_pagato');
+      setUpsellPagamento40Data(data.upsell_pagamento_40_data || '');
+      setUpsellPagamento60Stato((data.upsell_pagamento_60_stato as 'non_pagato' | 'pagato') || 'non_pagato');
+      setUpsellPagamento60Data(data.upsell_pagamento_60_data || '');
+      setUpsellGoLiveDate(data.upsell_golive_date || '');
+
       setLoading(false);
     };
     fetchLead();
@@ -146,6 +179,12 @@ export default function LeadDetail() {
         pagamento_40_data: pagamento40Data || null,
         pagamento_60_stato: pagamento60Stato,
         pagamento_60_data: pagamento60Data || null,
+        upsell_totale: upsellTotale ? Number(upsellTotale) : null,
+        upsell_pagamento_40_stato: upsellPagamento40Stato,
+        upsell_pagamento_40_data: upsellPagamento40Data || null,
+        upsell_pagamento_60_stato: upsellPagamento60Stato,
+        upsell_pagamento_60_data: upsellPagamento60Data || null,
+        upsell_golive_date: upsellGoLiveDate || null,
       })
       .eq('id', lead.id);
 
@@ -167,6 +206,12 @@ export default function LeadDetail() {
         pagamento_40_data: pagamento40Data || null,
         pagamento_60_stato: pagamento60Stato,
         pagamento_60_data: pagamento60Data || null,
+        upsell_totale: upsellTotale ? Number(upsellTotale) : null,
+        upsell_pagamento_40_stato: upsellPagamento40Stato,
+        upsell_pagamento_40_data: upsellPagamento40Data || null,
+        upsell_pagamento_60_stato: upsellPagamento60Stato,
+        upsell_pagamento_60_data: upsellPagamento60Data || null,
+        upsell_golive_date: upsellGoLiveDate || null,
       } : null);
       setTimeout(() => setSaved(false), 2500);
     }
@@ -232,17 +277,19 @@ export default function LeadDetail() {
   };
 
   const toggleMainFlow = (flowId: string) => {
-    if (isConverted) return;
+    if (isConverted && prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot) return;
     setFlussiPrincipaliAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
+    if (isConverted) setUpsellTotaleManuale(false);
   };
 
   const toggleExtraFlow = (flowId: string) => {
-    if (isConverted) return;
+    if (isConverted && prezziBloccatiSnapshot && flowId in prezziBloccatiSnapshot) return;
     setFlussiExtraAttivi(prev =>
       prev.includes(flowId) ? prev.filter(f => f !== flowId) : [...prev, flowId]
     );
+    if (isConverted) setUpsellTotaleManuale(false);
   };
 
   const formatDate = (dateString: string) => {
@@ -384,6 +431,21 @@ export default function LeadDetail() {
           onPagamento60StatoChange={(s, d) => { setPagamento60Stato(s); setPagamento60Data(d); }}
           pagamento60DataChange={setPagamento60Data}
           isConverted={isConverted}
+          hasUpsell={hasUpsell}
+          upsellTotale={upsellTotale}
+          onUpsellTotaleChange={setUpsellTotale}
+          upsellTotaleManuale={upsellTotaleManuale}
+          onUpsellTotaleManualeChange={setUpsellTotaleManuale}
+          upsellGoLiveDate={upsellGoLiveDate}
+          onUpsellGoLiveDateChange={setUpsellGoLiveDate}
+          upsellPagamento40Stato={upsellPagamento40Stato}
+          upsellPagamento40Data={upsellPagamento40Data}
+          onUpsellPagamento40StatoChange={(s, d) => { setUpsellPagamento40Stato(s); setUpsellPagamento40Data(d); }}
+          upsellPagamento40DataChange={setUpsellPagamento40Data}
+          upsellPagamento60Stato={upsellPagamento60Stato}
+          upsellPagamento60Data={upsellPagamento60Data}
+          onUpsellPagamento60StatoChange={(s, d) => { setUpsellPagamento60Stato(s); setUpsellPagamento60Data(d); }}
+          upsellPagamento60DataChange={setUpsellPagamento60Data}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -511,42 +573,67 @@ export default function LeadDetail() {
           </div>
 
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Flussi principali attivi</label>
+            <div className="flex items-center gap-2 mb-2">
+              <label className="block text-sm font-medium text-gray-700">Flussi principali attivi</label>
+              {isConverted && (
+                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-lg">
+                  Flussi originali bloccati — puoi aggiungere upsell
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap gap-2">
-              {MAIN_FLOWS_OPTIONS.map(flow => (
-                <button
-                  key={flow.id}
-                  onClick={() => toggleMainFlow(flow.id)}
-                  disabled={isConverted}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
-                    flussiPrincipaliAttivi.includes(flow.id)
-                      ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
-                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  } disabled:cursor-default`}
-                >
-                  {flussiPrincipaliAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
-                </button>
-              ))}
+              {MAIN_FLOWS_OPTIONS.map(flow => {
+                const isOriginal = isConverted && prezziBloccatiSnapshot && flow.id in prezziBloccatiSnapshot;
+                const isUpsell = isConverted && flussiPrincipaliAttivi.includes(flow.id) && !isOriginal;
+                const isActive = flussiPrincipaliAttivi.includes(flow.id);
+                return (
+                  <button
+                    key={flow.id}
+                    onClick={() => toggleMainFlow(flow.id)}
+                    disabled={!!isOriginal}
+                    title={isOriginal ? 'Bloccato — flusso dell\'accordo originale' : isUpsell ? 'Flusso upsell — prezzi aggiornati' : undefined}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                      isUpsell
+                        ? 'bg-amber-50 text-amber-700 border-amber-300'
+                        : isActive
+                        ? 'bg-misty-teal/10 text-misty-teal-dark border-misty-teal'
+                        : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                    } disabled:cursor-default`}
+                  >
+                    {isActive ? '✓ ' : ''}{flow.label}
+                    {isUpsell && <span className="ml-1.5 text-xs bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-md">Upsell</span>}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
           <div className="mb-5">
             <label className="block text-sm font-medium text-gray-700 mb-2">Flussi extra attivi</label>
             <div className="flex flex-wrap gap-2">
-              {EXTRA_FLOWS_OPTIONS.map(flow => (
-                <button
-                  key={flow.id}
-                  onClick={() => toggleExtraFlow(flow.id)}
-                  disabled={isConverted}
-                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
-                    flussiExtraAttivi.includes(flow.id)
-                      ? 'bg-sage-green/10 text-forest-green border-sage-green'
-                      : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
-                  } disabled:cursor-default`}
-                >
-                  {flussiExtraAttivi.includes(flow.id) ? '✓ ' : ''}{flow.label}
-                </button>
-              ))}
+              {EXTRA_FLOWS_OPTIONS.map(flow => {
+                const isOriginal = isConverted && prezziBloccatiSnapshot && flow.id in prezziBloccatiSnapshot;
+                const isUpsell = isConverted && flussiExtraAttivi.includes(flow.id) && !isOriginal;
+                const isActive = flussiExtraAttivi.includes(flow.id);
+                return (
+                  <button
+                    key={flow.id}
+                    onClick={() => toggleExtraFlow(flow.id)}
+                    disabled={!!isOriginal}
+                    title={isOriginal ? 'Bloccato — flusso dell\'accordo originale' : isUpsell ? 'Flusso upsell — prezzi aggiornati' : undefined}
+                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all border-2 ${
+                      isUpsell
+                        ? 'bg-amber-50 text-amber-700 border-amber-300'
+                        : isActive
+                        ? 'bg-sage-green/10 text-forest-green border-sage-green'
+                        : 'bg-gray-50 text-gray-400 border-transparent hover:bg-gray-100'
+                    } disabled:cursor-default`}
+                  >
+                    {isActive ? '✓ ' : ''}{flow.label}
+                    {isUpsell && <span className="ml-1.5 text-xs bg-amber-100 text-amber-600 px-1.5 py-0.5 rounded-md">Upsell</span>}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -603,39 +690,73 @@ export default function LeadDetail() {
           </div>
 
           {(tipoCentroAttivo || flussiPrincipaliAttivi.length > 0 || flussiExtraAttivi.length > 0 || costoConcordato) && (
-            <div className="mt-5 pt-4 border-t border-gray-100">
-              <p className="text-xs text-gray-400 mb-2">Riepilogo configurazione attiva</p>
-              <div className="flex flex-wrap gap-1.5">
-                {tipoCentroAttivo && (
-                  <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-medium">
-                    {tipoCentroAttivo === 'single' ? '1 operatore' :
-                     tipoCentroAttivo === 'team' ? '2-4 operatori' :
-                     tipoCentroAttivo.startsWith('team_custom_') ? `${tipoCentroAttivo.replace('team_custom_', '')} operatori` :
-                     tipoCentroAttivo}
-                  </span>
-                )}
-                {flussiPrincipaliAttivi.map(fid => {
-                  const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
-                  return flow ? (
-                    <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
-                      {flow.label}
+            <div className="mt-5 pt-4 border-t border-gray-100 space-y-4">
+              <div>
+                <p className="text-xs text-gray-400 mb-2">Setup originale</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {tipoCentroAttivo && (
+                    <span className="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full font-medium">
+                      {tipoCentroAttivo === 'single' ? '1 operatore' :
+                       tipoCentroAttivo === 'team' ? '2-4 operatori' :
+                       tipoCentroAttivo.startsWith('team_custom_') ? `${tipoCentroAttivo.replace('team_custom_', '')} operatori` :
+                       tipoCentroAttivo}
                     </span>
-                  ) : null;
-                })}
-                {flussiExtraAttivi.map(fid => {
-                  const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
-                  return flow ? (
-                    <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
-                      {flow.label}
+                  )}
+                  {flussiPrincipaliAttivi.filter(fid => !upsellMainFlows.includes(fid)).map(fid => {
+                    const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
+                    return flow ? (
+                      <span key={fid} className="bg-misty-teal/10 text-misty-teal-dark text-xs px-3 py-1 rounded-full font-medium">
+                        {flow.label}
+                      </span>
+                    ) : null;
+                  })}
+                  {flussiExtraAttivi.filter(fid => !upsellExtraFlows.includes(fid)).map(fid => {
+                    const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
+                    return flow ? (
+                      <span key={fid} className="bg-sage-green/10 text-forest-green text-xs px-3 py-1 rounded-full font-medium">
+                        {flow.label}
+                      </span>
+                    ) : null;
+                  })}
+                  {costoConcordato && (
+                    <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium">
+                      €{Number(costoConcordato).toLocaleString('it-IT')}
                     </span>
-                  ) : null;
-                })}
-                {costoConcordato && (
-                  <span className="bg-amber-50 text-amber-700 text-xs px-3 py-1 rounded-full font-medium">
-                    €{Number(costoConcordato).toLocaleString('it-IT')}
-                  </span>
-                )}
+                  )}
+                </div>
               </div>
+              {hasUpsell && (
+                <div>
+                  <p className="text-xs text-amber-600 font-semibold mb-2">Upsell aggiuntivi</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {upsellMainFlows.map(fid => {
+                      const flow = MAIN_FLOWS_OPTIONS.find(f => f.id === fid);
+                      const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                      return flow ? (
+                        <span key={fid} className="bg-amber-50 text-amber-700 border border-amber-200 text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                          {flow.label}
+                          <span className="text-amber-500">€{prezzo.toLocaleString('it-IT')}</span>
+                        </span>
+                      ) : null;
+                    })}
+                    {upsellExtraFlows.map(fid => {
+                      const flow = EXTRA_FLOWS_OPTIONS.find(f => f.id === fid);
+                      const prezzo = getPrezzoAttualeFlow(fid, tipoCentroAttivo);
+                      return flow ? (
+                        <span key={fid} className="bg-amber-50 text-amber-700 border border-amber-200 text-xs px-3 py-1 rounded-full font-medium flex items-center gap-1">
+                          {flow.label}
+                          <span className="text-amber-500">€{prezzo.toLocaleString('it-IT')}</span>
+                        </span>
+                      ) : null;
+                    })}
+                    {upsellTotale && (
+                      <span className="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold">
+                        Totale upsell: €{Number(upsellTotale).toLocaleString('it-IT')}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -37,6 +37,12 @@ export interface QuoteRequest {
   pagamento_60_data: string | null;
   data_conversione: string | null;
   prezzi_bloccati: Record<string, number> | null;
+  upsell_totale: number | null;
+  upsell_pagamento_40_stato: 'non_pagato' | 'pagato' | null;
+  upsell_pagamento_40_data: string | null;
+  upsell_pagamento_60_stato: 'non_pagato' | 'pagato' | null;
+  upsell_pagamento_60_data: string | null;
+  upsell_golive_date: string | null;
 }
 
 export interface ModuloAcquistato {
@@ -119,4 +125,31 @@ export function getPrezzoModulo(
   const extra = EXTRA_FLOWS_OPTIONS.find(o => o.id === modulo);
   if (extra) return extra.price;
   return 0;
+}
+
+export function getPrezzoAttualeFlow(flowId: string, tipoCentro: string): number {
+  const isTeam = tipoCentro === 'team' || tipoCentro.startsWith('team_custom_');
+  const main = MAIN_FLOWS_OPTIONS.find(o => o.id === flowId);
+  if (main) return isTeam ? main.priceTeam : main.priceSingle;
+  const extra = EXTRA_FLOWS_OPTIONS.find(o => o.id === flowId);
+  if (extra) return extra.price;
+  return 0;
+}
+
+export function calcCostoUpsell(
+  tipoCentro: string,
+  upsellMainFlows: string[],
+  upsellExtraFlows: string[]
+): number {
+  const isTeam = tipoCentro === 'team' || tipoCentro.startsWith('team_custom_');
+  let total = 0;
+  upsellMainFlows.forEach(id => {
+    const f = MAIN_FLOWS_OPTIONS.find(o => o.id === id);
+    if (f) total += isTeam ? f.priceTeam : f.priceSingle;
+  });
+  upsellExtraFlows.forEach(id => {
+    const f = EXTRA_FLOWS_OPTIONS.find(o => o.id === id);
+    if (f) total += f.price;
+  });
+  return total;
 }

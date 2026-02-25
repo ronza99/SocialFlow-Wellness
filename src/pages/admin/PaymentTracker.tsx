@@ -1,5 +1,5 @@
 import React from 'react';
-import { CreditCard, Calendar, CheckCircle2, Clock } from 'lucide-react';
+import { CreditCard, Calendar, CheckCircle2, Clock, TrendingUp } from 'lucide-react';
 import { QuoteRequest } from './types';
 
 interface Props {
@@ -17,6 +17,21 @@ interface Props {
   onPagamento60StatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
   pagamento60DataChange: (v: string) => void;
   isConverted: boolean;
+  hasUpsell?: boolean;
+  upsellTotale: string;
+  onUpsellTotaleChange: (v: string) => void;
+  upsellTotaleManuale: boolean;
+  onUpsellTotaleManualeChange: (v: boolean) => void;
+  upsellGoLiveDate: string;
+  onUpsellGoLiveDateChange: (v: string) => void;
+  upsellPagamento40Stato: 'non_pagato' | 'pagato';
+  upsellPagamento40Data: string;
+  onUpsellPagamento40StatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
+  upsellPagamento40DataChange: (v: string) => void;
+  upsellPagamento60Stato: 'non_pagato' | 'pagato';
+  upsellPagamento60Data: string;
+  onUpsellPagamento60StatoChange: (stato: 'non_pagato' | 'pagato', data: string) => void;
+  upsellPagamento60DataChange: (v: string) => void;
 }
 
 function today(): string {
@@ -49,79 +64,183 @@ export default function PaymentTracker({
   onPagamento60StatoChange,
   pagamento60DataChange,
   isConverted,
+  hasUpsell,
+  upsellTotale,
+  onUpsellTotaleChange,
+  upsellTotaleManuale,
+  onUpsellTotaleManualeChange,
+  upsellGoLiveDate,
+  onUpsellGoLiveDateChange,
+  upsellPagamento40Stato,
+  upsellPagamento40Data,
+  onUpsellPagamento40StatoChange,
+  upsellPagamento40DataChange,
+  upsellPagamento60Stato,
+  upsellPagamento60Data,
+  onUpsellPagamento60StatoChange,
+  upsellPagamento60DataChange,
 }: Props) {
   const totale = parseFloat(setupTotale) || 0;
   const imp40 = Math.round(totale * 0.4);
   const imp60 = Math.round(totale * 0.6);
   const scadenza60 = goLiveDate ? addDays(goLiveDate, 30) : '';
 
+  const upsellTot = parseFloat(upsellTotale) || 0;
+  const upsellImp40 = Math.round(upsellTot * 0.4);
+  const upsellImp60 = Math.round(upsellTot * 0.6);
+  const upsellScadenza60 = upsellGoLiveDate ? addDays(upsellGoLiveDate, 30) : '';
+
   return (
-    <div className="bg-white rounded-2xl shadow-wellness p-6">
-      <div className="flex items-center gap-2 mb-5">
-        <CreditCard size={16} className="text-misty-teal" />
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Pagamenti Setup</h2>
+    <div className="space-y-4">
+      <div className="bg-white rounded-2xl shadow-wellness p-6">
+        <div className="flex items-center gap-2 mb-5">
+          <CreditCard size={16} className="text-misty-teal" />
+          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Pagamenti Setup</h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Totale setup (€)</label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+              <input
+                type="number"
+                value={setupTotale}
+                onChange={e => onSetupTotaleChange(e.target.value)}
+                disabled={isConverted}
+                placeholder="0"
+                className={`w-full pl-7 pr-4 py-2 rounded-xl border text-sm transition-all ${
+                  isConverted
+                    ? 'border-gray-100 bg-gray-50 text-gray-500 cursor-default'
+                    : 'border-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white'
+                }`}
+              />
+            </div>
+            {isConverted && (
+              <p className="text-xs text-amber-600 mt-1">Bloccato dopo conversione</p>
+            )}
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Data Go-live</label>
+            <div className="relative">
+              <Calendar size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="date"
+                value={goLiveDate}
+                onChange={e => onGoLiveDateChange(e.target.value)}
+                className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white transition-all"
+              />
+            </div>
+            {scadenza60 && (
+              <p className="text-xs text-gray-400 mt-1">Scadenza 60%: {formatDateIT(scadenza60)}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <PaymentSlice
+            label="Acconto 40%"
+            importo={imp40}
+            stato={pagamento40Stato}
+            data={pagamento40Data}
+            onSegna={() => onPagamento40StatoChange('pagato', today())}
+            onDataChange={pagamento40DataChange}
+            onAnnulla={() => onPagamento40StatoChange('non_pagato', '')}
+          />
+          <PaymentSlice
+            label="Saldo 60%"
+            importo={imp60}
+            stato={pagamento60Stato}
+            data={pagamento60Data}
+            onSegna={() => onPagamento60StatoChange('pagato', today())}
+            onDataChange={pagamento60DataChange}
+            onAnnulla={() => onPagamento60StatoChange('non_pagato', '')}
+            scadenza={scadenza60}
+          />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Totale setup (€)</label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
-            <input
-              type="number"
-              value={setupTotale}
-              onChange={e => onSetupTotaleChange(e.target.value)}
-              disabled={isConverted}
-              placeholder="0"
-              className={`w-full pl-7 pr-4 py-2 rounded-xl border text-sm transition-all ${
-                isConverted
-                  ? 'border-gray-100 bg-gray-50 text-gray-500 cursor-default'
-                  : 'border-gray-200 text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white'
-              }`}
-            />
+      {isConverted && hasUpsell && (
+        <div className="bg-white rounded-2xl shadow-wellness p-6 border-2 border-amber-100">
+          <div className="flex items-center gap-2 mb-5">
+            <TrendingUp size={16} className="text-amber-500" />
+            <h2 className="text-sm font-semibold text-amber-600 uppercase tracking-wide">Pagamenti Upsell</h2>
+            <span className="ml-auto text-xs text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
+              Prezzi aggiornati al listino attuale
+            </span>
           </div>
-          {isConverted && (
-            <p className="text-xs text-amber-600 mt-1">Bloccato dopo conversione</p>
-          )}
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Data Go-live</label>
-          <div className="relative">
-            <Calendar size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-            <input
-              type="date"
-              value={goLiveDate}
-              onChange={e => onGoLiveDateChange(e.target.value)}
-              className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-misty-teal/30 focus:border-misty-teal bg-white transition-all"
-            />
-          </div>
-          {scadenza60 && (
-            <p className="text-xs text-gray-400 mt-1">Scadenza 60%: {formatDateIT(scadenza60)}</p>
-          )}
-        </div>
-      </div>
 
-      <div className="space-y-4">
-        <PaymentSlice
-          label="Acconto 40%"
-          importo={imp40}
-          stato={pagamento40Stato}
-          data={pagamento40Data}
-          onSegna={() => onPagamento40StatoChange('pagato', today())}
-          onDataChange={pagamento40DataChange}
-          onAnnulla={() => onPagamento40StatoChange('non_pagato', '')}
-        />
-        <PaymentSlice
-          label="Saldo 60%"
-          importo={imp60}
-          stato={pagamento60Stato}
-          data={pagamento60Data}
-          onSegna={() => onPagamento60StatoChange('pagato', today())}
-          onDataChange={pagamento60DataChange}
-          onAnnulla={() => onPagamento60StatoChange('non_pagato', '')}
-          scadenza={scadenza60}
-        />
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-medium text-gray-500">Totale upsell (€)</label>
+                <button
+                  onClick={() => onUpsellTotaleManualeChange(!upsellTotaleManuale)}
+                  className={`text-xs px-2 py-0.5 rounded-lg transition-all border ${
+                    upsellTotaleManuale
+                      ? 'bg-amber-50 text-amber-700 border-amber-200'
+                      : 'bg-gray-50 text-gray-400 border-gray-200 hover:bg-gray-100'
+                  }`}
+                >
+                  {upsellTotaleManuale ? 'Manuale' : 'Auto'}
+                </button>
+              </div>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+                <input
+                  type="number"
+                  value={upsellTotale}
+                  onChange={e => { onUpsellTotaleChange(e.target.value); onUpsellTotaleManualeChange(true); }}
+                  placeholder="0"
+                  className="w-full pl-7 pr-4 py-2 rounded-xl border border-amber-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white transition-all"
+                />
+              </div>
+              {!upsellTotaleManuale && (
+                <p className="text-xs text-gray-400 mt-1">Calcolato dai flussi upsell attivi</p>
+              )}
+            </div>
+            <div>
+              <label className="block text-xs font-medium text-gray-500 mb-1">Data Go-live upsell</label>
+              <div className="relative">
+                <Calendar size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <input
+                  type="date"
+                  value={upsellGoLiveDate}
+                  onChange={e => onUpsellGoLiveDateChange(e.target.value)}
+                  className="w-full pl-8 pr-4 py-2 rounded-xl border border-gray-200 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-200 focus:border-amber-400 bg-white transition-all"
+                />
+              </div>
+              {upsellScadenza60 && (
+                <p className="text-xs text-gray-400 mt-1">Scadenza 60%: {formatDateIT(upsellScadenza60)}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <PaymentSlice
+              label="Acconto upsell 40%"
+              importo={upsellImp40}
+              stato={upsellPagamento40Stato}
+              data={upsellPagamento40Data}
+              onSegna={() => onUpsellPagamento40StatoChange('pagato', today())}
+              onDataChange={upsellPagamento40DataChange}
+              onAnnulla={() => onUpsellPagamento40StatoChange('non_pagato', '')}
+              colorAccent="amber"
+            />
+            <PaymentSlice
+              label="Saldo upsell 60%"
+              importo={upsellImp60}
+              stato={upsellPagamento60Stato}
+              data={upsellPagamento60Data}
+              onSegna={() => onUpsellPagamento60StatoChange('pagato', today())}
+              onDataChange={upsellPagamento60DataChange}
+              onAnnulla={() => onUpsellPagamento60StatoChange('non_pagato', '')}
+              scadenza={upsellScadenza60}
+              colorAccent="amber"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -135,6 +254,7 @@ function PaymentSlice({
   onDataChange,
   onAnnulla,
   scadenza,
+  colorAccent = 'teal',
 }: {
   label: string;
   importo: number;
@@ -144,6 +264,7 @@ function PaymentSlice({
   onDataChange: (v: string) => void;
   onAnnulla: () => void;
   scadenza?: string;
+  colorAccent?: 'teal' | 'amber';
 }) {
   const pagato = stato === 'pagato';
 
@@ -174,7 +295,11 @@ function PaymentSlice({
           {!pagato ? (
             <button
               onClick={onSegna}
-              className="text-xs bg-misty-teal hover:bg-misty-teal-dark text-white px-3 py-1.5 rounded-lg font-medium transition-colors"
+              className={`text-xs text-white px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                colorAccent === 'amber'
+                  ? 'bg-amber-500 hover:bg-amber-600'
+                  : 'bg-misty-teal hover:bg-misty-teal-dark'
+              }`}
             >
               Segna come pagato
             </button>
