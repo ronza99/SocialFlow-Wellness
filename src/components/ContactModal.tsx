@@ -48,9 +48,9 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
     subscriptions: 'Abbonamenti ricorrenti',
     cosmetics: 'Vendita cosmetici in chat',
     'ai-assistant': 'Segretaria AI in chat',
-    'gift-cards': 'Buoni trattamento e buoni regalo digitali (con codici sconto)',
+    'gift-cards': 'Card & Gift Card digitali (con coupon)',
     packages: 'Pacchetti di sedute',
-    whatsapp: 'Promemoria e messaggi di richiamo su WhatsApp'
+    whatsapp: 'Promemoria e follow-up su WhatsApp'
   };
 
   const flowPrices: Record<string, { single: number; team: number } | number> = {
@@ -65,7 +65,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
 
   const maintenancePlans = {
     'piano manutenzione tecnica': { name: 'Piano Manutenzione tecnica', price: 59, description: 'Interventi tecnici e piccoli aggiustamenti' },
-    'piano crescita dm': { name: 'Piano Crescita', price: 129, description: 'Include manutenzione tecnica + fino a 3 ore/mese per miglioramenti e 1 chiamata strategica ogni 2 mesi' },
+    'piano crescita dm': { name: 'Piano Crescita DM', price: 129, description: 'Include manutenzione tecnica + fino a 3 ore/mese per miglioramenti e 1 chiamata strategica ogni 2 mesi' },
     'none': { name: 'Ora non mi serve nessun piano', price: 0, description: 'Richiederò interventi solo quando necessario (60 €/ora)' }
   };
 
@@ -96,7 +96,7 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, pricingDat
   ];
 
   const challengeOptions = [
-    'Troppi clienti che non si presentano',
+    'Troppi no-show',
     'Difficoltà a gestire prenotazioni',
     'Pochi nuovi clienti',
     'Gestione pagamenti complicata',
