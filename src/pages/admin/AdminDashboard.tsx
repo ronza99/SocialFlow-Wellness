@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import {
   LogOut, Search, Filter, TrendingUp, Users, Euro, Clock,
-  ChevronRight, RefreshCw
+  ChevronRight, RefreshCw, UserPlus, Download
 } from 'lucide-react';
 import { QuoteRequest, LeadStatus, STATUS_LABELS, STATUS_COLORS } from './types';
 import Logo from '../../components/Logo';
+import NewLeadModal from './NewLeadModal';
+import ExportBackup from './ExportBackup';
 
 const STATUS_OPTIONS: { value: LeadStatus | 'all'; label: string }[] = [
   { value: 'all', label: 'Tutti' },
@@ -23,6 +25,8 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState<LeadStatus | 'all'>('all');
   const [search, setSearch] = useState('');
   const [refreshing, setRefreshing] = useState(false);
+  const [showNewLead, setShowNewLead] = useState(false);
+  const [showExport, setShowExport] = useState(false);
 
   const fetchLeads = async () => {
     setRefreshing(true);
@@ -103,9 +107,28 @@ export default function AdminDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-800">Preventivi</h1>
-          <p className="text-gray-500 text-sm mt-1">Gestisci e monitora tutte le richieste</p>
+        <div className="mb-8 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Preventivi</h1>
+            <p className="text-gray-500 text-sm mt-1">Gestisci e monitora tutte le richieste</p>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => setShowExport(true)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-gray-200 bg-white text-sm text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
+              title="Backup & Esportazione"
+            >
+              <Download size={15} />
+              <span className="hidden sm:block">Backup</span>
+            </button>
+            <button
+              onClick={() => setShowNewLead(true)}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-forest-green text-white text-sm font-medium hover:bg-forest-green/90 transition-colors shadow-sm"
+            >
+              <UserPlus size={15} />
+              <span className="hidden sm:block">Nuovo cliente</span>
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -205,6 +228,20 @@ export default function AdminDashboard() {
           )}
         </div>
       </main>
+
+      {showNewLead && (
+        <NewLeadModal
+          onClose={() => setShowNewLead(false)}
+          onCreated={(id) => {
+            setShowNewLead(false);
+            navigate(`/admin/lead/${id}`);
+          }}
+        />
+      )}
+
+      {showExport && (
+        <ExportBackup onClose={() => setShowExport(false)} />
+      )}
     </div>
   );
 }
