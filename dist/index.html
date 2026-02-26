@@ -8,7 +8,8 @@
     <title>SocialFlow Wellness - Marketing Automation per Centri Wellness</title>
     <meta name="description" content="Il primo sistema che trasforma i tuoi social in una macchina di prenotazioni automatica. Più prenotazioni, zero no-show per centri wellness." />
     <meta name="keywords" content="marketing automation, centri wellness, prenotazioni social, Instagram booking, Facebook prenotazioni, no-show, wellness marketing" />
-    
+    <meta name="facebook-domain-verification" content="rib5xothdltpqe9x3f0bl9kahpzux8" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://socialflow.it/" />
@@ -26,6 +27,31 @@
     <link rel="stylesheet" crossorigin href="/assets/index-D3ImS9nW.css">
   </head>
   <body>
+    <!-- Facebook Messenger Chat Plugin -->
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          xfbml: true,
+          version: 'v18.0'
+        });
+      };
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/it_IT/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div class="fb-customerchat"
+      attribution="biz_inbox"
+      page_id="795607970300722"
+      theme_color="#0084ff"
+      logged_in_greeting="Ciao! Come posso aiutarti?"
+      logged_out_greeting="Ciao! Come posso aiutarti?">
+    </div>
+
     <div id="root"></div>
   </body>
 </html>
